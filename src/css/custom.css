@@ -26,3 +26,20 @@
 html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+/* 居中导航栏内容 */
+.navbar .navbar-inner {
+  justify-content: center !important;
+}
+
+/* 可选：让导航项均匀分布 */
+.navbar__items {
+  flex: 1;
+  justify-content: center;
+}
+
+/* 可选：调整导航项间距 */
+.navbar__item,
+.navbar__link {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}

@@ -11,8 +11,23 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'Wchao', // Usually your GitHub org/user name.
+  projectName: 'lib-hub', // Usually your repo name.
+
+  themeConfig: {
+    navbar: {
+      items: [
+        {
+          type: 'localeDropdown',
+        },
+      ],
+    },
+  },
+
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'fr'],
+  },
 
   presets: [
     [
