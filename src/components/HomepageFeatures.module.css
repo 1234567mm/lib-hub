@@ -5,7 +5,7 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
+.feature {
+  text-align: center;
+  padding: 1.5rem;
 }
