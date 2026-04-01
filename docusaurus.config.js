@@ -1,32 +1,23 @@
+// @ts-check
+
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-// With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: '山药泥酸奶的技术窝',
+  tagline: '嵌入式开发 | 智能硬件 | 知识输出',
+  url: 'https://1234567mm.github.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'Wchao', // Usually your GitHub org/user name.
-  projectName: 'lib-hub', // Usually your repo name.
-
-  themeConfig: {
-    navbar: {
-      items: [
-        {
-          type: 'localeDropdown',
-        },
-      ],
-    },
-  },
+  organizationName: '1234567mm',
+  projectName: 'lib-hub',
 
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'fr'],
+    defaultLocale: 'zh-Hans',
+    locales: ['zh-Hans'],
   },
 
   presets: [
@@ -36,14 +27,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
+          editUrl: 'https://github.com/1234567mm/lib-hub/edit/main/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
+          editUrl: 'https://github.com/1234567mm/lib-hub/edit/main/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -55,10 +43,16 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: 'img/social-card.jpg',
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
       navbar: {
-        title: 'My Site',
+        title: '山药泥酸奶',
         logo: {
-          alt: 'My Site Logo',
+          alt: 'Site Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -66,13 +60,43 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: '博客介绍',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
+            type: 'doc',
+            docId: 'stm32/intro',
+            position: 'left',
+            label: 'STM32知识库',
+          },
+          {
+            type: 'doc',
+            docId: 'esp32/esp32-intro',
+            position: 'left',
+            label: 'ESP32知识库',
+          },
+          {
+            type: 'doc',
+            docId: 'sharing/intro',
+            position: 'left',
+            label: '干货分享',
+          },
+          {
+            type: 'doc',
+            docId: 'industry/intro',
+            position: 'left',
+            label: '行业动态',
+          },
+          {
+            type: 'doc',
+            docId: 'team/intro',
+            position: 'left',
+            label: '科研团队',
+          },
+          {
+            href: 'https://github.com/1234567mm/lib-hub',
             position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },
@@ -80,46 +104,27 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: '内容分区',
             items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
+              { label: '博客介绍', to: '/docs/intro' },
+              { label: 'STM32知识库', to: '/docs/stm32/intro' },
+              { label: 'ESP32知识库', to: '/docs/esp32/esp32-intro' },
+              { label: '干货分享', to: '/docs/sharing/intro' },
+              { label: '行业动态', to: '/docs/industry/intro' },
+              { label: '科研团队', to: '/docs/team/intro' },
             ],
           },
           {
-            title: 'Community',
+            title: '社交媒体',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
+              { label: '小红书', href: 'https://www.xiaohongshu.com/user/profile/5d0d7bfa000000001002850b' },
+              { label: '哔哩哔哩', href: 'https://space.bilibili.com/511264524' },
+              { label: '抖音', href: 'https://www.douyin.com/user/self' },
+              { label: 'GitHub', href: 'https://github.com/1234567mm/lib-hub' },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `© ${new Date().getFullYear()} 山药泥酸奶 · Built with Docusaurus`,
       },
       prism: {
         theme: lightCodeTheme,

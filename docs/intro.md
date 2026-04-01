@@ -2,34 +2,39 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# 博客介绍
 
-Let's discover **Docusaurus in less than 5 minutes**.
+欢迎来到山药泥酸奶的技术窝！这是一个专注于嵌入式开发与智能硬件领域的个人技术博客。
 
-## Getting Started
+## 关于这个博客
 
-Get started by **creating a new site**.
+在这个数字化的时代，嵌入式系统已经渗透到我们生活的方方面面——从智能手表到工业控制器，从智能家居到自动驾驶汽车。作为一名嵌入式开发工程师和研究生在读的学习者，我创建这个博客的目的是：
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### 记录成长之路
+将学习嵌入式开发过程中的点滴心得整理成文，既是对知识的回顾与总结，也希望能帮助到同样在这条路上摸索的伙伴们。
 
-## Generate a new site
+### 体系化知识输出
+通过「STM32知识库」栏目，我希望构建一个从入门到进阶的嵌入式学习路径，涵盖理论基础、外设驱动、项目实战等多个维度。
 
-Generate a new Docusaurus site using the **classic template**:
+### 技术分享与交流
+「干货分享」和「行业动态」栏目将聚焦工具推荐、经验技巧、行业观察等内容，与大家一起紧跟技术发展趋势。
 
-```shell
-npx @docusaurus/init@latest init my-website classic
-```
+## 内容规划
 
-## Start your site
+| 栏目 | 内容方向 |
+|------|----------|
+| **STM32知识库** | 基础知识、外设驱动、项目实战 |
+| **干货分享** | 工具推荐、经验技巧、行业洞察 |
+| **行业动态** | 最新资讯、技术趋势、市场分析 |
+| **科研团队** | 团队介绍、科研项目、技术成果 |
 
-Run the development server:
+## 写作理念
 
-```shell
-cd my-website
+我相信知识的力量在于分享与传承。每一篇文章都会力求：
+- **准确性**：确保技术内容经过验证
+- **系统性**：帮助读者构建完整知识体系
+- **实用性**：注重实践应用价值
 
-npx docusaurus start
-```
+---
 
-Your site starts at `http://localhost:3000`.
-
-Open `docs/intro.md` and edit some lines: the site **reloads automatically** and display your changes.
+*愿与所有嵌入式爱好者共同成长，探索硬件与软件融合的无限可能。*
