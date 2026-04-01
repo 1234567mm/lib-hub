@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 24.x # 建议使用主要版本，如 24.x，以便自动获取补丁更新（包括安全修复）。
+          node-version: 24 # 建议使用主要版本，如 24.x，以便自动获取补丁更新（包括安全修复）。
           cache: npm
 
       - name: Install dependencies
