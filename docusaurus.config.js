@@ -32,7 +32,7 @@ const darkCodeTheme = themes.dracula;
         },
         blog: {
           showReadingTime: true,
-          editUrl: 'https://github.com/1234567mm/lib-hub/edit/main/',
+          editUrl: undefined,
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

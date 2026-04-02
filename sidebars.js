@@ -72,6 +72,14 @@ const sidebars = {
           label: '行业洞察',
           items: ['sharing/insights/intro'],
         },
+        {
+          type: 'category',
+          label: '笔记文章',
+          items: [
+            'sharing/Git本地开发与GitHub协作全流程笔记',
+            'sharing/Windows Docker 学习笔记',
+          ],
+        },
       ],
     },
   ],

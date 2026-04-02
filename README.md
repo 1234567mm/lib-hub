@@ -1,42 +1,24 @@
-<<<<<<< HEAD
-# Website
+<div align="center">
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+<div style="padding:8px;border-radius:100%;background:white;width:200px;height:200px">
+<img src="./img/logo.png" width=200 height=200>
+</div>
 
-### Installation
 
-```
-$ yarn
-```
+# 山药泥酸奶的技术窝
 
-### Local Development
 
-```
-$ yarn start
-```
+![GitHub repository stars badge for lib-hub project](https://img.shields.io/github/stars/1234567mm/lib-hub?style=social)
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-=======
-# lib-hub
-personal-website
+</div>
 
 ---
+# 概述
+这是一个基于docusaurus框架的个人博客项目，
+
+
+
+
 # 许可证
 本项目采用[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)许可证
  - 个人使用、学习、研究、非商业项目：不需要署名，不需要申请
