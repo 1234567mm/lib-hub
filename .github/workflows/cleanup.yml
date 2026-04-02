@@ -4,19 +4,103 @@ permissions:
   actions: write
   contents: read
 
+# 触发：当仓库中的 workflow 文件被创建或修改时触发（新增/修改 .github/workflows 下文件）
 on:
-  workflow_run:
-    workflows: ["Deploy to GitHub Pages"]
-    types: [completed]
+  push:
+    paths:
+      - '.github/workflows/**'
 
 jobs:
-  cleanup:
+  cleanup-on-new-workflow:
+    name: Cleanup runs for older workflows when new workflow added/modified
     runs-on: ubuntu-latest
     steps:
-      - name: Delete old workflow runs
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine changed workflow files
+        id: changed
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --prune --depth=1 origin ${{ github.ref }} || true
+          before=${{ github.event.before }}
+          after=${{ github.sha }}
+          if [ "$before" = "0000000000000000000000000000000000000000" ]; then
+            # initial commit for the branch, compare to empty tree
+            changed=$(git ls-tree -r --name-only $after | grep '^.github/workflows/' || true)
+          else
+            changed=$(git diff --name-only $before $after | grep '^.github/workflows/' || true)
+          fi
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$changed" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Exit if no workflow files changed
+        if: steps.changed.outputs.changed_files == ''
+        run: |
+          echo "No workflow files changed; exiting."
+
+      - name: Build delete pattern for older workflows
+        id: pattern
+        run: |
+          set -euo pipefail
+          # list all workflow filenames (basename)
+          all_files=$(ls .github/workflows || true)
+          # changed list from previous step
+          changed_raw="${{ steps.changed.outputs.changed_files }}"
+          # build exclusion set
+          pattern_parts=()
+          for f in $all_files; do
+            skip=false
+            for c in $changed_raw; do
+              if [ "$c" = ".github/workflows/$f" ] || [ "$c" = "$f" ]; then
+                skip=true
+                break
+              fi
+            done
+            if [ "$skip" = false ]; then
+              # use filename (matching by filename or name)
+              pattern_parts+=("$f")
+            fi
+          done
+          if [ ${#pattern_parts[@]} -eq 0 ]; then
+            echo "no_targets=true" >> $GITHUB_OUTPUT
+            echo "No older workflows to target." >&2
+            exit 0
+          fi
+          # join with |
+          IFS='|' ; pattern="${pattern_parts[*]}" ; unset IFS
+          echo "delete_pattern=$pattern" >> $GITHUB_OUTPUT
+
+      - name: Read retention config from new workflow(s)
+        id: cfg
+        run: |
+          set -euo pipefail
+          changed_raw="${{ steps.changed.outputs.changed_files }}"
+          # defaults
+          keep_min=3
+          retain_days=0
+          for c in $changed_raw; do
+            file="${c}"
+            if [ -f "$file" ]; then
+              # try to extract YAML keys under a top-level 'cleanup' mapping or commented hints
+              k=$(grep -E '^[[:space:]]*keep_minimum_runs:[[:space:]]*[0-9]+' -m1 "$file" | sed -E 's/.*keep_minimum_runs:[[:space:]]*([0-9]+).*/\1/') || true
+              d=$(grep -E '^[[:space:]]*retain_days:[[:space:]]*[0-9]+' -m1 "$file" | sed -E 's/.*retain_days:[[:space:]]*([0-9]+).*/\1/') || true
+              if [ -n "$k" ]; then keep_min=$k; fi
+              if [ -n "$d" ]; then retain_days=$d; fi
+            fi
+          done
+          echo "keep_minimum_runs=$keep_min" >> $GITHUB_OUTPUT
+          echo "retain_days=$retain_days" >> $GITHUB_OUTPUT
+
+      - name: Delete old workflow runs (target older workflows)
+        if: steps.pattern.outputs.no_targets != 'true'
         uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
-          retain_days: 7
-          keep_minimum_runs: 3
+          # retain_days=0 will consider all runs (older than 0 days) so action will remove oldest
+          retain_days: ${{ steps.cfg.outputs.retain_days }}
+          keep_minimum_runs: ${{ steps.cfg.outputs.keep_minimum_runs }}
+          delete_workflow_pattern: ${{ steps.pattern.outputs.delete_pattern }}
+          dry_run: false
