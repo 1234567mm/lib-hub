@@ -214,7 +214,7 @@ git add main.py
 git commit -m "初始化项目"
 ```
 
-这里的提交信息建议写清楚改动内容(<span style="color:orange;">是开发流程全过程可追踪的依据)</span>
+这里的提交信息建议写清楚改动内容**是开发流程全过程可追踪的依据**
  
 例如：
 
@@ -251,7 +251,7 @@ d4e5f6g 新增登录功能
 
 `.gitignore` 用来告诉 Git：
 
-> 哪些文件不要提交到仓库<span style="color:red;">（比如个人配置信息，敏感文件）</span>
+> 哪些文件不要提交到仓库<span style={{color:red}}>（比如个人配置信息，敏感文件）</span>
 
 ---
 
@@ -311,7 +311,7 @@ tmp/
 
 ---
 
-# 十、写一个 README.md（项目说明文件）
+# 十、写一个README.md（项目说明文件）
 
 项目根目录建议创建：
 
@@ -337,14 +337,14 @@ README.md
 ```bash
 python main.py
 ```
+```
+
 
 > README 是别人打开你项目后最先看到的说明文档。
 
 ---
 
 ## 11. 把本地项目上传到 GitHub（完整流程）
-
-
 
 
 ### 1️⃣ 创建 GitHub 仓库
@@ -381,7 +381,7 @@ git remote add origin https://github.com/yourusername/my-project.git
 git remote -v
 ```
 
-<span style="font-size:24px;color: black;">**附：**</span>
+附：
 
 你可以把 Git 的关系想成这样：
 
@@ -429,7 +429,7 @@ git push -u origin main
 - 如果你的默认分支是 `master`，请替换 `main` → `master`。
 
 
-<span style="font-size:24px;color: red;">初级学到这停</span>
+## 初级学到这停!
   
 只要掌握了以下五个命令，后边就不用学了，后边是管理大型项目的，直接跳过
 
