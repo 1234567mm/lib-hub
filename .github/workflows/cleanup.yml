@@ -1,5 +1,9 @@
 name: Cleanup old workflow runs
 
+permissions:
+  actions: write
+  contents: read
+
 on:
   workflow_run:
     workflows: ["Deploy to GitHub Pages"]
