@@ -251,7 +251,7 @@ d4e5f6g 新增登录功能
 
 `.gitignore` 用来告诉 Git：
 
-> 哪些文件不要提交到仓库<span style={{color:red}}>（比如个人配置信息，敏感文件）</span>
+-> 哪些文件不要提交到仓库<span style={{color: 'red'}}>（比如个人配置信息，敏感文件）</span>
 
 ---
 
