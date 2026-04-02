@@ -7,14 +7,15 @@
 1. 下载 Docker Desktop（Windows 版本）并安装
 2. 安装完成后打开 Docker Desktop，确保 Docker Engine 已启动
 3. 打开终端（PowerShell 或 CMD），检查版本：
-   ```bash
-   docker version
-   ```
+```bash
+docker version
+```
 
-	  输出类似：
-	```bash
-	Docker version 29.3.1, build c2be9cc
-	```
+输出类似：
+
+```bash
+Docker version 29.3.1, build c2be9cc
+```
 
 ---
 
@@ -56,10 +57,12 @@
    ls
    ```
 4. 退出容器：
-   ```bash
-   exit
-   ```
-| 容器有独立的 Linux 文件系统，默认路径 `/usr/share/nginx/html` 用于网页文件。
+
+```bash
+exit
+```
+
+容器有独立的 Linux 文件系统，默认路径 `/usr/share/nginx/html` 用于网页文件。
 
 ---
 
@@ -74,21 +77,25 @@
    <h1>Hello from my local folder</h1>
    ```
 3. 在 Docker Desktop 中共享 D 盘：
-- 打开 Docker Desktop → Settings → Resources → File Sharing → 勾选 D 盘 → 应用并重启 Docker
-1. 删除旧容器：
-   ```bash
-   docker rm -f mynginx
-   ```
-2. 启动带挂载的 Nginx 容器：
-   ```bash
-   docker run -d -p 8080:80 --name mynginx -v /d/docker-nginx-demo:/usr/share/nginx/html:ro nginx
-   ```
-3. 浏览器访问：
-   ```bash
-   docker run -d -p 8080:80 --name mynginx -v /d/docker-nginx-demo:/usr/share/nginx/html:ro nginx
-   ```
-   
+
+   打开 Docker Desktop → Settings → Resources → File Sharing → 勾选 D 盘 → 应用并重启 Docker
+
+4. 删除旧容器：
+
+```bash
+docker rm -f mynginx
+```
+
+5. 启动带挂载的 Nginx 容器：
+
+```bash
+docker run -d -p 8080:80 --name mynginx -v /d/docker-nginx-demo:/usr/share/nginx/html:ro nginx
+```
+
+6. 浏览器访问：在浏览器中打开 `http://localhost:8080`
+
 关键点：
+
 - `/d/docker-nginx-demo` 是 Linux 容器可识别的 Windows 路径
 - `:ro` 表示只读挂载，防止容器覆盖本地文件
 - 修改本地文件，容器里网页会实时更新
