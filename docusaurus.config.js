@@ -82,8 +82,7 @@ const darkCodeTheme = themes.dracula;
             label: '干货分享',
           },
           {
-            type: 'doc',
-            docId: 'industry/intro',
+            href: '/industry-news',
             position: 'left',
             label: '行业动态',
           },
@@ -111,7 +110,7 @@ const darkCodeTheme = themes.dracula;
               { label: 'STM32知识库', to: '/docs/stm32/intro' },
               { label: 'ESP32知识库', to: '/docs/esp32/esp32-intro' },
               { label: '干货分享', to: '/docs/sharing/intro' },
-              { label: '行业动态', to: '/docs/industry/intro' },
+              { label: '行业动态', to: '/industry-news' },
               { label: '科研团队', to: '/docs/team/intro' },
             ],
           },
