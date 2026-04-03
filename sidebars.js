@@ -28,6 +28,14 @@ const sidebars = {
           label: '项目实战',
           items: ['stm32/stm32-projects/intro'],
         },
+        {
+          type: 'category',
+          label: '学习笔记',
+          items: [
+            'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
+            'stm32/STM32知识库/STM32 学习笔记（二）存储器、电源与时钟体系',
+          ],
+        },
       ],
     },
   ],
