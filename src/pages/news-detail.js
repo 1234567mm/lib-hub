@@ -1,6 +1,6 @@
 import React from 'react';
+import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
-import { useLocation } from '@docusaurus/router';
 import styles from './news-detail.module.css';
 
 const newsItems = [
@@ -181,8 +181,7 @@ RP2350 定价依然亲民，单芯片售价约 1 美元，预计将在 2025 年�
 ];
 
 export default function NewsDetail() {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
   const newsId = params.get('id');
   const newsItem = newsItems.find(item => item.id === newsId);
 
@@ -193,9 +192,9 @@ export default function NewsDetail() {
           <div className={styles.notFound}>
             <h1>文章不存在</h1>
             <p>您访问的文章可能已被删除或移动</p>
-            <a href="/industry-news" className={styles.backButton}>
+            <Link to="/industry-news" className={styles.backButton}>
               返回列表
-            </a>
+            </Link>
           </div>
         </main>
       </Layout>
@@ -256,9 +255,9 @@ export default function NewsDetail() {
           </div>
 
           <footer className={styles.footer}>
-            <a href="/industry-news" className={styles.backButton}>
+            <Link to="/industry-news" className={styles.backButton}>
               ← 返回行业动态
-            </a>
+            </Link>
           </footer>
         </article>
       </main>

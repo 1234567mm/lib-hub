@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import IndustryNewsCard from '@site/src/components/IndustryNewsCard';
 import styles from './industry-news.module.css';
 
-const newsItems = [
+const initialNewsItems = [
   {
     id: 'stm32h5',
     title: 'STM32H5系列发布：高性能与安全特性再升级',
@@ -60,14 +61,99 @@ const newsItems = [
   },
 ];
 
-function TrendingSidebar() {
-  const trendingItems = [
-    { title: 'STM32H5系列发布', views: '12.5k' },
-    { title: 'ESP32-C6 Wi-Fi 6支持', views: '10.2k' },
-    { title: 'Matter 1.3规范发布', views: '8.8k' },
-    { title: 'NXP i.MX RT 1180', views: '7.3k' },
-    { title: 'RP2350芯片发布', views: '6.1k' },
-  ];
+const STORAGE_KEY = 'industry_news_views';
+const UPDATE_INTERVAL = 60 * 60 * 1000; // 1小时
+
+function getStoredViews() {
+  if (typeof window === 'undefined') return {};
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      // 检查是否过期（超过1小时）
+      if (Date.now() - data.timestamp < UPDATE_INTERVAL) {
+        return data.views;
+      }
+    }
+  } catch (e) {}
+  return {};
+}
+
+function saveViews(views) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      views,
+      timestamp: Date.now()
+    }));
+  } catch (e) {}
+}
+
+// 模拟随机热度增长
+function simulateViews(newsItems, currentViews) {
+  const updatedViews = { ...currentViews };
+  newsItems.forEach(item => {
+    const baseViews = currentViews[item.id] || Math.floor(Math.random() * 500) + 100;
+    // 每次模拟增加0-30随机阅读量
+    const increment = Math.floor(Math.random() * 30);
+    updatedViews[item.id] = baseViews + increment;
+  });
+  return updatedViews;
+}
+
+function formatViews(num) {
+  if (num >= 10000) {
+    return (num / 10000).toFixed(1) + 'w';
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'k';
+  }
+  return num.toString();
+}
+
+function TrendingSidebar({ newsItems }) {
+  const [views, setViews] = useState({});
+  const [lastUpdate, setLastUpdate] = useState(null);
+
+  // 初始化阅读量
+  useEffect(() => {
+    const storedViews = getStoredViews();
+    if (Object.keys(storedViews).length === 0) {
+      // 初始化随机阅读量
+      const initialViews = {};
+      newsItems.forEach(item => {
+        initialViews[item.id] = Math.floor(Math.random() * 500) + 100;
+      });
+      setViews(initialViews);
+      saveViews(initialViews);
+    } else {
+      setViews(storedViews);
+    }
+    setLastUpdate(new Date());
+  }, [newsItems]);
+
+  // 定时更新热度
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setViews(currentViews => {
+        const updated = simulateViews(newsItems, currentViews);
+        saveViews(updated);
+        setLastUpdate(new Date());
+        return updated;
+      });
+    }, UPDATE_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [newsItems]);
+
+  // 根据阅读量排序
+  const trendingItems = newsItems
+    .map(item => ({
+      ...item,
+      views: views[item.id] || 0
+    }))
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 5);
 
   return (
     <aside className={styles.sidebar}>
@@ -75,13 +161,20 @@ function TrendingSidebar() {
         <span className={styles.sidebarIcon}>🔥</span>
         <h3 className={styles.sidebarTitle}>热度排行</h3>
       </div>
+      {lastUpdate && (
+        <div className={styles.updateTime}>
+          更新于 {lastUpdate.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
+        </div>
+      )}
       <ul className={styles.trendingList}>
         {trendingItems.map((item, index) => (
-          <li key={index} className={styles.trendingItem}>
+          <li key={item.id} className={styles.trendingItem}>
             <span className={`${styles.trendingRank} ${styles[`rank${index + 1}`]}`}>{index + 1}</span>
             <div className={styles.trendingContent}>
-              <span className={styles.trendingTitle}>{item.title}</span>
-              <span className={styles.trendingViews}>{item.views} 阅读</span>
+              <Link to={`/news-detail?id=${item.id}`} className={styles.trendingTitleLink}>
+                <span className={styles.trendingTitle}>{item.title}</span>
+              </Link>
+              <span className={styles.trendingViews}>{formatViews(item.views)} 阅读</span>
             </div>
           </li>
         ))}
@@ -92,7 +185,7 @@ function TrendingSidebar() {
 
 function LatestNewsCard({ item }) {
   return (
-    <a href={item.to} className={styles.latestCard}>
+    <Link to={item.to} className={styles.latestCard}>
       <div className={styles.latestImageWrapper}>
         <img src={item.image} alt={item.title} className={styles.latestImage} />
         <span className={styles.latestBadge}>最新动态</span>
@@ -109,13 +202,13 @@ function LatestNewsCard({ item }) {
           <span className={styles.latestDate}>📅 {item.date}</span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
 export default function IndustryNews() {
-  const latestNews = newsItems[0];
-  const otherNews = newsItems.slice(1);
+  const latestNews = initialNewsItems[0];
+  const otherNews = initialNewsItems.slice(1);
 
   return (
     <Layout title="行业动态" description="追踪嵌入式与智能硬件行业的最新资讯、技术趋势与市场动态">
@@ -133,15 +226,15 @@ export default function IndustryNews() {
               <section className={styles.newsGridSection}>
                 <h2 className={styles.sectionTitle}>更多资讯</h2>
                 <div className={styles.newsGrid}>
-                  {otherNews.map((item, index) => (
-                    <IndustryNewsCard key={index} {...item} />
+                  {otherNews.map((item) => (
+                    <IndustryNewsCard key={item.id} {...item} />
                   ))}
                 </div>
               </section>
             </div>
 
             <aside className={styles.sidebarWrapper}>
-              <TrendingSidebar />
+              <TrendingSidebar newsItems={initialNewsItems} />
             </aside>
           </div>
         </div>
