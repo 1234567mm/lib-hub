@@ -57,6 +57,7 @@ const sidebars = {
       label: '干货分享',
       collapsed: false,
       items: [
+        'sharing/intro',
         {
           type: 'category',
           label: '笔记文章',
