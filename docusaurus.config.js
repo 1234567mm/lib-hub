@@ -28,7 +28,7 @@ const darkCodeTheme = themes.dracula;
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/1234567mm/lib-hub/edit/main/',
+          editUrl: undefined,
         },
         blog: {
           showReadingTime: true,
