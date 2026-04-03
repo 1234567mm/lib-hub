@@ -9,33 +9,31 @@ const sidebars = {
   ],
   stm32: [
     {
-      type: 'category',
+      type: 'doc',
+      id: 'stm32/intro',
       label: 'STM32知识库',
-      collapsed: false,
+    },
+    {
+      type: 'category',
+      label: '基础知识',
+      items: ['stm32/stm32-basics/intro'],
+    },
+    {
+      type: 'category',
+      label: '外设驱动',
+      items: ['stm32/stm32-peripherals/intro'],
+    },
+    {
+      type: 'category',
+      label: '项目实战',
+      items: ['stm32/stm32-projects/intro'],
+    },
+    {
+      type: 'category',
+      label: '学习笔记',
       items: [
-        {
-          type: 'category',
-          label: '基础知识',
-          items: ['stm32/stm32-basics/intro'],
-        },
-        {
-          type: 'category',
-          label: '外设驱动',
-          items: ['stm32/stm32-peripherals/intro'],
-        },
-        {
-          type: 'category',
-          label: '项目实战',
-          items: ['stm32/stm32-projects/intro'],
-        },
-        {
-          type: 'category',
-          label: '学习笔记',
-          items: [
-            'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
-            'stm32/STM32知识库/STM32 学习笔记（二）存储器、电源与时钟体系',
-          ],
-        },
+        'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
+        'stm32/STM32知识库/STM32 学习笔记（二）存储器、电源与时钟体系',
       ],
     },
   ],
