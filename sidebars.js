@@ -59,25 +59,10 @@ const sidebars = {
       items: [
         {
           type: 'category',
-          label: '工具推荐',
-          items: ['sharing/tools/intro'],
-        },
-        {
-          type: 'category',
-          label: '经验技巧',
-          items: ['sharing/tips/intro'],
-        },
-        {
-          type: 'category',
-          label: '行业洞察',
-          items: ['sharing/insights/intro'],
-        },
-        {
-          type: 'category',
           label: '笔记文章',
           items: [
-            'sharing/Git本地开发与GitHub协作全流程笔记',
-            'sharing/Windows Docker 学习笔记',
+            'sharing/git-local-github',
+            'sharing/windows-docker',
           ],
         },
       ],
