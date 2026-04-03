@@ -1,3 +1,8 @@
+---
+id: git-local-github
+title: "Git 本地项目管理与上传 GitHub 全流程开发笔记"
+---
+
 # Git 本地项目管理与上传 GitHub 全流程开发笔记
 
 > 适用对象：
