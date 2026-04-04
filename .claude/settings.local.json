@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)",
       "Bash(rm -rf .docusaurus)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(powershell -Command \"Get-Content 'docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md' | Select-String -Pattern 'img|image:|png|jpg' -Context 1,1\")"
     ]
   }
 }
