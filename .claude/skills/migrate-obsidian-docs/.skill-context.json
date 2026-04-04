@@ -1,0 +1,48 @@
+{
+  "lastRun": "2026-04-04T10:30:00Z",
+  "description": "记录 skill 执行后的网站上下文状态，用于下次增量更新",
+  "sidebarDocIds": [
+    "stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿",
+    "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系"
+  ],
+  "docIdToFilePath": {
+    "stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿": "docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿.md",
+    "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系": "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md"
+  },
+  "crossLinks": {
+    "docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿.md": [
+      "/docs/stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系"
+    ],
+    "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md": [
+      "/docs/stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿"
+    ]
+  },
+  "knownIssues": [
+    {
+      "issue": "文件名含半角括号",
+      "files": ["docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿.md"],
+      "status": "已通过 slug 修复"
+    },
+    {
+      "issue": "frontmatter 前有内容",
+      "files": ["docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md"],
+      "status": "已修复，frontmatter 已移至文件开头"
+    }
+  ],
+  "sidebarStructure": {
+    "stm32": {
+      "基础知识": ["stm32/stm32-basics/intro"],
+      "外设驱动": ["stm32/stm32-peripherals/intro"],
+      "项目实战": ["stm32/stm32-projects/intro"],
+      "学习笔记": [
+        "stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿",
+        "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系"
+      ]
+    },
+    "esp32": {
+      "ESP32知识库": ["esp32/esp32-intro"],
+      "项目实战": ["esp32/esp32-smart-car", "esp32/esp32-gimbal"],
+      "电赛经验": ["esp32/esp32-competition-guide"]
+    }
+  }
+}
