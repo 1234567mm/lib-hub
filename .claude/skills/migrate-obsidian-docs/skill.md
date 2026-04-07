@@ -2,335 +2,190 @@
 
 将 Obsidian 风格的笔记文档迁移至 Docusaurus 项目，自动完成格式规范化与侧边栏接入。
 
+**核心功能**：当用户新增笔记文档时，自动完成 frontmatter 配置、侧边栏接入、交叉链接更新。
+
 ## 触发条件
 
 当项目中存在以下情况时使用：
-- 缺少 Docusaurus frontmatter 的 `.md` 文件
-- 包含 Obsidian 双链语法 `[[...]]` 的文件
-- MDX 编译错误，如 `Unexpected closing tag`、标签不匹配、未闭合的 `<img>` 标签、`ReferenceError: Byte is not defined` 等
 - 用户新增了笔记文档，需要在网页上正确显示
 - 用户删除了本地笔记文件，需要同步删除 sidebar 中的失效引用
 - 用户重命名或移动了笔记文件，需要同步更新 sidebar 中的 docId
-- 用户修改了已有文档的内容
-- 用户上传了新图片到错误位置（如 `docs/` 下的任何目录）
-- 用户明确要求"迁移笔记"或"上传了笔记文档"
 - **文件名包含特殊字符导致网页无法正常显示**（如半角括号 `(`, `)` 或全角括号 `（`, `）`）
-- **笔记中的图片在 GitHub Pages 部署后无法正常显示**
+- **MDX 编译错误**，如 LaTeX 公式 `$$...$$` 中的括号被误解析为 JSX
+- 笔记之间的交叉链接需要更新（新增笔记时连接上篇和下篇）
 
-**重要**：本 skill 的处理规则适用于**任何文件操作**，不管是新增、修改还是删除文档或图片，都遵循统一的规范化流程。
+## 核心执行步骤
 
-## 目录结构规范
+### 第一步：检测新增文件
 
-### 内容目录（文档放这里）
+扫描 `docs/` 目录，找出**新增的** `.md` 文件（对比 context 中记录的 `sidebarDocIds`）。
 
-所有文档放在 `docs/` 目录下，对应侧边栏的分类结构：
+### 第二步：处理新增笔记的规范化
 
-| 文档路径 | 侧边栏分类 | 接入位置 |
-|---|---|---|
-| `docs/stm32/STM32知识库/` | `stm32` | STM32知识库 > 学习笔记 |
-| `docs/stm32/stm32-basics/` | `stm32` | STM32知识库 > 基础知识 |
-| `docs/stm32/stm32-peripherals/` | `stm32` | STM32知识库 > 外设驱动 |
-| `docs/stm32/stm32-projects/` | `stm32` | STM32知识库 > 项目实战 |
-| `docs/esp32/` | `esp32` | ESP32知识库 |
-| `docs/sharing/` | `sharing` | 干货分享 |
-| `docs/industry/` | `industry` | 行业动态 |
-| `docs/team/` | `team` | 科研团队 |
+对每个新增文件执行：
 
-**⚠️ 重要**：`docs/` 目录下**只允许放 `.md` 文档**，不允许放图片或其他资源文件。
+#### 2.1 文件名处理（重要！）
 
-### 静态资源目录（图片放这里）
+**文件名含括号会导致 Docusaurus 无法识别为文档！**
 
-**图片等静态资源必须放在 `static/` 目录下**，构建时会自动复制到 `build/` 输出目录：
+| 情况 | 处理方式 |
+|---|---|
+| 含半角括号 `(`, `)` | 重命名文件，将 `(` 替换为 `-`，`)` 去掉或替换为 `-` |
+| 含全角括号 `（`, `）` | 重命名文件，替换为 `-` |
+| 其他特殊字符 `#`, `?`, `%` | 替换为 `-` |
 
-| 源路径 | 构建后路径 | 用途 |
-|---|---|---|
-| `static/img/` | `build/img/` | 全站通用图片 |
-| `static/img/stm32/` | `build/img/stm32/` | STM32 相关图片 |
-| `static/img/esp32/` | `build/img/esp32/` | ESP32 相关图片 |
-| `static/img/logo.svg` | `build/img/logo.svg` | 网站 Logo |
-| `static/img/favicon.ico` | `build/img/favicon.ico` | 网站图标 |
+**正确示例**：
+- `笔记(三)工程1-点亮LED.md` → `笔记三-工程1-点亮LED.md`
+- `STM32学习笔记(一)：那些你该知道的事儿.md` → 保留原名（因前面已处理）
 
-### 目录禁则
+#### 2.2 添加 frontmatter
 
-| 禁则 | 错误示例 | 后果 |
-|---|---|---|
-| 文档目录放图片 | `docs/stm32/img/25.png` | 图片不会被复制到构建输出，GitHub Pages 无法显示 |
-| 文档目录放其他资源 | `docs/xxx/data.json` | 不会被复制到构建输出 |
-| 使用 HTML img 标签 | `<img src="/img/xxx.png">` | 不会自动添加 baseUrl，GitHub Pages 无法正常显示 |
+在文件开头添加（frontmatter 的 `---` 必须在第1行）：
 
-## 执行步骤
-
-### 第一步：扫描（前期审查优化）
-
-在 `docs/` 目录下递归搜索同时满足以下任一条件的 `.md` 文件：
-- 文件内容开头不是 `---`（frontmatter 前有空行或空白字符，或缺少 frontmatter）
-- 文件内容包含 `[[` 和 `]]`（Obsidian 双链语法）
-- 文件内容包含非自闭合的 `<img` 标签
-- 文件包含会导致 MDX 编译失败的 LaTeX 或其他特殊语法
-- **文件名包含特殊字符**（见下方"文件名禁则"）
-
-#### 文件名禁则（必须修复，否则网页无法正常显示）
-
-以下字符出现在文件名中会导致 Docusaurus URL 路由解析异常，**必须替换或添加 slug**：
-
-| 危险字符 | 示例 | 后果 | 修复方案 |
-|---|---|---|---|
-| 半角括号 `(`, `)` | `STM32学习笔记(一).md` | URL 路由解析失败，页面显示"找不到页面" | 添加 `slug: STM32学习笔记一-xxx` |
-| 全角括号 `（`, `）` | `STM32学习笔记（二）.md` | 可能导致构建警告或链接失效 | 替换为 `-` 或直接移除，如 `STM32学习笔记二-xxx` |
-| frontmatter 前有内容 | 开头有"上一页"等链接 | frontmatter 无法被解析，页面内容异常 | 将 frontmatter 移到文件第1行 |
-| 井号 `#`、问号 `?`、百分号 `%` | - | URL 编码问题 | 替换为 `-` |
-
-**文件名处理优先级**：
-1. **首选方案**：重命名文件，将特殊字符替换为 `-`
-2. **备选方案**：保留原文件名，但在 frontmatter 中添加 `slug` 指定干净的 URL 路径
-
-#### frontmatter 解析要求
-
-- `---` 必须出现在文件**第1行**，前面不得有任何空行、空白字符或内容
-- frontmatter 前面如果有"上一页/下一页"等导航链接，**必须移到 frontmatter 之后**
-- 正确格式：
-  ```markdown
-  ---
-  title: 标题
-  ---
-  > 上一页链接...
-
-  # 正文内容
-  ```
-
-**同时**，检查 `sidebars.js` 中引用的每个 docId 是否在本地有对应文件，发现以下情况也要处理：
-- sidebar 中引用的文件本地已删除 → 记录为待删除
-- 本地新增文件尚未写入 sidebar → 记录为待新增
-- 本地文件被重命名/移动，旧路径在 sidebar 中 → 记录为待更新
-
-### 第二步：识别板块
-
-根据文件路径判断所属分类，参考上方的目录结构规范。
-
-对于 sidebar 中的失效引用，根据被删除文件原来的 docId 路径推断它属于哪个分类，在对应位置执行删除。
-
-### 第三步（上）：规范化格式
-
-对每个扫描到的文件：
-
-1. **提取 title**：从首行 `# 标题` 中提取，去除 `#` 和前后空格
-2. **添加 frontmatter**：
-   ```yaml
-   ---
-   title: {提取的标题}
-   authors: 山药泥酸奶
-   tags: [{根据路径推断的标签，如 STM32、ESP32 等}]
-   date: {当前日期，格式 2024-MM-DD}
-   slug: {如果文件名包含特殊字符，添加此项指定干净URL}
-   ---
-   ```
-3. **修复 Obsidian 双链**：将 `[[文档名]]` 替换为标准 Markdown 链接
-4. **修复 Obsidian vault 链接**：将 `obsidian://open?vault=...` 格式的链接转换为标准 URL
-5. **修复 MDX 图片标签**：将非自闭合的 `<img>` 标签改为自闭合形式 `<img ... />`
-6. **修复 MDX 不兼容的 LaTeX**：将 `$$...$$` 中含 `\text{...}` 的 LaTeX 公式改为纯文本或去掉 `$$`，因为 Docusaurus 默认不支持 LaTeX 渲染
-
-### 第三步（下）：规范化图片引用（关键步骤）
-
-**图片引用方式直接决定图片是否能在 GitHub Pages 上正常显示。**
-
-#### 核心问题：HTML `<img>` vs Markdown `![alt](path)`
-
-Docusaurus 对两种图片引用方式的处理截然不同：
-
-| 引用方式 | 示例 | baseUrl 前缀 | 是否可用 |
-|---|---|---|---|
-| HTML `<img>` 标签 | `<img src="/img/stm32/25.png">` | **不会**自动添加 | ❌ 本地可显示，GitHub Pages 不可显示 |
-| Markdown 图片语法 | `![alt](/img/stm32/25.png)` | **会**自动添加 | ✅ 两者都正常显示 |
-
-**原因**：Docusaurus 的 Markdown 编译器（MDX）会自动为 Markdown 图片语法添加 baseUrl 前缀，但不会处理 HTML `<img>` 标签中的路径。
-
-#### 图片存放规则（强制要求）
-
-| 存放位置 | 是否允许 | 说明 |
-|---|---|---|
-| `static/img/` 及子目录 | ✅ 允许 | 构建时会复制到 `build/img/` |
-| `docs/` 任何位置 | ❌ 不允许 | 不会复制到构建输出，GitHub Pages 无法显示 |
-
-**任何图片都必须放在 `static/` 目录下**，不管是通过什么方式、在什么时间进入 `docs/` 目录的，都必须迁移到 `static/` 目录。
-
-#### 正确操作流程
-
-**第一步：扫描所有非法图片**
-
-递归搜索 `docs/` 目录下的所有图片文件（如 `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.webp`）。
-
-**第二步：自动迁移图片到 `static/` 目录**
-
-如果发现 `docs/` 下有图片文件，按以下规则迁移：
-
-1. **分析图片用途**：根据所属文档的分类，确定目标目录
-   - 文档在 `docs/stm32/` 下 → `static/img/stm32/`
-   - 文档在 `docs/esp32/` 下 → `static/img/esp32/`
-   - 其他情况 → `static/img/misc/`
-
-2. **创建目标目录（如不存在）**：
-   ```bash
-   mkdir -p static/img/{分类}
-   ```
-
-3. **复制图片到正确位置**：
-   ```bash
-   cp docs/stm32/img/*.png static/img/stm32/
-   ```
-
-4. **删除原位置图片**：
-   ```bash
-   rm docs/stm32/img/*.png
-   ```
-
-5. **删除空文件夹**：如果原图片目录变为空，删除该目录：
-   ```bash
-   rmdir docs/stm32/img/
-   ```
-
-6. **更新文档中的图片引用路径**（如果有的话）
-
-**第三步：使用 Markdown 图片语法**
-
-```markdown
-<!-- ❌ 错误：HTML img 标签，GitHub Pages 上无法显示 -->
-<img src="/img/stm32/25.png" alt="STM32总线架构图" width="600" />
-
-<!-- ✅ 正确：Markdown 图片语法 -->
-![STM32总线架构图](/img/stm32/25.png)
+```yaml
+---
+title: {从文件H1提取的标题}
+authors: 山药泥酸奶
+tags: [{根据路径推断，如 STM32、ESP32、嵌入式等}]
+date: {当前日期，格式 2026-MM-DD}
+slug: {如果文件名含特殊字符，添加此项指定干净URL}
+---
 ```
 
-**第四步：路径规则**
+#### 2.3 检查并修复 MDX 编译问题
 
-图片路径以 `/` 开头（相对于网站根目录），不需要包含 `static/` 或 baseUrl：
-- 图片位于 `static/img/stm32/25.png`
-- 引用路径写 `/img/stm32/25.png`
-- Docusaurus 构建时会自动转换为 `/lib-hub/img/stm32/25.png`（带 baseUrl）
+**LaTeX 公式问题（最常见报错）**：
+- `$$ T = \frac{(PSC + 1) \times (ARR + 1)}{Clk} $$` 会因括号导致 MDX 解析失败
+- **修复**：将 `$$...$$` 中的公式改为纯文本，如 `T = (PSC + 1) × (ARR + 1) / Clk`
 
-#### 排查图片不显示的思路
+**其他需修复的内容**：
+- Obsidian 双链 `[[文档名]]` → 标准 Markdown 链接
+- HTML `<img>` 标签 → Markdown `![alt](path)` 语法
+- frontmatter 前有导航链接 → 移到 frontmatter 之后
 
-1. **确认图片在 `static/` 目录**：检查 `static/img/xxx/` 下是否有对应图片
-2. **确认使用 Markdown 语法**：检查文档中是否使用 `![alt](path)` 而不是 `<img src="path">`
-3. **确认路径正确**：路径应为 `/img/...`（以 `/` 开头），不是 `../img/...` 或 `/static/img/...`
-4. **本地验证**：运行 `npm run build && npm run serve` 检查构建后图片是否在 `build/img/` 目录
+### 第三步：同步侧边栏配置
 
-### 第四步：同步侧边栏配置（关键步骤）
+#### 3.1 写入 sidebar
 
-**Docusaurus 的侧边栏不是从文件系统自动生成的，必须在 `sidebars.js` 中显式配置，文档才会显示侧边栏。**
+根据文件路径判断分类，追加到 `sidebars.js` 对应分类的 `items` 数组：
 
-#### 4.1 读取配置
-
-读取 `sidebars.js` 和 `docs/` 目录结构，比对两者的差异。
-
-#### 4.2 清理已删除文件的引用
-
-遍历 `sidebars.js` 中所有 docId（字符串形式的文件路径），检查本地是否存在对应文件：
-
-- 计算 docId 对应的本地路径：`docs/` + docId（将 `/` 替换为系统路径分隔符）+ `.md`
-- 如果文件不存在，从 sidebar 中删除该条目
-- 如果被删除的文件所在的子分类（如"学习笔记"）变空，保留空分类（由 `collapsible: true` 控制）
-
-#### 4.3 新增文件写入侧边栏
-
-根据文件路径判断所属分类，追加到对应子分类的 `items` 数组中，格式：
 ```js
-'stm32/STM32知识库/新笔记文件名',  // ← 直接追加 docId 字符串
+// 路径示例：docs/stm32/STM32知识库/笔记三-工程1-点亮LED.md
+// 对应分类：stm32 > 学习笔记
+
+{
+  type: 'category',
+  label: '学习笔记',
+  items: [
+    // ... 已有项
+    'stm32/STM32知识库/笔记三-工程1-点亮LED',  // ← 追加新的 docId
+  ],
+},
 ```
 
-#### 4.4 重命名/移动文件时同步更新引用
+**docId 格式**：相对于 `docs/` 的路径，不带 `.md` 后缀
+- 正确：`stm32/STM32知识库/笔记三-工程1-点亮LED`
+- 错误：`stm32/STM32知识库/笔记三-工程1-点亮LED.md`（多了 .md）
 
-如果本地文件被重命名或移动：
-- 新路径生成新的 docId
-- 在 sidebar 中找到旧的 docId，替换为新的
-- **不要**删除旧的再用新的，要做 in-place 替换，保持 sidebar 中的顺序
+#### 3.2 更新交叉链接
 
-#### 4.5 docId 格式说明
+**新增笔记链接规则**：
+- **上篇链接**：在 frontmatter 之后添加 `> 上一篇：[xxx](/docs/stm32/STM32知识库/xxx)`
+- **下篇链接**：在文件末尾添加 `## 下一篇：[xxx](/docs/stm32/STM32知识库/xxx)`
 
-docId 是文件相对于 `docs/` 目录的路径（不带 `.md` 后缀），例如：
-- `docs/stm32/intro.md` → `stm32/intro`
-- `docs/stm32/STM32知识库/笔记.md` → `stm32/STM32知识库/笔记`
+**更新上篇笔记**：在上篇笔记末尾的 `## 下一篇` 指向新笔记。
 
-#### 4.6 更新笔记间的交叉链接
+### 第四步：更新 context
 
-当添加新笔记或重命名笔记时，检查并更新所有笔记中的"上一页/下一页"链接：
-- 找到所有引用旧 docId 的 Markdown 链接
-- 替换为新的 docId 或 slug URL
+将本次变更记录到 `.skill-context.json`：
+- `sidebarDocIds`：追加新的 docId
+- `docIdToFilePath`：新增 docId → 文件路径映射
+- `crossLinks`：新增链接关系
 
-## 常见 MDX 编译错误及修复
+## 常见错误及修复
 
-| 错误信息 | 原因 | 修复方法 |
-|---|---|---|
-| `Unexpected closing tag </p>` | `<img>` 标签未闭合 | 改为 `<img ... />` |
-| `ReferenceError: Byte is not defined` | LaTeX 中的 `\text{...}` 在 MDX 中被当作 JS 变量 | 将 `$$...$$` 中的 `\text{...}` 改为纯文本或去掉 `$$` |
-| `Unexpected closing tag </xxx>` | HTML 标签未正确闭合 | 检查并闭合对应标签 |
+### 错误：sidebar docId 不存在
 
-## 侧边栏不显示的排查思路
+```
+These sidebar document ids do not exist:
+- stm32/STM32知识库/xxx
+```
 
-1. **确认 docId 正确**：docId 必须是相对于 `docs/` 的路径，不能有前导 `/`，不能有 `.md` 后缀
-2. **确认 sidebar 数组中已列出**：文档必须作为 item 加入 `sidebars.js` 中对应的 sidebar 数组，只在 `docs/` 目录下存在是不够的
-3. **确认 frontmatter 中有 `sidebar` 字段**：由第四步配置自动保证
-4. **确认文件名不含特殊字符**：检查文件名是否包含 `(`, `)`, `（`, `）` 等字符
-5. **确认 frontmatter 在文件开头**：检查 `---` 是否在第1行，前面无任何内容
+**原因**：docId 与实际文件名不匹配
+- 文件名含括号 `笔记(三)` 而 docId 写 `笔记三`
+- 或文件名缺少 `.md` 扩展名
 
-## 上下文持久化（增量更新机制）
+**修复**：
+1. 检查 `docs/stm32/STM32知识库/` 目录下文件的实际名称
+2. sidebar 中的 docId 必须与实际文件名完全一致
 
-每次 skill 执行完毕后，将当前网站状态记录到上下文中，下次执行时直接使用，无需重新全量扫描。
+### 错误：MDX 编译失败
 
-### 记录文件位置
+```
+Could not parse expression with acorn
+Cause: Could not parse expression with acorn
+```
 
-`.claude/skills/migrate-obsidian-docs/.skill-context.json`（由 skill 内部维护，不暴露给用户）
+**原因**：`$$...$$` 中的括号 `()` 被 MDX 解析器误认为 JSX 表达式
+
+**修复**：将 LaTeX 公式改为纯文本
+
+### 错误：文件名含括号导致文档无法识别
+
+**原因**：Docusaurus 无法将含括号的文件名解析为有效的 docId
+
+**修复**：重命名文件，去除括号
+
+## 笔记交叉链接参考
+
+当前链接关系：
+- 笔记一 → 笔记二
+- 笔记二 → 笔记一、笔记三
+- 笔记三 → 笔记二、（下篇待创建）
+
+---
+
+## 上下文持久化
+
+### 记录文件
+
+`.claude/skills/migrate-obsidian-docs/.skill-context.json`
 
 ### 记录内容格式
 
 ```json
 {
-  "lastRun": "2026-04-04T10:30:00Z",
+  "lastRun": "2026-04-07T00:00:00Z",
   "sidebarDocIds": [
     "stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿",
-    "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系"
+    "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系",
+    "stm32/STM32知识库/笔记三-工程1-点亮LED"
   ],
   "docIdToFilePath": {
     "stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿": "docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿.md",
-    "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系": "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md"
+    "stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系": "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md",
+    "stm32/STM32知识库/笔记三-工程1-点亮LED": "docs/stm32/STM32知识库/笔记三-工程1-点亮LED.md"
   },
   "crossLinks": {
     "docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿.md": [
       "/docs/stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系"
+    ],
+    "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md": [
+      "/docs/stm32/STM32知识库/STM32学习笔记一-那些你该知道的事儿",
+      "/docs/stm32/STM32知识库/笔记三-工程1-点亮LED"
+    ],
+    "docs/stm32/STM32知识库/笔记三-工程1-点亮LED.md": [
+      "/docs/stm32/STM32知识库/STM32学习笔记二-存储器-电源与时钟体系"
     ]
-  },
-  "specialCharsInFilenames": []
+  }
 }
 ```
 
 ### 增量更新策略
 
-下次执行时：
-1. 读取 `docs/.skill-context.json`
-2. 比对 sidebar 数组和文件系统，识别新增/删除/重命名的文件
-3. **只处理变更项**：新增文件 → 添加 frontmatter + 写入 sidebar；删除文件 → 从 sidebar 移除；重命名 → 更新 sidebar 中的 docId
-4. 更新上下文文件
-
-## 注意事项
-
-### 文档处理规则
-- frontmatter 的 `title` 必须与文件内 H1 完全一致
-- `date` 使用当前日期
-- `tags` 根据文件路径推断，默认为 `[文档所在分类]`
-- 修复图片标签时，只改非自闭合的 `<img ...>` 为 `<img ... />`
-- 侧边栏配置是确保文档在网页上正确显示的关键步骤，不可省略
-- **同步是双向的**：本地文件删除 → sidebar 中删除对应引用；本地新增文件 → sidebar 中追加；本地重命名 → sidebar 中 in-place 更新
-- docId 是 sidebar 关联文件的唯一标识，修改文件位置后必须同步更新 sidebar 中的 docId
-- **文件名含特殊字符是导致页面"找不到"的常见原因**，优先处理
-- frontmatter 前不得有任何内容，包括导航链接，必须确保 `---` 在第1行
-
-### 图片处理规则（强制）
-- **图片必须放在 `static/` 目录下**，构建时才会被复制到 `build/` 目录
-- **`docs/` 目录下禁止存放任何图片**，不管是新建、上传还是修改，任何位置、任何时间进入 `docs/` 的图片都必须迁移到 `static/` 目录
-- **必须使用 Markdown 图片语法 `![alt](path)`**，不要使用 HTML `<img>` 标签（后者不会自动添加 baseUrl，GitHub Pages 上无法正常显示）
-- **图片路径以 `/` 开头**，例如 `/img/stm32/25.png`，不需要包含 `static/` 或 baseUrl
-- 迁移图片后如果原目录为空，必须删除空目录
-
-### 统一处理原则
-- **适用于所有文件操作**：不管是新增、修改还是删除文档或图片，都遵循本 skill 的规范化流程
-- 每次执行时都要检查是否有非法图片（`docs/` 下的图片）需要迁移
-- 每次执行时都要检查是否有新的 sidebar 同步需求
+每次执行时：
+1. 读取 context 中的 `sidebarDocIds`
+2. 扫描 `docs/stm32/STM32知识库/` 下的 `.md` 文件
+3. 识别新增文件 → 执行规范化 + 写入 sidebar + 更新交叉链接
+4. 识别被删除文件 → 从 sidebar 移除 + 更新 context
+5. 识别重命名文件 → 更新 sidebar docId + 更新 context

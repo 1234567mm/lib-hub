@@ -1,5 +1,5 @@
 ---
-title: STM32学习笔记(一)：那些你该知道的事儿
+title: 一、STM32基本介绍
 authors: 山药泥酸奶
 tags: [STM32, 嵌入式, ARM]
 date: 2024-10-01
