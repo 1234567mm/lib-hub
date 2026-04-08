@@ -27,43 +27,45 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-/* 左侧文档侧边栏固定 */
-.menu {
-  position: fixed !important;
-  left: 0 !important;
-  top: var(--ifm-navbar-height) !important;
-  width: var(--ifm-sidebar-width, 280px) !important;
-  height: calc(100vh - var(--ifm-navbar-height)) !important;
-  max-height: calc(100vh - var(--ifm-navbar-height)) !important;
-  overflow-y: auto !important;
-  z-index: var(--ifm-z-index-fixed) !important;
-}
+/* 左侧文档侧边栏固定 - 仅桌面端 */
+@media screen and (min-width: 997px) {
+  .menu {
+    position: fixed !important;
+    left: 0 !important;
+    top: var(--ifm-navbar-height) !important;
+    width: var(--ifm-sidebar-width, 280px) !important;
+    height: calc(100vh - var(--ifm-navbar-height)) !important;
+    max-height: calc(100vh - var(--ifm-navbar-height)) !important;
+    overflow-y: auto !important;
+    z-index: var(--ifm-z-index-fixed) !important;
+  }
 
-/* 右侧目录栏固定 */
-.table-of-contents {
-  position: fixed !important;
-  right: 0 !important;
-  top: var(--ifm-navbar-height) !important;
-  width: 250px !important;
-  max-height: calc(100vh - var(--ifm-navbar-height) - 2rem) !important;
-  overflow-y: auto !important;
-  padding: 1rem 0.5rem !important;
-  border-left: 1px solid var(--ifm-color-emphasis-300) !important;
-  background: var(--ifm-background-color) !important;
-  z-index: var(--ifm-z-index-fixed) !important;
-}
+  /* 右侧目录栏固定 */
+  .table-of-contents {
+    position: fixed !important;
+    right: 0 !important;
+    top: var(--ifm-navbar-height) !important;
+    width: 250px !important;
+    max-height: calc(100vh - var(--ifm-navbar-height) - 2rem) !important;
+    overflow-y: auto !important;
+    padding: 1rem 0.5rem !important;
+    border-left: 1px solid var(--ifm-color-emphasis-300) !important;
+    background: var(--ifm-background-color) !important;
+    z-index: var(--ifm-z-index-fixed) !important;
+  }
 
-[data-theme='dark'] .table-of-contents {
-  border-left-color: var(--ifm-color-emphasis-700) !important;
-  background: var(--ifm-background-color) !important;
-}
+  [data-theme='dark'] .table-of-contents {
+    border-left-color: var(--ifm-color-emphasis-700) !important;
+    background: var(--ifm-background-color) !important;
+  }
 
-/* 中间笔记内容区域自适应，留出左右侧边栏空间 */
-.mainWrapper {
-  margin-left: var(--ifm-sidebar-width, 280px) !important;
-  margin-right: 250px !important;
-  flex: 1 0 auto !important;
-  min-width: 0 !important;
+  /* 中间笔记内容区域自适应，留出左右侧边栏空间 */
+  .mainWrapper {
+    margin-left: var(--ifm-sidebar-width, 280px) !important;
+    margin-right: 250px !important;
+    flex: 1 0 auto !important;
+    min-width: 0 !important;
+  }
 }
 
 /* GitHub 链接图标 */
@@ -180,49 +182,9 @@ pre code {
 
 /* 移动端导航栏修复 */
 @media screen and (max-width: 996px) {
-  .navbar__toggle {
-    display: flex !important;
-  }
-
-  .navbar__menu {
-    position: fixed;
-    top: var(--ifm-navbar-height);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--ifm-background-color);
-    z-index: var(--ifm-z-index-fixed);
-    overflow-y: auto;
-    padding: 1rem;
-  }
-
-  .navbar__item {
-    display: block;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--ifm-color-emphasis-300);
-  }
-
-  .navbar__link {
-    display: block;
-    width: 100%;
-  }
-
-  /* 修复导航栏滚动问题 */
-  body.menu-open {
-    overflow: hidden;
-  }
-
-  /* 侧边栏移动端适配 */
-  .menu {
-    position: fixed !important;
-    width: 100% !important;
-    max-width: 300px !important;
-    left: -100% !important;
-    transition: left 0.3s ease;
-  }
-
-  .menu.menu-open {
-    left: 0 !important;
+  /* 隐藏顶部导航栏标题 */
+  .navbar__title {
+    display: none;
   }
 
   /* 文档内容区域移动端 */
