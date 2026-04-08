@@ -148,3 +148,91 @@ pre code {
 [data-theme='dark'] .footer {
   background: #111111;
 }
+
+/* 页脚链接列居中等距分布 */
+.footer__links {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.footer__col {
+  min-width: 150px;
+}
+
+.footer__title {
+  text-align: center;
+}
+
+.footer__items {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__link-item {
+  text-align: left;
+}
+
+/* 移动端导航栏修复 */
+@media screen and (max-width: 996px) {
+  .navbar__toggle {
+    display: flex !important;
+  }
+
+  .navbar__menu {
+    position: fixed;
+    top: var(--ifm-navbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--ifm-background-color);
+    z-index: var(--ifm-z-index-fixed);
+    overflow-y: auto;
+    padding: 1rem;
+  }
+
+  .navbar__item {
+    display: block;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--ifm-color-emphasis-300);
+  }
+
+  .navbar__link {
+    display: block;
+    width: 100%;
+  }
+
+  /* 修复导航栏滚动问题 */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* 侧边栏移动端适配 */
+  .menu {
+    position: fixed !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    left: -100% !important;
+    transition: left 0.3s ease;
+  }
+
+  .menu.menu-open {
+    left: 0 !important;
+  }
+
+  /* 文档内容区域移动端 */
+  .mainWrapper {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* 右侧目录移动端隐藏 */
+  .table-of-contents {
+    display: none !important;
+  }
+}

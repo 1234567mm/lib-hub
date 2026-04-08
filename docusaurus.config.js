@@ -123,8 +123,17 @@ const darkCodeTheme = themes.dracula;
               { label: 'GitHub', href: 'https://github.com/1234567mm/lib-hub' },
             ],
           },
+          {
+            title: '联系我们',
+            items: [
+              { html: '邮箱：synsnneer@qq.com' },
+              { html: 'QQ群：1007458214' },
+              { html: '山药泥酸奶&嵌入式技术交流群' },
+              { html: '服务时间：工作日 10:00–18:00' },
+            ],
+          },
         ],
-        copyright: `© ${new Date().getFullYear()} 山药泥酸奶 · Built with Docusaurus`,
+        copyright: `© ${new Date().getFullYear()} 山药泥酸奶 · 保留所有权利`,
       },
       prism: {
         theme: lightCodeTheme,
