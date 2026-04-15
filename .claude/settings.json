@@ -1,12 +1,28 @@
 {
   "permissions": {
     "allow": [
-      "Bash(powershell -Command \"Get-Content 'docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md' | Select-String -Pattern 'img.*stm32'\")",
-      "Bash(grep -rn \"\\\\.\\\\./img\\\\|/img/\" docs/stm32/*.md docs/stm32/**/*.md)",
-      "Bash(grep -l \"stm32\" build/**/*.html)",
-      "Bash(xargs grep:*)",
-      "Bash(grep -o \"img.*25.png[^\\\\\\\\\\\\\"]*\")",
-      "Edit(/.claude/skills/migrate-obsidian-docs/**)"
+      "Bash(powershell -Command *)",
+      "Bash(grep -rn * docs/stm32/**)",
+      "Bash(grep -l * build/**/*.html)",
+      "Bash(xargs grep *)",
+      "Bash(grep -o *)",
+      "Edit(/.claude/skills/migrate-obsidian-docs/**)",
+      "WebSearch",
+      "Bash(npm *)",
+      "Bash(npx docusaurus *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-md.py\""
+          }
+        ]
+      }
     ]
   }
 }

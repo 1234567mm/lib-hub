@@ -35,6 +35,7 @@ const sidebars = {
         'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
         'stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系',
         'stm32/STM32知识库/笔记三-工程1-点亮LED',
+        'stm32/gpio-usage',
       ],
     },
   ],
