@@ -41,6 +41,7 @@ npm run clear    # 清除缓存
 | Skill | 命令 | 功能 |
 |-------|------|------|
 | `new-post` | `/new-post` | 创建新文章，自动注册侧边栏，更新交叉链接 |
+| `sync-docs` | `/sync-docs` | 扫描新增文件，同步侧边栏、交叉链接和 README |
 | `preview` | `/preview` | 本地预览，自动同步文档到侧边栏 |
 | `check-images` | `/check-images` | 检查图片路径 |
 | `deploy` | `/deploy` | 部署博客 |
@@ -65,6 +66,22 @@ npm run clear    # 清除缓存
 | Hook | 触发 | 功能 |
 |------|------|------|
 | `lint-md` | Write/Edit .md | Markdown 格式检查 |
+| `sidebar-validate` | Write/Edit sidebars.js | 验证 docId 对应文件存在 |
+| `write-counter` | Write/Edit docs/* | 计数写入，触发知识蒸馏 |
+
+## Memory
+
+知识库存储在 `.claude/memory/` 目录，包含项目操作规范：
+
+| 文件 | 内容 |
+|------|------|
+| `MEMORY.md` | 索引文件 |
+| `doc-id-rules.md` | docId 生成规则 |
+| `filename-rules.md` | 文件名特殊字符处理 |
+| `sidebar-rules.md` | 侧边栏配置规范 |
+| `crosslink-rules.md` | 交叉链接规范 |
+
+**知识蒸馏**：每写入 10 次 docs/ 下的文件，自动去重合并规则。
 
 ## Subagents
 

@@ -6,7 +6,6 @@
       "Bash(grep -l * build/**/*.html)",
       "Bash(xargs grep *)",
       "Bash(grep -o *)",
-      "Edit(/.claude/skills/migrate-obsidian-docs/**)",
       "WebSearch",
       "Bash(npm *)",
       "Bash(npx docusaurus *)"
@@ -20,6 +19,24 @@
           {
             "type": "command",
             "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/lint-md.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/write-counter.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/sidebar-validate.py\""
           }
         ]
       }

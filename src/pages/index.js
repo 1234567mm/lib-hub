@@ -73,7 +73,7 @@ function HomepageSections() {
     {
       title: '行业动态',
       description: '追踪嵌入式与智能硬件行业的最新资讯、技术趋势与市场动态。保持对行业发展的敏锐洞察。',
-      to: '/docs/industry/intro',
+      to: '/docs/industry/news/intro',
       icon: '📰',
     },
     {

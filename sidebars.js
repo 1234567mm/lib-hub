@@ -16,17 +16,46 @@ const sidebars = {
     {
       type: 'category',
       label: '基础知识',
-      items: ['stm32/stm32-basics/intro'],
+      items: [
+        'stm32/stm32-basics/intro',
+        'stm32/stm32-basics/clock-system',
+        'stm32/stm32-basics/gpio-config',
+        'stm32/stm32-basics/interrupt-basics',
+        'stm32/stm32-basics/timer-basics',
+      ],
     },
     {
       type: 'category',
       label: '外设驱动',
-      items: ['stm32/stm32-peripherals/intro'],
+      items: [
+        'stm32/stm32-peripherals/intro',
+        'stm32/stm32-peripherals/adc-conversion',
+        'stm32/stm32-peripherals/dma-transfer',
+        'stm32/stm32-peripherals/i2c-protocol',
+        'stm32/stm32-peripherals/pwm-control',
+        'stm32/stm32-peripherals/spi-protocol',
+        'stm32/stm32-peripherals/usart-communication',
+      ],
     },
     {
       type: 'category',
       label: '项目实战',
-      items: ['stm32/stm32-projects/intro'],
+      items: [
+        'stm32/stm32-projects/intro',
+        'stm32/stm32-projects/env-monitor-project',
+        'stm32/stm32-projects/quadcopter-project',
+        'stm32/stm32-projects/smart-car-project',
+      ],
+    },
+    {
+      type: 'category',
+      label: '开发工作流',
+      items: [
+        'stm32/嵌入式开发工作流搭建/WSL2安装与基础配置',
+        'stm32/嵌入式开发工作流搭建/Ollama安装与配置',
+        'stm32/嵌入式开发工作流搭建/HermesAgent安装与模型联动',
+        'stm32/嵌入式开发工作流搭建/知识库与项目开发工作流',
+      ],
     },
     {
       type: 'category',
@@ -34,6 +63,7 @@ const sidebars = {
       items: [
         'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
         'stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系',
+        'stm32/STM32知识库/STM32_RCC标准库全解析-3',
         'stm32/STM32知识库/笔记三-工程1-点亮LED',
         'stm32/gpio-usage',
       ],
