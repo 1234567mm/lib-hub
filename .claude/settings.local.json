@@ -4,7 +4,7 @@
       "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)",
       "Bash(rm -rf .docusaurus)",
       "Bash(npm run:*)",
-      "Bash(powershell -Command \"Get-Content 'docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md' | Select-String -Pattern 'img|image:|png|jpg' -Context 1,1\")",
+      "Bash(powershell -Command \"Get-Content 'docs/stm32/入门教程/STM32学习笔记（二）存储器、电源与时钟体系.md' | Select-String -Pattern 'img|image:|png|jpg' -Context 1,1\")",
       "Bash(git ls-tree *)",
       "Bash(node *)",
       "Bash(git add *)",
@@ -26,9 +26,10 @@
       "Bash(python .claude/hooks/build-success-tracker.py)",
       "Bash(python scripts/fix-brackets.py --dry-run)",
       "Bash(python scripts/fix-brackets.py)",
-      "Bash(xxd docs/stm32/STM32知识库/intro.md)",
+      "Bash(xxd docs/stm32/入门教程/intro.md)",
       "Bash(python3 -c ' *)",
-      "Bash(find build *)"
+      "Bash(find build *)",
+      "Bash(python *)"
     ]
   }
 }

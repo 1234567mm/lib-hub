@@ -1,7 +1,7 @@
 {
   "stm32": {
     "dir": "stm32",
-    "label": "STM32知识库"
+    "label": "入门教程"
   },
   "esp32": {
     "dir": "esp32",

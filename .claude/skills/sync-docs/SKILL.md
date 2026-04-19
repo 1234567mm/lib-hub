@@ -85,13 +85,13 @@ const newDocIds = allDocIds.filter(id => !existingDocIds.includes(id));
 
 ```markdown
 <!-- 新文章 frontmatter 后 -->
-> 上一篇：[笔记一标题](/docs/stm32/STM32知识库/笔记一)
+> 上一篇：[笔记一标题](/docs/stm32/入门教程/笔记一)
 
 <!-- 新文章末尾 -->
-## 下一篇：[笔记三标题](/docs/stm32/STM32知识库/笔记三)
+## 下一篇：[笔记三标题](/docs/stm32/入门教程/笔记三)
 
 <!-- 前一篇文章末尾更新 -->
-## 下一篇：[新文章标题](/docs/stm32/STM32知识库/笔记二)
+## 下一篇：[新文章标题](/docs/stm32/入门教程/笔记二)
 ```
 
 ### 6. 更新 .skill-context.json
@@ -148,7 +148,7 @@ const newDocIds = allDocIds.filter(id => !existingDocIds.includes(id));
 ## 栏目结构
 
 ```
-STM32知识库
+入门教程
 ├── 基础知识
 │   └── 5 篇文章
 ├── 外设驱动
@@ -175,12 +175,12 @@ STM32知识库
    发现 5 个新增文件
 
    + stm32/gpio-usage
-   + stm32/STM32知识库/笔记四-定时器
+   + stm32/入门教程/笔记四-定时器
    + esp32/wifi-config
 
 📝 注册侧边栏...
    ✓ 已注册 stm32/gpio-usage 到 学习笔记
-   ✓ 已注册 stm32/STM32知识库/笔记四-定时器 到 学习笔记
+   ✓ 已注册 stm32/入门教程/笔记四-定时器 到 学习笔记
    ✓ 已注册 esp32/wifi-config 到 ESP32知识库
 
 🔗 更新交叉链接...

@@ -68,7 +68,7 @@ Example for stm32:
   label: '学习笔记',
   items: [
     // ... existing items
-    'stm32/STM32知识库/{filename}',  // ← append new docId
+    'stm32/入门教程/{filename}',  // ← append new docId
   ],
 },
 ```

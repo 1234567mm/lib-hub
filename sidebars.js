@@ -25,10 +25,11 @@ const sidebars = {
       type: 'category',
       label: '入门教程',
       items: [
-        `${dirs.stm32.dir}/STM32知识库/STM32学习笔记（一）：那些你该知道的事儿`,
-        `${dirs.stm32.dir}/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系`,
-        `${dirs.stm32.dir}/STM32知识库/STM32_RCC标准库全解析-3`,
-        `${dirs.stm32.dir}/STM32知识库/笔记三-工程1-点亮LED`,
+        `${dirs.stm32.dir}/入门教程/STM32学习笔记（一）：那些你该知道的事儿`,
+        `${dirs.stm32.dir}/入门教程/STM32学习笔记（二）存储器、电源与时钟体系`,
+        `${dirs.stm32.dir}/入门教程/STM32_RCC标准库全解析-3`,
+        `${dirs.stm32.dir}/入门教程/笔记三-工程1-点亮LED`,
+        `${dirs.stm32.dir}/入门教程/定时器笔记`,
       ],
     },
     {

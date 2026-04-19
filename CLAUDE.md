@@ -112,7 +112,7 @@ Docusaurus docId 生成规则：
 | 文件路径 | docId |
 |----------|-------|
 | `docs/stm32/2026-04-15-gpio-usage.md` | `stm32/gpio-usage` |
-| `docs/stm32/STM32知识库/笔记三-工程1-点亮LED.md` | `stm32/STM32知识库/笔记三-工程1-点亮LED` |
+| `docs/stm32/入门教程/笔记三-工程1-点亮LED.md` | `stm32/入门教程/笔记三-工程1-点亮LED` |
 | `docs/开发工具/WSL2安装与基础配置.md` | `开发工具/WSL2安装与基础配置` |
 
 ## 项目流程
