@@ -95,11 +95,12 @@ npm run clear    # 清除缓存
 
 | 分类 | 路径 | Sidebar Section |
 |------|------|-----------------|
-| STM32 | `docs/stm32/` | 学习笔记 |
+| STM32 | `docs/stm32/` | 入门教程 |
 | ESP32 | `docs/esp32/` | ESP32知识库 |
 | 干货分享 | `docs/sharing/` | 干货分享 |
 | 行业动态 | `docs/industry/` | 行业动态 |
 | 科研团队 | `docs/team/` | 科研团队 |
+| 开发工具 | `docs/开发工具/` | 开发工具 |
 
 ## docId 生成规则
 
@@ -112,6 +113,7 @@ Docusaurus docId 生成规则：
 |----------|-------|
 | `docs/stm32/2026-04-15-gpio-usage.md` | `stm32/gpio-usage` |
 | `docs/stm32/STM32知识库/笔记三-工程1-点亮LED.md` | `stm32/STM32知识库/笔记三-工程1-点亮LED` |
+| `docs/开发工具/WSL2安装与基础配置.md` | `开发工具/WSL2安装与基础配置` |
 
 ## 项目流程
 
@@ -130,4 +132,6 @@ Docusaurus docId 生成规则：
 - 2026-04-15: 完善 new-post skill（文件名处理、侧边栏注册、交叉链接）
 - 2026-04-15: 完善 preview skill（预检、docId 同步、端口检测）
 - 2026-04-15: 验证预览正常
+- 2026-04-19: 新增 issue-tracker hook 和 issue-troubleshooting.md，完善 sidebar-validate 和 write-counter
+- 2026-04-19: 重构 STM32 目录结构：学习笔记→入门教程，嵌入式开发工作流→开发工具（独立分类）
 - 2026-04-19: 新增 issue-tracker hook 和 issue-troubleshooting.md，完善 sidebar-validate 和 write-counter

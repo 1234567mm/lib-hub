@@ -8,12 +8,159 @@
 
 ## 统计
 
-- `issue-count`: 6
+- `issue-count`: 13
 - `last-update`: 2026-04-19
 
 ---
 
 ## 详细记录
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `stm32/嵌入式开发工作流搭建/HermesAgent安装与模型联动 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/知识库与项目开发工作流 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/WSL2安装与基础配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `stm32/嵌入式开发工作流搭建/知识库与项目开发工作流 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `stm32/嵌入式开发工作流搭建/Ollama安装与配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/Ollama安装与配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/HermesAgent安装与模型联动 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
 
@@ -128,10 +275,10 @@
 ```
 These sidebar document ids do not exist:
 - stm32/STM32知识库/STM32_RCC标准库全解析-3
-- stm32/嵌入式开发工作流搭建/HermesAgent安装与模型联动
-- stm32/嵌入式开发工作流搭建/Ollama安装与配置
-- stm32/嵌入式开发工作流搭建/WSL2安装与基础配置
-- stm32/嵌入式开发工作流搭建/知识库与项目开发工作流
+- 开发工具/HermesAgent安装与模型联动
+- 开发工具/Ollama安装与配置
+- 开发工具/WSL2安装与基础配置
+- 开发工具/知识库与项目开发工作流
 ```
 
 **根因分析**：
@@ -139,9 +286,9 @@ These sidebar document ids do not exist:
 2. docId 中包含数字前缀（`01_`, `02_` 等）但 sidebars.js 引用时未包含
 
 **修复方法**：
-1. `git add docs/stm32/嵌入式开发工作流搭建/` 提交新文件
+1. `git add docs/开发工具/` 提交新文件
 2. 修改 sidebars.js，将引用改为完整 docId（包含数字前缀）
-3. 或使用对象格式自定义标签：`{ id: '...', label: '显示标题' }`
+3. 或使用对象格式自定义标签：`{ type: 'doc', id: '...', label: '显示标题' }`
 
 **预防措施**：
 - 新建文档后立即 `git add` + `commit`

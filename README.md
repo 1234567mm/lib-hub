@@ -126,11 +126,12 @@ npm run clear    # 清除缓存
 
 | 分类 | 路径 | Sidebar Section |
 |------|------|-----------------|
-| STM32 | `docs/stm32/` | 学习笔记 |
+| STM32 | `docs/stm32/` | 入门教程 |
 | ESP32 | `docs/esp32/` | ESP32知识库 |
 | 干货分享 | `docs/sharing/` | 干货分享 |
 | 行业动态 | `docs/industry/` | 行业动态 |
 | 科研团队 | `docs/team/` | 科研团队 |
+| 开发工具 | `docs/开发工具/` | 开发工具 |
 
 ## docId 生成规则
 

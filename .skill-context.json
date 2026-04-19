@@ -10,7 +10,6 @@
     "docs/sharing/git-local-github",
     "docs/sharing/intro",
     "docs/sharing/windows-docker",
-    "docs/stm32/2026-04-15-gpio-usage",
     "docs/stm32/STM32知识库/STM32_RCC标准库全解析-3",
     "docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿",
     "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系",
@@ -32,10 +31,10 @@
     "docs/stm32/stm32-projects/intro",
     "docs/stm32/stm32-projects/quadcopter-project",
     "docs/stm32/stm32-projects/smart-car-project",
-    "docs/stm32/嵌入式开发工作流搭建/01_WSL2安装与基础配置",
-    "docs/stm32/嵌入式开发工作流搭建/02_Ollama安装与配置",
-    "docs/stm32/嵌入式开发工作流搭建/03_HermesAgent安装与模型联动",
-    "docs/stm32/嵌入式开发工作流搭建/04_知识库与项目开发工作流",
+    "docs/开发工具/01_WSL2安装与基础配置",
+    "docs/开发工具/02_Ollama安装与配置",
+    "docs/开发工具/03_HermesAgent安装与模型联动",
+    "docs/开发工具/04_知识库与项目开发工作流",
     "docs/team/intro"
   ],
   "docIdToFilePath": {
@@ -48,7 +47,6 @@
     "sharing/git-local-github": "docs/sharing/git-local-github.md",
     "sharing/intro": "docs/sharing/intro.md",
     "sharing/windows-docker": "docs/sharing/windows-docker.md",
-    "stm32/2026-04-15-gpio-usage": "docs/stm32/2026-04-15-gpio-usage.md",
     "stm32/STM32知识库/STM32_RCC标准库全解析-3": "docs/stm32/STM32知识库/STM32_RCC标准库全解析-3.md",
     "stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿": "docs/stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿.md",
     "stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系": "docs/stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系.md",
@@ -70,10 +68,10 @@
     "stm32/stm32-projects/intro": "docs/stm32/stm32-projects/intro.md",
     "stm32/stm32-projects/quadcopter-project": "docs/stm32/stm32-projects/quadcopter-project.md",
     "stm32/stm32-projects/smart-car-project": "docs/stm32/stm32-projects/smart-car-project.md",
-    "stm32/嵌入式开发工作流搭建/01_WSL2安装与基础配置": "docs/stm32/嵌入式开发工作流搭建/01_WSL2安装与基础配置.md",
-    "stm32/嵌入式开发工作流搭建/02_Ollama安装与配置": "docs/stm32/嵌入式开发工作流搭建/02_Ollama安装与配置.md",
-    "stm32/嵌入式开发工作流搭建/03_HermesAgent安装与模型联动": "docs/stm32/嵌入式开发工作流搭建/03_HermesAgent安装与模型联动.md",
-    "stm32/嵌入式开发工作流搭建/04_知识库与项目开发工作流": "docs/stm32/嵌入式开发工作流搭建/04_知识库与项目开发工作流.md",
-    "team/intro": "docs/team/intro.md"
+    "team/intro": "docs/team/intro.md",
+    "01_WSL2安装与基础配置": "docs/开发工具/01_WSL2安装与基础配置.md",
+    "02_Ollama安装与配置": "docs/开发工具/02_Ollama安装与配置.md",
+    "03_HermesAgent安装与模型联动": "docs/开发工具/03_HermesAgent安装与模型联动.md",
+    "04_知识库与项目开发工作流": "docs/开发工具/04_知识库与项目开发工作流.md"
   }
 }

@@ -4,23 +4,23 @@
 
 | 分类 | 路径 | Sidebar Section | DocId Prefix |
 |------|------|-----------------|--------------|
-| stm32 | `docs/stm32/` | 学习笔记 | `stm32/` |
+| stm32 | `docs/stm32/` | 入门教程 | `stm32/` |
 | esp32 | `docs/esp32/` | ESP32知识库 | `esp32/` |
 | sharing | `docs/sharing/` | 干货分享 | `sharing/` |
 | industry | `docs/industry/` | 行业动态 | `industry/` |
 | team | `docs/team/` | 科研团队 | `team/` |
+| 开发工具 | `docs/开发工具/` | 开发工具 | `开发工具/` |
 
 ## 侧边栏结构示例
 
 ```js
 {
   type: 'category',
-  label: '学习笔记',
+  label: '入门教程',
   items: [
     'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
     'stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系',
     'stm32/STM32知识库/笔记三-工程1-点亮LED',
-    'stm32/gpio-usage',
   ],
 },
 ```

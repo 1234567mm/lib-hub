@@ -19,7 +19,7 @@ Docusaurus docId 是文档的唯一标识符，用于侧边栏和路由。
 | `docs/stm32/STM32知识库/笔记三-工程1-点亮LED.md` | `stm32/STM32知识库/笔记三-工程1-点亮LED` | - |
 | `docs/esp32/esp32-intro.md` | `esp32/esp32-intro` | - |
 | `docs/sharing/git-local-github.md` | `sharing/git-local-github` | - |
-| `docs/stm32/嵌入式开发工作流搭建/01_WSL2安装.md` | `stm32/嵌入式开发工作流搭建/WSL2安装` | `...01_WSL2安装` |
+| `docs/开发工具/01_WSL2安装.md` | `开发工具/WSL2安装` | - |
 
 ## 错误后果
 
