@@ -9,7 +9,7 @@ sidebar_position: 1
 ## 内容列表
 
 - [GPIO端口配置](./gpio-config)
-- [时钟系统详解](./clock-system)
+- [时钟系统详解](./stm32-clock-system)
 - [中断基础入门](./interrupt-basics)
 - [定时器基本原理](./timer-basics)
 

@@ -716,3 +716,27 @@ These sidebar document ids do not exist:
 ```bash
 git status
 ```
+
+### 模式 3：frontmatter slug 导致链接失效
+
+**典型特征**：
+- 文档 A 引用文档 B 使用文件名作为链接
+- 但文档 B 的 frontmatter 中定义了自定义 slug
+- 导致链接 404
+
+**根因**：Docusaurus 中 `slug` 字段会覆盖文件名生成 URL
+
+**检测方法**：
+```bash
+# 查找所有定义了 slug 的文件
+grep -r "slug:" docs/ --include="*.md"
+```
+
+**修复流程**：
+1. 找到目标文件的 `slug:` 值（如 `slug: stm32-clock-system`）
+2. 将引用链接从 `./clock-system` 改为 `./stm32-clock-system`
+3. 运行 `npm run build` 验证
+
+**预防检查**：
+- 创建文档时避免使用自定义 slug（保持 URL 与 docId 一致）
+- 如需 slug，在文档开头注释说明，并在交叉链接时使用 slug 而非文件名
