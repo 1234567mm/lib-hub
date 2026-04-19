@@ -97,12 +97,30 @@ npm run clear    # 清除缓存
 | Hook | 触发 | 功能 |
 |------|------|------|
 | `lint-md` | Write/Edit .md | Markdown 格式检查 |
+| `sidebar-validate` | Write/Edit sidebars.js | 验证 docId 对应文件存在，支持 untracked 检测 |
+| `write-counter` | Write/Edit docs/*, sidebars.js, .claude/* | 知识蒸馏计数 |
+| `issue-tracker` | CI 构建失败后 | 解析日志，记录问题到 memory |
 
 ## Subagents
 
 | Agent | 用途 |
 |-------|------|
 | `blog-reviewer` | 博客内容审查 |
+
+## Memory
+
+知识库存储在 `.claude/memory/` 目录：
+
+| 文件 | 内容 |
+|------|------|
+| `MEMORY.md` | 索引文件 |
+| `doc-id-rules.md` | docId 生成规则 |
+| `filename-rules.md` | 文件名特殊字符处理 |
+| `sidebar-rules.md` | 侧边栏配置规范 |
+| `crosslink-rules.md` | 交叉链接规范 |
+| `issue-troubleshooting.md` | 问题修复记录 |
+
+**知识蒸馏**：每 10 次写入触发，规则和问题记录共同去重。
 
 ## 内容分类
 

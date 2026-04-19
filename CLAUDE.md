@@ -66,8 +66,9 @@ npm run clear    # 清除缓存
 | Hook | 触发 | 功能 |
 |------|------|------|
 | `lint-md` | Write/Edit .md | Markdown 格式检查 |
-| `sidebar-validate` | Write/Edit sidebars.js | 验证 docId 对应文件存在 |
-| `write-counter` | Write/Edit docs/* | 计数写入，触发知识蒸馏 |
+| `sidebar-validate` | Write/Edit sidebars.js | 验证 docId 对应文件存在，支持 untracked 检测 |
+| `write-counter` | Write/Edit docs/*, sidebars.js, .claude/* | 知识蒸馏计数 |
+| `issue-tracker` | CI 构建失败后 | 解析日志，记录问题到 memory |
 
 ## Memory
 
@@ -80,8 +81,9 @@ npm run clear    # 清除缓存
 | `filename-rules.md` | 文件名特殊字符处理 |
 | `sidebar-rules.md` | 侧边栏配置规范 |
 | `crosslink-rules.md` | 交叉链接规范 |
+| `issue-troubleshooting.md` | 问题修复记录 |
 
-**知识蒸馏**：每写入 10 次 docs/ 下的文件，自动去重合并规则。
+**知识蒸馏**：每 10 次写入触发，规则和问题记录共同去重。
 
 ## Subagents
 
@@ -128,3 +130,4 @@ Docusaurus docId 生成规则：
 - 2026-04-15: 完善 new-post skill（文件名处理、侧边栏注册、交叉链接）
 - 2026-04-15: 完善 preview skill（预检、docId 同步、端口检测）
 - 2026-04-15: 验证预览正常
+- 2026-04-19: 新增 issue-tracker hook 和 issue-troubleshooting.md，完善 sidebar-validate 和 write-counter
