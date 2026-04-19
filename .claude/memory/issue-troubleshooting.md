@@ -8,14 +8,21 @@
 
 ## 统计
 
-- `issue-count`: 25
+- `issue-count`: 27
 - `last-update`: 2026-04-19
+- `fixed-count`: 0
 
 ---
 
 ## 详细记录
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -37,6 +44,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -58,6 +71,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -79,6 +98,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -100,6 +125,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -121,6 +152,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -142,6 +179,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -163,6 +206,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -184,6 +233,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -205,6 +260,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -226,6 +287,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -247,6 +314,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -268,6 +341,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -289,6 +368,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -310,6 +395,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -331,6 +422,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -352,6 +449,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -373,6 +476,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -394,6 +503,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -415,6 +530,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -436,6 +557,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -457,6 +584,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -478,6 +611,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -499,6 +638,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 
@@ -520,6 +665,12 @@
 
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 不存在
+**已修复** ✅
+- 修复日期: 2026-04-19
+- 修复方案: 修复了 hook `.claude/hooks/sidebar-validate.py`；修改了 `docusaurus.config.js`；修改了 `sidebars.js`
+- 提交: 9850ef9
+
+
 
 **问题类型**：Docusaurus 构建错误
 

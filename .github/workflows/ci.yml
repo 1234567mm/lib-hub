@@ -42,10 +42,18 @@ jobs:
             grep -A5 "Docusaurus found broken anchors" build.log || true
           fi
 
-      # 4. Issue tracking on failure
+      # 4. 构建成功时：记录修复的问题
+      - name: Record fixed issues
+        if: success()
+        run: |
+          echo "=== Build Success: Tracking fixed issues ==="
+          python .claude/hooks/build-success-tracker.py
+
+      # 5. 构建失败时：记录问题
       - name: Record build issues
         if: failure()
         run: |
+          echo "=== Build Failed: Recording issues ==="
           python .claude/hooks/issue-tracker.py "CI构建失败"
 
   deploy:
