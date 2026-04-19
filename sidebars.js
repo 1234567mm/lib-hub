@@ -51,10 +51,10 @@ const sidebars = {
       type: 'category',
       label: '开发工作流',
       items: [
-        'stm32/嵌入式开发工作流搭建/WSL2安装与基础配置',
-        'stm32/嵌入式开发工作流搭建/Ollama安装与配置',
-        'stm32/嵌入式开发工作流搭建/HermesAgent安装与模型联动',
-        'stm32/嵌入式开发工作流搭建/知识库与项目开发工作流',
+        { id: 'stm32/嵌入式开发工作流搭建/01_WSL2安装与基础配置', label: 'WSL2 安装与基础配置' },
+        { id: 'stm32/嵌入式开发工作流搭建/02_Ollama安装与配置', label: 'Ollama 安装与配置' },
+        { id: 'stm32/嵌入式开发工作流搭建/03_HermesAgent安装与模型联动', label: 'HermesAgent 安装与模型联动' },
+        { id: 'stm32/嵌入式开发工作流搭建/04_知识库与项目开发工作流', label: '知识库与项目开发工作流' },
       ],
     },
     {
