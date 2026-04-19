@@ -30,11 +30,13 @@ const sidebars = {
       items: [
         'stm32/stm32-peripherals/intro',
         'stm32/stm32-peripherals/adc-conversion',
+        'stm32/stm32-peripherals/gpio-config',
         'stm32/stm32-peripherals/dma-transfer',
         'stm32/stm32-peripherals/i2c-protocol',
         'stm32/stm32-peripherals/pwm-control',
         'stm32/stm32-peripherals/spi-protocol',
         'stm32/stm32-peripherals/usart-communication',
+        'stm32/stm32-peripherals/2026-04-15-gpio-usage',
       ],
     },
     {
@@ -65,7 +67,6 @@ const sidebars = {
         'stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系',
         'stm32/STM32知识库/STM32_RCC标准库全解析-3',
         'stm32/STM32知识库/笔记三-工程1-点亮LED',
-        'stm32/gpio-usage',
       ],
     },
   ],
