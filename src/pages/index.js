@@ -23,7 +23,7 @@ function HomepageHeader() {
           <Link className={styles.primaryButton} to="/docs/intro">
             了解更多
           </Link>
-          <Link className={styles.secondaryButton} to="/docs/stm32/intro">
+          <Link className={styles.secondaryButton} to="/docs/stm32/stm32-basics/intro">
             开始学习
           </Link>
         </div>
@@ -55,7 +55,7 @@ function HomepageSections() {
     {
       title: 'STM32知识库',
       description: '从基础知识到外设驱动，从项目实战到体系化知识库整理。涵盖GPIO、定时器、串口通信、PWM等核心内容。',
-      to: '/docs/stm32/intro',
+      to: '/docs/stm32/stm32-basics/intro',
       icon: '🔧',
     },
     {

@@ -9,7 +9,26 @@
       "Bash(node *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git commit *)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/lib-hub/)",
+      "Bash(curl *)",
+      "Bash(python .claude/hooks/sidebar-validate.py)",
+      "Bash(grep -a \"开发工具\" assets/js/*.js)",
+      "Bash(grep -a \"docsSidebars\" assets/js/*.js)",
+      "Bash(grep -ao '\"docsSidebars\":{[^}]*}' assets/js/*.js)",
+      "Bash(grep -a \"WSL2\" assets/js/*.js)",
+      "Bash(ls *.js)",
+      "Bash(wc -l *.js)",
+      "Bash(python -c ' *)",
+      "Bash(gh run *)",
+      "Bash(python .claude/hooks/build-success-tracker.py)",
+      "Bash(python scripts/fix-brackets.py --dry-run)",
+      "Bash(python scripts/fix-brackets.py)",
+      "Bash(xxd docs/stm32/STM32知识库/intro.md)",
+      "Bash(python3 -c ' *)",
+      "Bash(find build *)"
     ]
   }
 }

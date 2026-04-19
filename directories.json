@@ -1,0 +1,46 @@
+{
+  "stm32": {
+    "dir": "stm32",
+    "label": "STM32知识库"
+  },
+  "esp32": {
+    "dir": "esp32",
+    "label": "ESP32知识库",
+    "intro": { "type": "static" }
+  },
+  "sharing": {
+    "dir": "sharing",
+    "label": "干货分享",
+    "intro": { "type": "file-list", "listTitle": "笔记文章" }
+  },
+  "industry": {
+    "dir": "industry",
+    "label": "行业动态",
+    "intro": { "type": "static" }
+  },
+  "team": {
+    "dir": "team",
+    "label": "科研团队",
+    "intro": { "type": "static" }
+  },
+  "tools": {
+    "dir": "开发工具",
+    "label": "开发工具",
+    "intro": { "type": "static" }
+  },
+  "stm32-basics": {
+    "dir": "stm32/stm32-basics",
+    "label": "基础知识",
+    "intro": { "type": "file-list", "listTitle": "内容列表" }
+  },
+  "stm32-peripherals": {
+    "dir": "stm32/stm32-peripherals",
+    "label": "外设驱动",
+    "intro": { "type": "file-list", "listTitle": "内容列表" }
+  },
+  "stm32-projects": {
+    "dir": "stm32/stm32-projects",
+    "label": "项目实战",
+    "intro": { "type": "file-list", "listTitle": "项目列表" }
+  }
+}

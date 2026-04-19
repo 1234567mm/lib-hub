@@ -9,11 +9,12 @@
 ```js
 {
   type: 'category',
-  label: '入门教程',
+  label: '学习笔记',
   items: [
     'stm32/STM32知识库/STM32学习笔记(一)：那些你该知道的事儿',
     'stm32/STM32知识库/STM32学习笔记（二）存储器、电源与时钟体系',
     'stm32/STM32知识库/笔记三-工程1-点亮LED',
+    'stm32/gpio-usage',
   ],
 },
 ```

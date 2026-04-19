@@ -61,15 +61,27 @@ def check_file_fixed(doc_id_pattern):
     """检查 docId 相关的问题是否已修复"""
     changed_files = get_git_diff()
 
-    # docId 模式对应可能的修复文件
+    # 默认静态映射
     fixes = {
         'sidebar-validate': 'sidebar-validate.py',
         'sidebars.js': 'sidebars.js',
         'docusaurus.config.js': 'docusaurus.config.js',
-        '开发工具': 'docs/开发工具/',
-        'stm32': 'docs/stm32/',
-        'esp32': 'docs/esp32/',
     }
+
+    # 从 directories.json 动态加载配置
+    try:
+        root_dir = Path(__file__).parent.parent.parent
+        config_path = root_dir / 'directories.json'
+        if config_path.exists():
+            with open(config_path, 'r', encoding='utf-8') as f:
+                dirs_config = json.load(f)
+                for key, val in dirs_config.items():
+                    # 添加 dir 映射
+                    dir_name = val.get('dir')
+                    if dir_name:
+                        fixes[dir_name] = f'docs/{dir_name}/'
+    except Exception as e:
+        print(f"Warning: Failed to load directories.json: {e}", file=sys.stderr)
 
     for pattern, filepath in fixes.items():
         if pattern in doc_id_pattern:

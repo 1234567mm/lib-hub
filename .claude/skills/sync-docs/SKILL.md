@@ -1,6 +1,6 @@
 # sync-docs 技能
 
-同步文档配置：扫描新增文件，自动注册侧边栏，更新交叉链接，同步 README。
+同步文档配置：扫描新增文件，自动注册侧边栏，更新交叉链接，同步 README 和 intro 文件。
 
 ## 功能
 
@@ -10,6 +10,7 @@
 4. **交叉链接**：为序列文章（如 `笔记一`、`笔记二`）更新交叉链接
 5. **上下文同步**：更新 `.skill-context.json` 中的 `sidebarDocIds` 和 `docIdToFilePath`
 6. **README 同步**：更新 `README.md` 中的内容分类章节
+7. **Intro 同步**：更新各模块目录下的 intro.md 文件列表
 
 ## 分类映射
 
@@ -76,18 +77,7 @@ const newDocIds = allDocIds.filter(id => !existingDocIds.includes(id));
 
 ### 4. 注册侧边栏
 
-根据文件路径确定分类，追加到对应分类的 `items` 数组：
-
-```js
-// 示例：注册 stm32/gpio-usage 到 sidebars.js
-const categoryMap = {
-  'docs/stm32/': '学习笔记',
-  'docs/esp32/': 'ESP32知识库',
-  'docs/sharing/': '干货分享',
-  'docs/industry/': '行业动态',
-  'docs/team/': '科研团队',
-};
-```
+根据文件路径确定分类，读取 `directories.json` 获取对应的 `label`，追加到 `sidebars.js` 中对应键的 `items` 数组。
 
 ### 5. 处理交叉链接
 
@@ -131,6 +121,47 @@ const categoryMap = {
 | ...
 ```
 
+### 8. 更新 Intro 文件
+
+扫描所有配置了 `intro` 的模块目录，生成文件列表并更新对应 intro.md。
+
+#### file-list 类型
+
+扫描模块目录下所有 `.md` 文件（排除 intro.md 自身），生成链接列表：
+
+```markdown
+## {listTitle}
+
+- [文件标题](./filename)
+```
+
+标题提取顺序：
+1. frontmatter 的 `title`
+2. 首行 H1 `# `
+3. 文件名（去除日期前缀）
+
+#### category-overview 类型
+
+统计所有子模块的文件数量，更新栏目结构树：
+
+```markdown
+## 栏目结构
+
+```
+STM32知识库
+├── 基础知识
+│   └── 5 篇文章
+├── 外设驱动
+│   └── 10 篇文章
+├── 项目实战
+│   └── 4 篇文章
+└── 入门教程
+    └── 4 篇文章
+```
+```
+
+内容替换使用正则匹配 `## {listTitle}` 到下一个 `##` 或 `---` 之间的内容。
+
 ## 示例
 
 ```
@@ -158,6 +189,10 @@ const categoryMap = {
 📄 同步 README.md...
    ✓ 内容分类已更新
 
+📚 更新 Intro 文件...
+   ✓ stm32/stm32-basics/intro.md 已更新
+   ✓ stm32/intro.md 栏目结构已更新（已禁用）
+
 ✨ 完成！已同步 3 个新增文件
 ```
 
@@ -166,3 +201,4 @@ const categoryMap = {
 - 仅处理 `.md` 文件
 - 不处理 `docs/intro.md` 等根目录文件
 - 交叉链接仅处理具有序列特征的文件名
+- Intro 同步参考 `directories.json` 中的 `intro` 配置

@@ -12,36 +12,7 @@ slug: stm32-clock-system
 
 ## 目录
 
-- [1. 时钟体系概述](#1-时钟体系概述)
-  - [1.1 STM32为什么需要复杂的时钟系统](#11-stm32为什么需要复杂的时钟系统)
-  - [1.2 时钟源分类（HSI/HSE/LSI/LSE）](#12-时钟源分类hsi-hse-lsi-lse)
-  - [1.3 内部时钟与外部时钟对比](#13-内部时钟与外部时钟对比)
-- [2. STM32时钟树详解](#2-stm32时钟树详解)
-  - [2.1 时钟树图解](#21-时钟树图解)
-  - [2.2 关键时钟节点（SYSCLK/HCLK/PCLK）](#22-关键时钟节点sysclk-hclk-pclk)
-  - [2.3 PLL锁相环（倍频器）](#23-pll锁相环倍频器)
-  - [2.4 SysTick与MCO](#24-systick与mco)
-- [3. RCC寄存器详解](#3-rcc寄存器详解)
-  - [3.1 RCC寄存器映射（基地址0x40021000）](#31-rcc寄存器映射基地址0x40021000)
-  - [3.2 RCC_CR（时钟控制寄存器）](#32-rcc_cr时钟控制寄存器)
-  - [3.3 RCC_CFGR（时钟配置寄存器）](#33-rcc_cfgr时钟配置寄存器)
-  - [3.4 RCC_APB2ENR / RCC_APB1ENR（外设时钟使能）](#34-rcc_apb2enr--rcc_apb1enr外设时钟使能)
-  - [3.5 寄存器位操作（掩码/位带）](#35-寄存器位操作掩码位带)
-- [4. 标准库函数解析](#4-标准库函数解析)
-  - [4.1 RCC_DeInit() - 复位RCC](#41-rcc_deinit---复位rcc)
-  - [4.2 RCC_HSEConfig() - 配置HSE](#42-rcc_hseconfig---配置hse)
-  - [4.3 RCC_WaitForHSEStartUp() - 等待HSE稳定](#43-rcc_waitforhsestartup---等待hse稳定)
-  - [4.4 RCC_HSICmd() - 控制HSI](#44-rcc_hsicmd---控制hsi)
-  - [4.5 RCC_PLLConfig() - 配置PLL](#45-rcc_pllconfig---配置pll)
-  - [4.6 RCC_SYSCLKConfig() - 切换系统时钟](#46-rcc_sysclkconfig---切换系统时钟)
-- [5. 72MHz系统时钟配置实战](#5-72mhz系统时钟配置实战)
-  - [5.1 硬件需求](#51-硬件需求)
-  - [5.2 完整配置流程](#52-完整配置流程)
-  - [5.3 验证方法](#53-验证方法)
-- [6. 寄存器位操作进阶](#6-寄存器位操作进阶)
-  - [6.1 位带（Bit-Band）访问机制](#61-位带bit-band访问机制)
-  - [6.2 断言机制 assert_param](#62-断言机制-assert_param)
-- [7. 常见问题与调试](#7-常见问题与调试)
+<!-- 目录使用自动生成的锚点，避免断链问题 -->
 
 ---
 

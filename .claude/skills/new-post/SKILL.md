@@ -52,13 +52,7 @@ sidebar_label: {title}
 
 ### 4. Determine Category Path
 
-| Category | Sidebar Section | DocId Prefix |
-|----------|----------------|--------------|
-| stm32 | 学习笔记 | stm32/STM32知识库/ |
-| esp32 | ESP32知识库 | esp32/ |
-| sharing | 干货分享 | sharing/ |
-| industry | 行业动态 | industry/ |
-| team | 科研团队 | team/ |
+Read `directories.json` to find the mapping for the selected category. Use the `dir` property for the path and the `label` property for the sidebar section.
 
 ### 5. Register to Sidebar
 
@@ -127,6 +121,12 @@ sidebar_label: GPIO使用详解
 ---
 ```
 4. Register to sidebars.js → stm32 > 学习笔记
+5. Update .skill-context.json
+
+## Output
+
+Report the created file path and any sidebar/context updates made.
+> 学习笔记
 5. Update .skill-context.json
 
 ## Output

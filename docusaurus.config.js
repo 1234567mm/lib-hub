@@ -3,6 +3,7 @@
 const { themes } = require('prism-react-renderer');
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
+const dirs = require('./directories.json');
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
@@ -65,38 +66,38 @@ const darkCodeTheme = themes.dracula;
           },
           {
             type: 'doc',
-            docId: 'stm32/intro',
+            docId: `${dirs.stm32.dir}/stm32-basics/intro`,
             position: 'left',
-            label: 'STM32知识库',
+            label: dirs.stm32.label,
           },
           {
             type: 'doc',
-            docId: 'esp32/esp32-intro',
+            docId: `${dirs.esp32.dir}/esp32-intro`,
             position: 'left',
-            label: 'ESP32知识库',
+            label: dirs.esp32.label,
           },
           {
             type: 'doc',
-            docId: 'sharing/intro',
+            docId: `${dirs.sharing.dir}/intro`,
             position: 'left',
-            label: '干货分享',
+            label: dirs.sharing.label,
           },
           {
             type: 'doc',
-            docId: '开发工具/WSL2安装与基础配置',
+            docId: `${dirs.tools.dir}/WSL2安装与基础配置`,
             position: 'left',
-            label: '开发工具',
+            label: dirs.tools.label,
           },
           {
             href: '/industry-news',
             position: 'left',
-            label: '行业动态',
+            label: dirs.industry.label,
           },
           {
             type: 'doc',
-            docId: 'team/intro',
+            docId: `${dirs.team.dir}/intro`,
             position: 'left',
-            label: '科研团队',
+            label: dirs.team.label,
           },
           {
             href: 'https://github.com/1234567mm/lib-hub',
@@ -113,11 +114,11 @@ const darkCodeTheme = themes.dracula;
             title: '内容分区',
             items: [
               { label: '博客介绍', to: '/docs/intro' },
-              { label: 'STM32知识库', to: '/docs/stm32/intro' },
-              { label: 'ESP32知识库', to: '/docs/esp32/esp32-intro' },
-              { label: '干货分享', to: '/docs/sharing/intro' },
-              { label: '行业动态', to: '/industry-news' },
-              { label: '科研团队', to: '/docs/team/intro' },
+              { label: dirs.stm32.label, to: `/docs/${dirs.stm32.dir}/stm32-basics/intro` },
+              { label: dirs.esp32.label, to: `/docs/${dirs.esp32.dir}/esp32-intro` },
+              { label: dirs.sharing.label, to: `/docs/${dirs.sharing.dir}/intro` },
+              { label: dirs.industry.label, to: '/industry-news' },
+              { label: dirs.team.label, to: `/docs/${dirs.team.dir}/intro` },
             ],
           },
           {
