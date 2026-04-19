@@ -37,6 +37,10 @@
           {
             "type": "command",
             "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/sidebar-validate.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/write-counter.py\""
           }
         ]
       }

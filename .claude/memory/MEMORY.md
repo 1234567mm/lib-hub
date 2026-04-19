@@ -8,6 +8,7 @@
 | `filename-rules.md` | 文件名特殊字符处理 | 括号替换规则 |
 | `sidebar-rules.md` | 侧边栏配置规范 | 分类映射、items 追加 |
 | `crosslink-rules.md` | 交叉链接规范 | 序列文章链接格式 |
+| `issue-troubleshooting.md` | 问题修复记录 | CI 构建失败等问题记录和预防措施 |
 
 ## 计数信息
 

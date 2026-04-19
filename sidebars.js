@@ -30,13 +30,12 @@ const sidebars = {
       items: [
         'stm32/stm32-peripherals/intro',
         'stm32/stm32-peripherals/adc-conversion',
-        'stm32/stm32-peripherals/gpio-config',
         'stm32/stm32-peripherals/dma-transfer',
         'stm32/stm32-peripherals/i2c-protocol',
         'stm32/stm32-peripherals/pwm-control',
         'stm32/stm32-peripherals/spi-protocol',
         'stm32/stm32-peripherals/usart-communication',
-        'stm32/stm32-peripherals/2026-04-15-gpio-usage',
+        'stm32/stm32-peripherals/gpio-usage',
       ],
     },
     {
@@ -53,10 +52,10 @@ const sidebars = {
       type: 'category',
       label: '开发工作流',
       items: [
-        { id: 'stm32/嵌入式开发工作流搭建/01_WSL2安装与基础配置', label: 'WSL2 安装与基础配置' },
-        { id: 'stm32/嵌入式开发工作流搭建/02_Ollama安装与配置', label: 'Ollama 安装与配置' },
-        { id: 'stm32/嵌入式开发工作流搭建/03_HermesAgent安装与模型联动', label: 'HermesAgent 安装与模型联动' },
-        { id: 'stm32/嵌入式开发工作流搭建/04_知识库与项目开发工作流', label: '知识库与项目开发工作流' },
+        { type: 'doc', id: 'stm32/嵌入式开发工作流搭建/WSL2安装与基础配置', label: 'WSL2 安装与基础配置' },
+        { type: 'doc', id: 'stm32/嵌入式开发工作流搭建/Ollama安装与配置', label: 'Ollama 安装与配置' },
+        { type: 'doc', id: 'stm32/嵌入式开发工作流搭建/HermesAgent安装与模型联动', label: 'HermesAgent 安装与模型联动' },
+        { type: 'doc', id: 'stm32/嵌入式开发工作流搭建/知识库与项目开发工作流', label: '知识库与项目开发工作流' },
       ],
     },
     {
