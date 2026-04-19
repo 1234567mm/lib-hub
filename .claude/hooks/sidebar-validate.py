@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Sidebar Validate Hook
 验证 sidebars.js 中的 docId 是否对应实际存在的文件。
@@ -13,7 +14,14 @@ import json
 import sys
 import re
 import subprocess
+import os
 from pathlib import Path
+
+# 强制设置stdout/stderr编码为UTF-8
+if sys.platform == 'win32':
+    import codecs
+    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer, errors='replace')
+    sys.stderr = codecs.getwriter('utf-8')(sys.stderr.buffer, errors='replace')
 
 
 def get_git_status():
@@ -39,6 +47,12 @@ def get_git_status():
         return set(), {}
 
 
+def strip_numeric_prefix(filename):
+    """去除文件名开头的 NN_ 前缀（Docusaurus docId 规则）"""
+    # 匹配开头的一个或多个数字 + 下划线
+    return re.sub(r'^\d+_', '', filename)
+
+
 def check_file_status(doc_id, untracked_files):
     """
     检查 docId 对应的文件状态
@@ -48,30 +62,38 @@ def check_file_status(doc_id, untracked_files):
     path = doc_id.replace('\\', '/')
     file_path = f"docs/{path}.md"
 
-    # 检查是否在 untracked 列表中
+    # 检查是否在 untracked 列表中（精确匹配）
     for f in untracked_files:
         f_clean = f.replace('\\', '/')
         if f_clean == file_path or f_clean.endswith(f"{path}.md"):
             return 'untracked'
 
-    # 检查文件是否存在
-    if not Path(file_path).exists():
-        return 'missing'
+    # 检查文件是否存在（精确匹配）
+    if Path(file_path).exists():
+        # 检查是否已提交
+        try:
+            result = subprocess.run(
+                ["git", "ls-files", "--error-unmatch", file_path],
+                capture_output=True,
+                text=True,
+                errors='replace'
+            )
+            if result.returncode == 0:
+                return 'committed'
+        except Exception:
+            pass
+        return 'staged'
 
-    # 检查是否已提交
-    try:
-        result = subprocess.run(
-            ["git", "ls-files", "--error-unmatch", file_path],
-            capture_output=True,
-            text=True,
-            errors='replace'
-        )
-        if result.returncode == 0:
-            return 'committed'
-    except Exception:
-        pass
+    # 精确匹配失败，尝试带数字前缀的文件（NN_ 前缀规则）
+    dir_path = Path(file_path).parent
+    filename = Path(file_path).name
+    if dir_path.exists():
+        for f in dir_path.iterdir():
+            if f.is_file() and strip_numeric_prefix(f.name) == filename:
+                # 找到了带前缀的文件，等效于 committed
+                return 'committed'
 
-    return 'staged'
+    return 'missing'
 
 
 def extract_doc_ids(sidebars_content):

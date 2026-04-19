@@ -18,8 +18,8 @@ const sidebars = {
       label: '基础知识',
       items: [
         'stm32/stm32-basics/intro',
-        'stm32/stm32-basics/clock-system',
         'stm32/stm32-basics/gpio-config',
+        'stm32/stm32-basics/clock-system',
         'stm32/stm32-basics/interrupt-basics',
         'stm32/stm32-basics/timer-basics',
       ],
@@ -29,12 +29,12 @@ const sidebars = {
       label: '外设驱动',
       items: [
         'stm32/stm32-peripherals/intro',
-        'stm32/stm32-peripherals/adc-conversion',
-        'stm32/stm32-peripherals/dma-transfer',
-        'stm32/stm32-peripherals/i2c-protocol',
-        'stm32/stm32-peripherals/pwm-control',
-        'stm32/stm32-peripherals/spi-protocol',
         'stm32/stm32-peripherals/usart-communication',
+        'stm32/stm32-peripherals/spi-protocol',
+        'stm32/stm32-peripherals/i2c-protocol',
+        'stm32/stm32-peripherals/adc-conversion',
+        'stm32/stm32-peripherals/pwm-control',
+        'stm32/stm32-peripherals/dma-transfer',
       ],
     },
     {
