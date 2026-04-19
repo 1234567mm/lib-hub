@@ -8,12 +8,264 @@
 
 ## 统计
 
-- `issue-count`: 13
+- `issue-count`: 25
 - `last-update`: 2026-04-19
 
 ---
 
 ## 详细记录
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/Ollama安装与配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/HermesAgent安装与模型联动 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/WSL2安装与基础配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/知识库与项目开发工作流 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/知识库与项目开发工作流 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/Ollama安装与配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/HermesAgent安装与模型联动 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/WSL2安装与基础配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/Ollama安装与配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/知识库与项目开发工作流 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/HermesAgent安装与模型联动 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
+
+### 2026-04-19: CI 构建失败 - Sidebar docId 错误
+
+**问题类型**：Docusaurus 构建错误
+
+**错误详情**：
+- `开发工具/WSL2安装与基础配置 (missing)` - unknown - 请手动检查
+
+**根因分析**：
+1. 文件已创建但未提交到仓库
+2. 或 docId 与实际文件路径不匹配
+
+**预防措施**：
+- 新建文档后立即 `git add` + `commit`
+- 使用 `npm run start` 本地预览验证后再 push
+- 修改 sidebars.js 后运行 `npm run build` 验证
+
+
+---
+
+
 
 ### 2026-04-19: CI 构建失败 - Sidebar docId 错误
 

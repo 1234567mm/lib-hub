@@ -112,24 +112,30 @@ const sidebars = {
   ],
   开发工具: [
     {
-      type: 'doc',
-      id: '开发工具/WSL2安装与基础配置',
-      label: 'WSL2 安装与基础配置',
-    },
-    {
-      type: 'doc',
-      id: '开发工具/Ollama安装与配置',
-      label: 'Ollama 安装与配置',
-    },
-    {
-      type: 'doc',
-      id: '开发工具/HermesAgent安装与模型联动',
-      label: 'HermesAgent 安装与模型联动',
-    },
-    {
-      type: 'doc',
-      id: '开发工具/知识库与项目开发工作流',
-      label: '知识库与项目开发工作流',
+      type: 'category',
+      label: '开发工具',
+      items: [
+        {
+          type: 'doc',
+          id: '开发工具/WSL2安装与基础配置',
+          label: 'WSL2 安装与基础配置',
+        },
+        {
+          type: 'doc',
+          id: '开发工具/Ollama安装与配置',
+          label: 'Ollama 安装与配置',
+        },
+        {
+          type: 'doc',
+          id: '开发工具/HermesAgent安装与模型联动',
+          label: 'HermesAgent 安装与模型联动',
+        },
+        {
+          type: 'doc',
+          id: '开发工具/知识库与项目开发工作流',
+          label: '知识库与项目开发工作流',
+        },
+      ],
     },
   ],
 };

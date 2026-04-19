@@ -82,6 +82,12 @@ const darkCodeTheme = themes.dracula;
             label: '干货分享',
           },
           {
+            type: 'doc',
+            docId: '开发工具/WSL2安装与基础配置',
+            position: 'left',
+            label: '开发工具',
+          },
+          {
             href: '/industry-news',
             position: 'left',
             label: '行业动态',
