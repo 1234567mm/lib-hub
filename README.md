@@ -52,17 +52,16 @@ npm run clear    # 清除缓存
 
 | Skill | 命令 | 功能 |
 |-------|------|------|
-| `new-post` | `/new-post` | 创建新文章，自动注册侧边栏，更新交叉链接 |
-| `sync-docs` | `/sync-docs` | 扫描新增文件，同步侧边栏、交叉链接和 README |
-| `preview` | `/preview` | 本地预览，自动同步文档到侧边栏 |
-| `check-images` | `/check-images` | 检查图片路径 |
+| `new-post` | `/new-post` | 创建新文章，自动注册侧边栏并同步上下文 |
+| `sync-docs` | `/sync-docs` | 扫描新增文件，同步侧边栏、交叉链接和上下文 |
+| `preview` | `/preview` | 本地预览，自动同步文档并检查图片 |
 | `deploy` | `/deploy` | 部署博客 |
 
 ### new-post 功能
 
 - 文件名特殊字符处理：括号 `()（ ）` → `-`
 - 自动注册到 `sidebars.js`
-- 更新 `.skill-context.json`
+- 创建后自动触发 sync-docs 同步上下文
 - 序列文章交叉链接（上一篇/下一篇）
 
 ### sync-docs 功能
@@ -71,26 +70,20 @@ npm run clear    # 清除缓存
 - 自动注册新增文件到侧边栏对应分类
 - 为序列文章更新交叉链接
 - 更新 `.skill-context.json`
-- 可选同步更新 README 内容分类章节
+- 更新 README 内容分类章节
 
 ### preview 功能
 
-- 预检：扫描 docs/ 目录，提取 docId
-- 对比上下文：识别新增/删除/重命名的文件
-- 自动更新侧边栏（去除日期前缀的 docId 规则）
-- 自动更新交叉链接
+- 调用 sync-docs 同步文档上下文
+- 集成图片检查：扫描新增文件的图片引用，验证文件存在
 - 端口 3000 占用检测和自动清理
-
-### check-images 功能
-
-- 扫描 markdown 文件中的图片引用
-- 验证图片文件是否存在
-- 报告缺失图片并给出修复建议
+- 启动本地预览服务
 
 ### deploy 功能
 
+- 预检 git 状态和问题追踪
 - 构建 Docusaurus 站点
-- 部署到 GitHub Pages
+- 自动提交推送，触发 CI/CD 部署
 
 ## Hooks
 
@@ -126,7 +119,7 @@ npm run clear    # 清除缓存
 
 | 分类 | 路径 | Sidebar Section |
 |------|------|-----------------|
-| STM32 | `docs/stm32/` | 入门教程 |
+| STM32 | `docs/stm32/` | 基础知识、入门教程、外设驱动、项目实战 |
 | ESP32 | `docs/esp32/` | ESP32知识库 |
 | 干货分享 | `docs/sharing/` | 干货分享 |
 | 行业动态 | `docs/industry/` | 行业动态 |
@@ -150,10 +143,9 @@ Docusaurus docId 生成规则：
 ```
 1. 创建文章: /new-post stm32 "文章标题"
 2. 编写内容
-3. 检查图片: /check-images docs/stm32/
-4. 本地预览: /preview (自动同步侧边栏)
-5. 提交审核: git add → commit → push
-6. CI/CD 自动部署
+3. 本地预览: /preview (自动同步侧边栏+检查图片)
+4. 提交审核: git add → commit → push
+5. CI/CD 自动部署
 ```
 
 ---
