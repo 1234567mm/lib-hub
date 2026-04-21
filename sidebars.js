@@ -133,6 +133,11 @@ const sidebars = {
           id: `${dirs.tools.dir}/知识库与项目开发工作流`,
           label: '知识库与项目开发工作流',
         },
+        {
+          type: 'doc',
+          id: `${dirs.tools.dir}/05-hermes-skills-reference`,
+          label: 'Hermes Skills 参考指南',
+        },
       ],
     },
   ],
