@@ -12,7 +12,6 @@ sidebar_label: Hermes Skills 参考指南
 
 ## 🗂️ 目录
 
-- [Hermes Agent — Skills 快速查询手册](#hermes-agent--skills-快速查询手册)
   - [🗂️ 目录](#️-目录)
   - [会话与工作流管理](#会话与工作流管理)
   - [编码与开发](#编码与开发)

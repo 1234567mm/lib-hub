@@ -138,6 +138,11 @@ const sidebars = {
           id: `${dirs.tools.dir}/05-hermes-skills-reference`,
           label: 'Hermes Skills 参考指南',
         },
+        {
+          type: 'doc',
+          id: `${dirs.tools.dir}/6-Hermes-Agent-Local-or-Online配置`,
+          label: '6-Hermes-Agent Local or Online配置',
+        },
       ],
     },
   ],
