@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-22T09:02:06.384Z",
+  "lastRun": "2026-04-25T08:26:08.335Z",
   "sidebarDocIds": [
     "docs\\esp32\\esp32-competition-guide",
     "docs\\esp32\\esp32-gimbal",
@@ -37,7 +37,8 @@
     "docs\\开发工具\\03_HermesAgent安装与模型联动",
     "docs\\开发工具\\04_知识库与项目开发工作流",
     "docs\\开发工具\\05-hermes-skills-reference",
-    "docs\\开发工具\\6-Hermes-Agent Local or Online配置"
+    "docs\\开发工具\\6-Hermes-Agent Local or Online配置",
+    "docs\\开发工具\\0-Linux发行版本介绍"
   ],
   "docIdToFilePath": {}
 }

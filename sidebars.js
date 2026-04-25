@@ -115,6 +115,11 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          id: `${dirs.tools.dir}/0-Linux发行版本介绍`,
+          label: '0-Linux发行版本介绍',
+        },
+        {
+          type: 'doc',
           id: `${dirs.tools.dir}/WSL2安装与基础配置`,
           label: 'WSL2 安装与基础配置',
         },
