@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-25T09:08:53.811Z",
+  "lastRun": "2026-04-25T09:57:33.247Z",
   "sidebarDocIds": [
     "docs\\esp32\\esp32-competition-guide",
     "docs\\esp32\\esp32-gimbal",
@@ -39,7 +39,8 @@
     "docs\\开发工具\\05-hermes-skills-reference",
     "docs\\开发工具\\6-Hermes-Agent Local or Online配置",
     "docs\\开发工具\\0-Linux发行版本介绍",
-    "docs\\开发工具\\07-wsl-clash-ccswitch-guide"
+    "docs\\开发工具\\07-wsl-clash-ccswitch-guide",
+    "docs\\stm32\\stm32-basics\\RTOS实时操作系统"
   ],
   "docIdToFilePath": {}
 }

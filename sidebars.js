@@ -19,6 +19,7 @@ const sidebars = {
         `${dirs.stm32.dir}/stm32-basics/clock-system`,
         `${dirs.stm32.dir}/stm32-basics/interrupt-basics`,
         `${dirs.stm32.dir}/stm32-basics/timer-basics`,
+        `${dirs.stm32.dir}/stm32-basics/RTOS实时操作系统`,
       ],
     },
     {
