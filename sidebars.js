@@ -148,6 +148,11 @@ const sidebars = {
           id: `${dirs.tools.dir}/6-Hermes-Agent-Local-or-Online配置`,
           label: '6-Hermes-Agent Local or Online配置',
         },
+        {
+          type: 'doc',
+          id: `${dirs.tools.dir}/07-wsl-clash-ccswitch-guide`,
+          label: 'WSL Clash CCSwitch 使用指南',
+        },
       ],
     },
   ],
