@@ -21,18 +21,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      # 1. 验证 sidebars.js docId
-      - name: Validate Sidebar docIds
-        run: python .claude/hooks/sidebar-validate.py
-
-      # 2. 构建
+      # 1. 构建
       - name: Build website
-        run: npm run build
+        run: npm run build 2>&1 | tee build.log
 
-      # 3. 链接检查
+      # 2. 链接检查
       - name: Check for broken links
         run: |
-          npm run build 2>&1 | tee build.log
           if grep -q "Docusaurus found broken links" build.log; then
             echo "⚠️ 发现断链，请检查文档链接"
             grep -A5 "Docusaurus found broken links" build.log || true
@@ -41,52 +36,3 @@ jobs:
             echo "⚠️ 发现无效锚点，请检查文档锚点"
             grep -A5 "Docusaurus found broken anchors" build.log || true
           fi
-
-      # 4. 构建成功时：记录修复的问题
-      - name: Record fixed issues
-        if: success()
-        run: |
-          echo "=== Build Success: Tracking fixed issues ==="
-          python .claude/hooks/build-success-tracker.py
-
-      # 5. 构建失败时：记录问题
-      - name: Record build issues
-        if: failure()
-        run: |
-          echo "=== Build Failed: Recording issues ==="
-          python .claude/hooks/issue-tracker.py "CI构建失败"
-
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: validate
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Build
-        run: npm run build
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./build
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

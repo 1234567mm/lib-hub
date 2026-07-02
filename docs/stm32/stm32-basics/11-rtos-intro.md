@@ -1,7 +1,6 @@
 ---
-id: RTOS实时操作系统
-title: RTOS实时操作系统
-sidebar_label: RTOS实时操作系统
+sidebar_position: 12
+title: RTOS 实时操作系统
 ---
 
 # RTOS实时操作系统

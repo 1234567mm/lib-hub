@@ -7,7 +7,7 @@
 | **名称** | 山药泥酸奶的技术窝 |
 | **框架** | Docusaurus 3.7.0 |
 | **类型** | 个人技术博客 |
-| **主题** | 嵌入式开发、智能硬件 |
+| **主题** | 嵌入式开发（STM32、ESP32） |
 | **部署** | GitHub Pages |
 | **URL** | https://1234567mm.github.io/lib-hub/ |
 
@@ -15,123 +15,104 @@
 
 ```
 lib-hub/
-├── docs/              # 主要内容 (STM32/ESP32/Sharing/Team/Industry)
-├── blog/             # 博客文章 (已清空，保留 authors.yml)
-├── src/              # React 组件
-├── static/           # 静态资源 (img/)
-├── build/            # 构建输出
-├── .claude/          # Claude Code 配置
-│   ├── settings.json  # 权限和 hooks 配置
-│   ├── skills/        # Skills (已完善)
-│   └── agents/       # Subagents
-└── .github/          # GitHub Actions
+├── blog/             # 博客文章（Docusaurus blog plugin）
+│   ├── YYYY-MM-DD-slug.md   # 文章文件
+│   └── authors.yml          # 作者信息
+├── docs/             # 文档页面（intro、team info 等）
+├── src/              # React 组件与页面
+├── static/           # 静态资源（img/）
+├── sidebars.js       # 侧边栏配置
+└── docusaurus.config.js     # Docusaurus 配置
 ```
 
 ## 常用命令
 
 ```bash
-npm run start    # 本地预览
-npm run build    # 构建
+npm run start    # 本地预览（http://localhost:3000）
+npm run build    # 构建生产版本
 npm run deploy   # 部署到 GitHub Pages
 npm run clear    # 清除缓存
 ```
 
-## Skills (已完善)
+## 文章发布流程
 
-| Skill | 命令 | 功能 |
-|-------|------|------|
-| `new-post` | `/new-post` | 创建新文章，自动注册侧边栏，更新交叉链接 |
-| `sync-docs` | `/sync-docs` | 扫描新增文件，同步侧边栏、交叉链接和 README |
-| `preview` | `/preview` | 本地预览，自动同步文档到侧边栏 |
-| `check-images` | `/check-images` | 检查图片路径 |
-| `deploy` | `/deploy` | 部署博客 |
+1. 在 `blog/` 目录下创建文件：`YYYY-MM-DD-slug.md`
+2. 设置 frontmatter（标题、作者、标签、封面图）：
 
-### new-post 完善功能
+```yaml
+---
+title: "文章标题"
+description: "一句话描述，用于SEO和首页展示（50-150字）"
+authors: yamahoney
+tags: [stm32, 入门教程]
+date: 2026-06-27
+---
+```
 
-- 文件名特殊字符处理：括号 `()（ ）` → `-`
-- 自动注册到 `sidebars.js`
-- 更新 `.skill-context.json`
-- 序列文章交叉链接（上一篇/下一篇）
-
-### preview 完善功能
-
-- 预检：扫描 docs/ 目录，提取 docId
-- 对比上下文：识别新增/删除/重命名的文件
-- 自动更新侧边栏（去除日期前缀的 docId 规则）
-- 自动更新交叉链接
-- 端口 3000 占用检测和自动清理
-
-## Hooks
-
-| Hook | 触发 | 功能 |
-|------|------|------|
-| `lint-md` | Write/Edit .md | Markdown 格式检查 |
-| `sidebar-validate` | Write/Edit sidebars.js | 验证 docId 对应文件存在，支持 untracked 检测 |
-| `write-counter` | Write/Edit docs/*, sidebars.js, .claude/* | 知识蒸馏计数 |
-| `issue-tracker` | CI 构建失败后 | 解析日志，记录问题到 memory |
-
-## Memory
-
-知识库存储在 `.claude/memory/` 目录，包含项目操作规范：
-
-| 文件 | 内容 |
-|------|------|
-| `MEMORY.md` | 索引文件 |
-| `doc-id-rules.md` | docId 生成规则 |
-| `filename-rules.md` | 文件名特殊字符处理 |
-| `sidebar-rules.md` | 侧边栏配置规范 |
-| `crosslink-rules.md` | 交叉链接规范 |
-| `issue-troubleshooting.md` | 问题修复记录 |
-
-**知识蒸馏**：每 10 次写入触发，规则和问题记录共同去重。
-
-## Subagents
-
-| Agent | 用途 |
-|-------|------|
-| `blog-reviewer` | 博客内容审查 |
+3. `npm run start` 本地预览
+4. `git push` 推送到 GitHub，CI/CD 自动部署
 
 ## 内容分类
 
-| 分类 | 路径 | Sidebar Section |
-|------|------|-----------------|
-| STM32 | `docs/stm32/` | 入门教程 |
-| ESP32 | `docs/esp32/` | ESP32知识库 |
-| 干货分享 | `docs/sharing/` | 干货分享 |
-| 行业动态 | `docs/industry/` | 行业动态 |
-| 科研团队 | `docs/team/` | 科研团队 |
-| 开发工具 | `docs/开发工具/` | 开发工具 |
+| 分类 | 位置 | 说明 |
+|------|------|------|
+| STM32 教程 | `blog/` | 标签 `STM32` |
+| ESP32 教程 | `blog/` | 标签 `ESP32` |
+| 干货分享 | `blog/` | 标签 `干货分享` |
+| 行业动态 | `blog/` | 标签 `行业动态` |
+| 开发工具 | `blog/` | 标签 `开发工具` |
+| 文档页面 | `docs/` | intro、团队介绍等 |
 
-## docId 生成规则
+## 注意事项
 
-Docusaurus docId 生成规则：
-- 去掉 `docs/` 前缀
-- 去掉 `.md` 后缀
-- **对于 `YYYY-MM-DD-{slug}.md` 格式的文件，只保留 `{slug}` 部分（去掉日期前缀）**
+- 所有博客文章统一放在 `blog/` 目录，按 `YYYY-MM-DD-slug.md` 命名
+- 文章分类通过 frontmatter 中的 `tags` 字段实现
+- `docs/` 目录仅用于文档类页面（如介绍、团队信息），不作为博客文章存储
+- 文件名中的括号使用全角中文括号 `（）` 而非半角 `()`
 
-| 文件路径 | docId |
-|----------|-------|
-| `docs/stm32/2026-04-15-gpio-usage.md` | `stm32/gpio-usage` |
-| `docs/stm32/入门教程/笔记三-工程1-点亮LED.md` | `stm32/入门教程/笔记三-工程1-点亮LED` |
-| `docs/开发工具/WSL2安装与基础配置.md` | `开发工具/WSL2安装与基础配置` |
+## 项目级 Skills 命令
 
-## 项目流程
+### `/blog-new` — 自然语言新建博客笔记（生成框架）
+
+用自然语言描述文章内容，自动生成标准 frontmatter 与 markdown 骨架文件。
 
 ```
-1. 创建文章: /new-post stm32 "文章标题"
-2. 编写内容
-3. 检查图片: /check-images docs/stm32/
-4. 本地预览: /preview (自动同步侧边栏)
-5. 提交审核: git add → commit → push
-6. CI/CD 自动部署
+/blog-new 标题: STM32 DMA 传输详解  分类: stm32, 进阶
+/blog-new 帮我写一篇关于定时器PWM输出的文章
 ```
 
-## 配置更新记录
+**功能**：解析标题/标签/描述 → 创建 `blog/YYYY-MM-DD-slug.md` → 生成 frontmatter + `<!-- truncate -->` + 章节骨架 → 输出文件路径
 
-- 2026-04-11: 初始配置
-- 2026-04-15: 完善 new-post skill（文件名处理、侧边栏注册、交叉链接）
-- 2026-04-15: 完善 preview skill（预检、docId 同步、端口检测）
-- 2026-04-15: 验证预览正常
-- 2026-04-19: 新增 issue-tracker hook 和 issue-troubleshooting.md，完善 sidebar-validate 和 write-counter
-- 2026-04-19: 重构 STM32 目录结构：学习笔记→入门教程，嵌入式开发工作流→开发工具（独立分类）
-- 2026-04-19: 新增 issue-tracker hook 和 issue-troubleshooting.md，完善 sidebar-validate 和 write-counter
+### `/blog-review` — 笔记内容审查与命名优化
+
+审查 blog 文章的质量，检查 frontmatter 完整性、文件名规范、标签合理性等。
+
+```
+/blog-review blog/2026-07-03-article.md    # 单篇审查
+/blog-review blog/                          # 全量审查
+```
+
+**检查项**：title/description/authors/tags/date 完整性、description 长度（50-150字）、truncate 标记、文件名括号规范、标签有效性、内部链接、图片路径
+
+### `/blog-deploy` — 仓库提交与在线构建
+
+自动 git commit + push，触发 GitHub Actions 在线构建。
+
+```
+/blog-deploy 修复DMA文章中的typo
+/blog-deploy feat: 新增 STM32 PWM 文章
+```
+
+**流程**：`git status` → 生成 conventional commit 消息 → `git add -A && git commit && git push` → 输出构建链接。构建失败时不推送。
+
+### `/project-showcase` — 项目甄选与展示管理
+
+扫描 blog 文章，自动识别含金量高的项目，输出结构化展示数据供 `技术甄选` 页面使用。
+
+```
+/project-showcase              # 全量扫描并更新
+/project-showcase --report     # 仅输出报告
+/project-showcase blog/xxx.md  # 单篇评估
+```
+
+**流程**：识别项目文章（标签/标题/长度/代码量） → 评定含金量 ⭐1-5 级 → 提炼技术亮点 → 输出 `data/projects.json` → 提示是否更新页面展示数据

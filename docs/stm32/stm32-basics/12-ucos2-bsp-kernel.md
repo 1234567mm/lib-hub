@@ -1,7 +1,6 @@
 ---
-id: ucos2-bsp-kernel
-title: UCOS2的BSP内核解析
-sidebar_label: UCOS2的BSP内核解析
+sidebar_position: 13
+title: uCOS-II BSP 内核解析
 ---
 ---
 

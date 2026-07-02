@@ -1,5 +1,6 @@
 ---
-title: GPIO配置详解
+sidebar_position: 5
+title: GPIO 配置详解
 ---
 
 # GPIO配置详解

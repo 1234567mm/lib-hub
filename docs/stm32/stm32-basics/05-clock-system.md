@@ -1,9 +1,6 @@
 ---
-title: STM32 时钟系统（Clock System）
-authors: 山药泥酸奶
-tags: [STM32, 嵌入式, ARM, 时钟, RCC]
-date: 2024-10-15
-slug: stm32-clock-system
+sidebar_position: 6
+title: 时钟系统详解
 ---
 
 > STM32F103 系列 | 时钟树 / RCC寄存器 / 标准库函数
