@@ -3,7 +3,7 @@ sidebar_position: 3
 title: 存储器、电源与时钟体系
 ---
 
-> 上一篇：[STM32学习笔记(一)：那些你该知道的事儿](/docs/stm32/stm32-basics/STM32学习笔记一-那些你该知道的事儿)
+> 上一篇：[STM32学习笔记(一)：那些你该知道的事儿](/docs/stm32/stm32-basics/stm32-intro)
 
 ---
 
@@ -1145,4 +1145,4 @@ STM32 的底层开发能力，本质上就是：
 
 ---
 
-## 下一篇：[工程1-点亮LED](/docs/stm32/stm32-basics/笔记三-工程1-点亮LED)
+## 下一篇：[工程1-点亮LED](/docs/stm32/stm32-basics/led-blink-project)

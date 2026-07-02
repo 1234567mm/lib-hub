@@ -15,6 +15,20 @@ const skills = [
   { name: 'AI工具', level: '掌握', desc: 'Ollama本地模型，Hermes Agent，AI辅助开发', icon: '🤖' },
 ];
 
+/** 标签 slug 映射（Docusaurus 对大写英文自动分隔） */
+const tagSlugMap = {
+  esp32: 'esp-32',
+  stm32: 'stm-32',
+  rcc: 'rcc',
+  gpio: 'gpio',
+  usart: 'usart',
+  ai: 'ai',
+  ollama: 'ollama',
+  git: 'git',
+  linux: 'linux',
+};
+const getTagSlug = (tag) => tagSlugMap[tag.toLowerCase()] || tag;
+
 /** 代表项目数据 */
 const projects = [
   { title: 'ESP32 二轴无刷云台', tags: ['esp32', '项目实战', 'FOC'], desc: 'IMU姿态解算 + FOC闭环控制，STM32+ESP32协同', stars: 5 },
@@ -73,9 +87,9 @@ function ResumeHeader() {
 /* ---------- Skills Grid ---------- */
 function SkillsSection() {
   return (
-    <section id="skills" className={styles.section}>
+    <section className={styles.section}>
       <div className={styles.sectionInner}>
-        <h2 className={styles.sectionTitle}>技术能力</h2>
+        <h2 id="skills" className={styles.sectionTitle}>技术能力</h2>
         <p className={styles.sectionSubtitle}>长期深耕嵌入式领域，持续迭代技术栈</p>
         <div className={styles.skillsGrid}>
           {skills.map((s, i) => (
@@ -99,9 +113,9 @@ function SkillsSection() {
 /* ---------- Projects ---------- */
 function ProjectsSection() {
   return (
-    <section id="projects" className={`${styles.section} ${styles.sectionAlt}`}>
+    <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className={styles.sectionInner}>
-        <h2 className={styles.sectionTitle}>精选项目</h2>
+        <h2 id="projects" className={styles.sectionTitle}>精选项目</h2>
         <p className={styles.sectionSubtitle}>从实战中打磨的技术沉淀</p>
         <div className={styles.projectsGrid}>
           {projects.map((p, i) => (
@@ -120,7 +134,7 @@ function ProjectsSection() {
                   <span key={j} className={styles.projectTag}>{t}</span>
                 ))}
               </div>
-              <Link className={styles.projectLink} to={`/blog/tags/${p.tags[0]}`}>查看相关文章 →</Link>
+              <Link className={styles.projectLink} to={`/blog/tags/${getTagSlug(p.tags[0])}`}>查看相关文章 →</Link>
             </div>
           ))}
         </div>

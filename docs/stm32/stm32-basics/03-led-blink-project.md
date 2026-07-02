@@ -3,7 +3,7 @@ sidebar_position: 4
 title: 点亮LED与流水灯实验
 ---
 
-> 上一篇：[STM32学习笔记（二）存储器、电源与时钟体系](/docs/stm32/stm32-basics/STM32学习笔记二-存储器-电源与时钟体系)
+> 上一篇：[STM32学习笔记（二）存储器、电源与时钟体系](/docs/stm32/stm32-basics/memory-power-clock)
 
 ---
 

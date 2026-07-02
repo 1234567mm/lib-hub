@@ -131,7 +131,7 @@ const darkCodeTheme = themes.dracula;
               { label: '小红书', href: 'https://www.xiaohongshu.com/user/profile/5d0d7bfa000000001002850b' },
               { label: '哔哩哔哩', href: 'https://space.bilibili.com/511264524' },
               { label: 'GitHub', href: 'https://github.com/1234567mm/lib-hub' },
-              { label: 'RSS', to: '/blog/rss.xml' },
+              { label: 'RSS', href: '/blog/rss.xml' },
             ],
           },
           {
