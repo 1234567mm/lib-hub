@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
+import useBrokenLinks from '@docusaurus/useBrokenLinks';
 import styles from './tech-radar.module.css';
 
 /** 技术能力数据 */
@@ -86,6 +87,7 @@ function ResumeHeader() {
 
 /* ---------- Skills Grid ---------- */
 function SkillsSection() {
+  useBrokenLinks().collectAnchor('skills');
   return (
     <section className={styles.section}>
       <div className={styles.sectionInner}>
@@ -112,6 +114,7 @@ function SkillsSection() {
 
 /* ---------- Projects ---------- */
 function ProjectsSection() {
+  useBrokenLinks().collectAnchor('projects');
   return (
     <section className={`${styles.section} ${styles.sectionAlt}`}>
       <div className={styles.sectionInner}>
