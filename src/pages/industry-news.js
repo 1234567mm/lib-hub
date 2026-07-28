@@ -1,26 +1,42 @@
-import React, { useEffect } from 'react';
-import { useHistory } from '@docusaurus/router';
+import React from 'react';
+import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
+import { getIndustryStories } from '../data/industryStories.mjs';
+import styles from './industry-news.module.css';
 
-/**
- * 行业动态页面 — 已迁移到博客标签页
- * 自动重定向到 /blog/tags/行业动态
- */
+function StoryCard({ story, featured = false }) {
+  return (
+    <Link
+      className={`${styles.storyCard} ${featured ? styles.featuredCard : ''}`}
+      to={story.href}
+    >
+      <span className={styles.storyLabel}>{featured ? '最新发布' : story.label}</span>
+      <div className={styles.storyContent}>
+        <h1 className={styles.storyTitle}>{story.title}</h1>
+        <p className={styles.storySummary}>{story.summary}</p>
+        <div className={styles.storyMeta}>
+          <time dateTime={story.publishedAt}>{story.publishedAt}</time>
+          <span className={styles.storyAction}>阅读专题 <span aria-hidden="true">→</span></span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function IndustryNews() {
-  const history = useHistory();
-
-  useEffect(() => {
-    history.replace('/blog/tags/行业动态');
-  }, [history]);
+  const stories = getIndustryStories();
+  const featuredStory = stories[0];
+  const otherStories = stories.slice(1);
 
   return (
-    <Layout title="行业动态" description="嵌入式与智能硬件行业最新资讯">
-      <main style={{ padding: '3rem', textAlign: 'center' }}>
-        <p>正在跳转到行业动态页面...</p>
-        <p>
-          如果没有自动跳转，请
-          <a href="/lib-hub/blog/tags/行业动态">点击这里</a>
-        </p>
+    <Layout title="行业动态">
+      <main className={styles.showcase}>
+        {featuredStory ? <StoryCard story={featuredStory} featured /> : <p className={styles.empty}>暂无专题内容。</p>}
+        {otherStories.length > 0 ? (
+          <section className={styles.storyGrid} aria-label="更多行业专题">
+            {otherStories.map((story) => <StoryCard key={story.slug} story={story} />)}
+          </section>
+        ) : null}
       </main>
     </Layout>
   );

@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { getIndustryStories } from '../src/data/industryStories.mjs';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 test('industry stories are newest first and never use a news subdirectory', () => {
   const stories = getIndustryStories();
@@ -11,4 +16,13 @@ test('industry stories are newest first and never use a news subdirectory', () =
   assert.deepEqual(stories.map(({ publishedAt }) => publishedAt), [...stories]
     .sort((left, right) => right.publishedAt.localeCompare(left.publishedAt))
     .map(({ publishedAt }) => publishedAt));
+});
+
+test('industry page renders its primary story and has no blog-tag redirect', () => {
+  const page = fs.readFileSync(path.join(root, 'src/pages/industry-news.js'), 'utf8');
+
+  assert.match(page, /getIndustryStories/);
+  assert.match(page, /stories\[0\]/);
+  assert.doesNotMatch(page, /blog\/tags/);
+  assert.doesNotMatch(page, /useHistory|useEffect/);
 });
