@@ -31,14 +31,19 @@ Blog posts live in `blog/` as `YYYY-MM-DD-slug.md`; docs pages live in `docs/`.
 
 ### Blog publishing
 
-Use the repo-local blog skills in `.claude/skills/`:
+Use the repo-local blog skills in `.codex/skills/`:
 - `/blog-new` to scaffold a new post
 - `/blog-review` to audit frontmatter, filenames, tags, and references
 - `/blog-deploy` to commit, push, and trigger deployment
 - `/project-showcase` to score project-heavy posts for the tech-radar page
 
-Follow the blog workflow in `README.md` and `CLAUDE.md` when editing posts:
+Follow the blog workflow in `README.md` and `AGENTS.md` when editing posts:
 create the file under `blog/`, keep the frontmatter complete, preview locally with `npm run start`, then deploy with `npm run deploy` or `/blog-deploy`.
+
+### Local permissions
+
+The repo-local automation allowlist has been migrated into `reasonix.toml`:
+`git status`, `git add`, `git commit`, `git push`, and `npm run`.
 
 ## Notes
 

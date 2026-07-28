@@ -20,6 +20,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # Tool directories
+.codebase-memory/
 .codegraph/
 .reasonix/
-.workbuddy/

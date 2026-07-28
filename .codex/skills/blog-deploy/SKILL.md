@@ -77,6 +77,7 @@ description: Commit and push blog/doc updates to GitHub, running a preflight bui
 | `docs` | 更新知识库文档（仅 docs） |
 | `fix` | 修复内容错误或断链 |
 | `chore` | 配置/构建脚本变更 |
+| `refactor` | 重构不改变内容功能 |
 
 ---
 
@@ -104,6 +105,17 @@ function MySection() {
 否则构建会报告 `[WARNING] Docusaurus found broken anchors`（不影响构建成功，但应修复）。
 
 **如果构建输出中出现其他断裂链接**（以及未注册的锚点），必须修复后再推送，不能忽略。
+
+## 输出要求
+
+部署成功后输出：
+
+- 提交信息
+- 变更文件数量
+- GitHub Actions 构建链接：`https://github.com/1234567mm/lib-hub/actions`
+- 线上地址：`https://1234567mm.github.io/lib-hub/`
+
+如果用户没有提供 commit message，根据变更内容生成 conventional commit 消息。
 
 ```
 ✅ 已提交并推送

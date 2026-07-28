@@ -33,8 +33,10 @@ lib-hub/
 │   ├── pages/        # 首页、技术甄选页、行业动态
 │   └── css/          # 自定义样式
 ├── static/           # 静态资源 (img/)
-├── .claude/          # AI 项目级 Skills 配置
-│   └── skills/       # Skills 定义（兼容 Claude Code 等工具）
+├── .codex/           # Codex 项目级 Skills 配置
+│   └── skills/       # Skills 定义（供 Codex / Reasonix 使用）
+├── reasonix.toml     # Reasonix 项目配置
+├── AGENTS.md         # Codex 项目级指令入口
 ├── .github/          # GitHub Actions CI/CD
 ├── sidebars.js       # 侧边栏配置
 └── docusaurus.config.js
@@ -49,7 +51,7 @@ npm run deploy   # 部署到 GitHub Pages
 npm run clear    # 清除缓存
 ```
 
-## 项目级 Skills
+## Codex / Reasonix 项目级 Skills
 
 以下 Skill 是项目内建的 AI 辅助命令，可通过对话直接调用：
 
