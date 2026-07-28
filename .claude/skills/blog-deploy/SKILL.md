@@ -1,8 +1,11 @@
+---
+name: blog-deploy
+description: Commit and push blog/doc updates to GitHub, running a preflight build first. Use when the user asks to deploy a post, sync blog and docs, or publish repo content.
+---
+
 # blog-deploy
 
-**命令**：`/blog-deploy`
-
-**功能**：自动 git 提交并推送到 GitHub，触发 CI/CD 在线构建部署。支持**双轨发布**模式：blog 展示摘要 + docs 知识库展示完整内容。
+自动 git 提交并推送到 GitHub，触发 CI/CD 在线构建部署。支持**双轨发布**模式：blog 展示摘要 + docs 知识库展示完整内容。
 
 ---
 
