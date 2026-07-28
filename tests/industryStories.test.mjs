@@ -39,9 +39,13 @@ test('legacy industry news document and navigation targets are removed', () => {
   assert.equal(fs.existsSync(path.join(root, 'docs/industry/news/intro.md')), false);
   const config = fs.readFileSync(path.join(root, 'docusaurus.config.js'), 'utf8');
   const home = fs.readFileSync(path.join(root, 'src/pages/index.js'), 'utf8');
+  const sidebars = fs.readFileSync(path.join(root, 'sidebars.js'), 'utf8');
+  const directories = fs.readFileSync(path.join(root, 'directories.json'), 'utf8');
 
   assert.doesNotMatch(config, /docs\/industry\/news/);
   assert.doesNotMatch(home, /docs\/industry\/news/);
   assert.match(config, /to: '\/industry-news'/);
   assert.match(home, /to: '\/industry-news'/);
+  assert.doesNotMatch(sidebars, /dirs\.industry/);
+  assert.doesNotMatch(directories, /"industry"/);
 });
