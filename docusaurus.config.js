@@ -92,7 +92,7 @@ const darkCodeTheme = themes.dracula;
           { to: '/docs/esp32/esp32-intro', label: 'ESP32', position: 'left' },
           { to: '/docs/sharing/intro', label: '干货分享', position: 'left' },
           { to: '/docs/开发工具/WSL2安装与基础配置', label: '开发工具', position: 'left' },
-          { to: '/docs/industry/news/intro', label: '行业动态', position: 'left' },
+          { to: '/industry-news', label: '行业动态', position: 'left' },
           { to: '/docs/intro', label: '关于', position: 'left' },
           {
             href: 'https://github.com/1234567mm/lib-hub',
@@ -121,7 +121,7 @@ const darkCodeTheme = themes.dracula;
               { label: 'STM32', to: '/docs/stm32/stm32-basics/intro' },
               { label: 'ESP32', to: '/docs/esp32/esp32-intro' },
               { label: '干货分享', to: '/docs/sharing/intro' },
-              { label: '行业动态', to: '/docs/industry/news/intro' },
+              { label: '行业动态', to: '/industry-news' },
               { label: '开发工具', to: '/docs/开发工具/WSL2安装与基础配置' },
             ],
           },
