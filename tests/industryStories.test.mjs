@@ -26,3 +26,11 @@ test('industry page renders its primary story and has no blog-tag redirect', () 
   assert.doesNotMatch(page, /blog\/tags/);
   assert.doesNotMatch(page, /useHistory|useEffect/);
 });
+
+test('BYD detail page keeps the Docusaurus layout and loads the source article outside news', () => {
+  const page = fs.readFileSync(path.join(root, 'src/pages/industry/byd-strategy.js'), 'utf8');
+
+  assert.match(page, /@theme\/Layout/);
+  assert.match(page, /byd-strategy\.html/);
+  assert.doesNotMatch(page, /\/news\//);
+});
