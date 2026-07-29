@@ -13,11 +13,6 @@
     "label": "干货分享",
     "intro": { "type": "file-list", "listTitle": "笔记文章" }
   },
-  "industry": {
-    "dir": "industry",
-    "label": "行业动态",
-    "intro": { "type": "static" }
-  },
   "team": {
     "dir": "team",
     "label": "科研团队",

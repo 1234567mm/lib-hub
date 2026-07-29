@@ -129,7 +129,7 @@ function HomeSections() {
     { title: 'ESP32知识库', description: '乐鑫ESP32系列开发指南，涵盖Wi-Fi蓝牙、FOC电机控制、智能小车与无刷云台。', to: '/docs/esp32/esp32-intro', icon: 'signal' },
     { title: '开发工具', description: 'WSL2配置、Ollama本地模型、Docker开发环境、Hermes Agent等开发工具指南。', to: '/docs/开发工具/WSL2安装与基础配置', icon: 'tool' },
     { title: '干货分享', description: '开发工具推荐、实用技巧总结、经验分享。帮助嵌入式开发者提升效率少走弯路。', to: '/docs/sharing/intro', icon: 'bulb' },
-    { title: '行业动态', description: '嵌入式与智能硬件行业最新资讯、技术趋势与市场动态。保持对行业的敏锐洞察。', to: '/docs/industry/news/intro', icon: 'news' },
+    { title: '行业动态', description: '行业深度专题与技术趋势观察，按最新发布时间集中呈现。', to: '/industry-news', icon: 'news' },
     { title: '科研团队', description: '科研项目介绍、团队成员展示、技术研究成果。记录学术探索与技术创新的点滴。', to: '/docs/team/intro', icon: 'users' },
   ];
 

@@ -1,0 +1,19 @@
+.articlePage {
+  background: var(--ifm-background-color);
+}
+
+.articleFrame {
+  display: block;
+  width: 100%;
+  height: calc(100vh - var(--ifm-navbar-height));
+  min-height: 680px;
+  border: 0;
+  background: #f4f7fb;
+}
+
+@media screen and (max-width: 996px) {
+  .articleFrame {
+    height: calc(100dvh - var(--ifm-navbar-height));
+    min-height: 600px;
+  }
+}
