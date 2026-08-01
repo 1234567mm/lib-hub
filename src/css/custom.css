@@ -9,6 +9,7 @@
   --ifm-color-primary-lightest: #93c5fd;
   --ifm-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --ifm-heading-font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  --ifm-font-size-base: 16px;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-code-font-size: 95%;
 }
@@ -75,7 +76,21 @@
 
 /* 导航栏 */
 .navbar { box-shadow: 0 1px 0 0 var(--ifm-color-emphasis-200); }
-.navbar__title { font-weight: 700; }
+.navbar__title {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.navbar__item {
+  --ifm-navbar-item-padding-horizontal: 0.75rem;
+}
+.navbar__link {
+  font-size: 1rem;
+}
+/* 导航项均匀铺满整行、间距一致 */
+.navbar__items:not(.navbar__items--right) {
+  justify-content: space-evenly;
+  flex: 1 1 auto;
+}
 
 /* 页脚 */
 .footer { background: #1a1a1a; }

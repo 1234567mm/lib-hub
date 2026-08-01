@@ -8,6 +8,7 @@ sidebar_position: 1
 
 ## 笔记文章
 
+- [C/C++ 字节对齐完全指南](./cpp-byte-alignment) — struct 布局、pragma pack、alignas 与实战
 - [Git 本地项目管理与上传 GitHub 全流程](./git-local-github) — 从零掌握 Git 和 GitHub
 - [Windows Docker 学习笔记](./windows-docker) — Docker 入门与实战
 

@@ -79,16 +79,7 @@ const darkCodeTheme = themes.dracula;
         items: [
           { to: '/', label: '首页', position: 'left' },
           { to: '/tech-radar', label: '技术甄选', position: 'left' },
-          {
-            type: 'dropdown',
-            label: 'STM32',
-            position: 'left',
-            items: [
-              { to: '/docs/stm32/stm32-basics/intro', label: '基础知识' },
-              { to: '/docs/stm32/stm32-peripherals/intro', label: '外设驱动' },
-              { to: '/docs/stm32/stm32-projects/intro', label: '项目实战' },
-            ],
-          },
+          { to: '/docs/stm32/stm32-basics/intro', label: 'STM32', position: 'left' },
           { to: '/docs/esp32/esp32-intro', label: 'ESP32', position: 'left' },
           { to: '/docs/sharing/intro', label: '干货分享', position: 'left' },
           { to: '/docs/开发工具/WSL2安装与基础配置', label: '开发工具', position: 'left' },
