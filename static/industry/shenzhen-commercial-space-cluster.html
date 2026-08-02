@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深圳商业航天产业集群全景｜从火箭到卫星的深圳力量</title>
+<style>
+  :root{
+    --bg1:#f0f7fd; --bg2:#e2eef9;
+    --ink:#0a1628; --ink-soft:#2d4a5e; --muted:#5a7a94;
+    --card:#ffffff; --line:#d0e2f0;
+    --primary:#0B1D3A; --primary2:#1A3A5C; --primary3:#2B5F8A;
+    --blue:#1565B5; --blue-soft:#E3F0FC;
+    --teal:#0A6B5A; --teal-bg:#E0F5F0;
+    --gold:#B8860B; --gold-bg:#FFF6DD;
+    --purple:#5B2A86; --purple-bg:#F1E9F7;
+    --red:#A4133C; --red-soft:#FBE8EE;
+    --orange:#D4652A; --orange-bg:#FDF0E6;
+    --shadow:0 10px 30px rgba(8,24,48,.08), 0 2px 8px rgba(8,24,48,.05);
+    --shadow-lg:0 24px 60px rgba(8,24,48,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",-apple-system,"Segoe UI",sans-serif;
+    background:linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
+    color:var(--ink);line-height:1.75;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:#ffd97a;color:#1a1a1a}
+
+  .topbar{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.82);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1280px;margin:0 auto;padding:10px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .brand{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--primary);white-space:nowrap}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#0B1D3A,#1565B5);box-shadow:0 0 0 3px rgba(21,101,181,.15);flex-shrink:0}
+  .brand small{font-weight:500;color:var(--muted);font-size:12px;white-space:nowrap}
+  .nav-links{display:flex;gap:4px;flex-wrap:nowrap}
+  .nav-links a{
+    text-decoration:none;color:var(--ink-soft);font-size:12.5px;
+    padding:5px 8px;border-radius:8px;transition:.2s;white-space:nowrap;
+  }
+  .nav-links a:hover{background:var(--primary);color:#fff}
+
+  .hero{
+    max-width:1180px;margin:0 auto;padding:56px 24px 32px;
+    position:relative;
+  }
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blue-soft);color:var(--blue);
+    padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;
+    border:1px solid rgba(21,101,181,.18);
+  }
+  .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .hero h1{
+    font-size:clamp(30px,5vw,52px);line-height:1.2;margin:18px 0 14px;
+    color:var(--primary);font-weight:800;letter-spacing:-.5px;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(120deg,var(--blue) 0%,var(--purple) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .sub{font-size:18px;color:var(--ink-soft);max-width:760px;margin-bottom:22px}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+  .meta .chip{
+    background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:8px 14px;font-size:13px;color:var(--ink-soft);box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:8px;
+  }
+  .meta .chip b{color:var(--primary)}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+  .stat{
+    background:#fff;border-radius:14px;padding:18px 16px;box-shadow:var(--shadow);
+    border-top:3px solid var(--primary3);
+  }
+  .stat .num{font-size:26px;font-weight:800;color:var(--primary);line-height:1}
+  .stat .lbl{font-size:12px;color:var(--muted);margin-top:6px}
+
+  .section{max-width:1180px;margin:0 auto;padding:48px 24px}
+  .sec-head{margin-bottom:28px}
+  .sec-head .kicker{font-size:12px;letter-spacing:3px;color:var(--blue);font-weight:700;text-transform:uppercase}
+  .sec-head h2{font-size:30px;color:var(--primary);margin:6px 0 8px;font-weight:800}
+  .sec-head p{color:var(--ink-soft);max-width:780px}
+
+  .mindmap-wrap{
+    background:#fff;border-radius:20px;box-shadow:var(--shadow-lg);
+    padding:18px;overflow:hidden;position:relative;
+  }
+  .mindmap-wrap::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 50%, rgba(43,95,138,.06), transparent 60%);
+    pointer-events:none;
+  }
+  .mm-svg{display:block;width:100%;height:auto;max-height:680px}
+  .mm-legend{
+    display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;
+    padding:14px 12px 4px;font-size:12px;color:var(--muted);
+  }
+  .mm-legend span{display:inline-flex;align-items:center;gap:6px}
+  .mm-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+  .chapter{
+    background:#fff;border-radius:18px;box-shadow:var(--shadow);
+    margin-bottom:26px;overflow:hidden;border:1px solid var(--line);
+    scroll-margin-top:90px;
+  }
+  .chapter-head{
+    padding:22px 28px 18px;display:flex;gap:18px;align-items:flex-start;
+    border-bottom:1px solid var(--line);position:relative;
+  }
+  .chapter-head::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  }
+  .chapter.c1 .chapter-head::before{background:linear-gradient(180deg,#0B1D3A,#1565B5)}
+  .chapter.c2 .chapter-head::before{background:linear-gradient(180deg,#1565B5,#0A6B5A)}
+  .chapter.c3 .chapter-head::before{background:linear-gradient(180deg,#0A6B5A,#5B2A86)}
+  .chapter.c4 .chapter-head::before{background:linear-gradient(180deg,#5B2A86,#B8860B)}
+  .chapter.c5 .chapter-head::before{background:linear-gradient(180deg,#B8860B,#A4133C)}
+  .chapter.c6 .chapter-head::before{background:linear-gradient(180deg,#A4133C,#0B1D3A)}
+  .chapter.c7 .chapter-head::before{background:linear-gradient(180deg,#D4652A,#B8860B)}
+  .ch-num{
+    flex:0 0 auto;width:46px;height:46px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:20px;color:#fff;
+  }
+  .chapter.c1 .ch-num{background:linear-gradient(135deg,#0B1D3A,#1565B5)}
+  .chapter.c2 .ch-num{background:linear-gradient(135deg,#1565B5,#0A6B5A)}
+  .chapter.c3 .ch-num{background:linear-gradient(135deg,#0A6B5A,#5B2A86)}
+  .chapter.c4 .ch-num{background:linear-gradient(135deg,#5B2A86,#B8860B)}
+  .chapter.c5 .ch-num{background:linear-gradient(135deg,#B8860B,#A4133C)}
+  .chapter.c6 .ch-num{background:linear-gradient(135deg,#A4133C,#0B1D3A)}
+  .chapter.c7 .ch-num{background:linear-gradient(135deg,#D4652A,#B8860B)}
+  .ch-title{font-size:21px;font-weight:800;color:var(--primary);line-height:1.3}
+  .ch-sub{font-size:13px;color:var(--muted);margin-top:3px}
+  .chapter-body{padding:24px 28px 28px}
+
+  .essence{
+    background:linear-gradient(135deg,#f7f9fd,#eef3fb);
+    border-radius:12px;padding:16px 18px;margin-bottom:16px;
+    border-left:4px solid var(--primary3);
+  }
+  .essence .label{
+    font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--primary3);
+    text-transform:uppercase;margin-bottom:6px;
+  }
+  .essence p{font-size:15px;color:var(--ink)}
+
+  .point-list{list-style:none;margin:14px 0}
+  .point-list li{
+    position:relative;padding:8px 0 8px 26px;font-size:15px;color:var(--ink-soft);
+    border-bottom:1px solid var(--line);
+  }
+  .point-list li:last-child{border-bottom:none}
+  .point-list li::before{
+    content:"";position:absolute;left:4px;top:16px;width:8px;height:8px;
+    border-radius:2px;transform:rotate(45deg);
+    background:var(--primary3);
+  }
+  .point-list li b{color:var(--ink)}
+
+  .quote{
+    margin:16px 0;padding:18px 22px 18px 24px;
+    background:var(--blue-soft);border-radius:0 12px 12px 0;
+    border-left:4px solid var(--blue);position:relative;
+  }
+  .quote::before{content:"\2605";position:absolute;left:10px;top:-4px;font-size:36px;color:rgba(21,101,181,.15);line-height:1}
+  .quote .qlabel{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;
+    color:var(--blue);background:#fff;padding:3px 9px;border-radius:5px;margin-bottom:8px;
+    border:1px solid rgba(21,101,181,.2);
+  }
+  .quote p{font-size:15px;color:#1a2a3e;line-height:1.8}
+  .quote .who{display:block;font-size:12px;color:var(--blue);margin-top:6px;font-style:normal;font-weight:600}
+
+  .data-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .data-card{
+    background:linear-gradient(135deg,#fff,#f5f8fd);
+    border-radius:12px;padding:14px;border:1px solid var(--line);text-align:center;
+  }
+  .data-card .v{font-size:22px;font-weight:800;color:var(--blue)}
+  .data-card .k{font-size:12px;color:var(--muted);margin-top:4px}
+
+  .district-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+  .district{
+    border-radius:14px;padding:18px;border:1px solid var(--line);
+    position:relative;overflow:hidden;
+  }
+  .district::before{content:"";position:absolute;top:0;left:0;right:0;height:4px}
+  .district.d1::before{background:linear-gradient(90deg,#1565B5,#0B1D3A)}
+  .district.d2::before{background:linear-gradient(90deg,#D4652A,#B8860B)}
+  .district.d3::before{background:linear-gradient(90deg,#0A6B5A,#1565B5)}
+  .district.d4::before{background:linear-gradient(90deg,#5B2A86,#1565B5)}
+  .district .dt{font-weight:800;font-size:15px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+  .district .dd{font-size:13px;color:var(--ink-soft)}
+  .district .d-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+  .district .d-tags span{
+    font-size:10px;padding:2px 8px;border-radius:99px;
+    background:var(--blue-soft);color:var(--blue);font-weight:600;
+  }
+
+  .enterprise{background:#fff;border-radius:14px;padding:18px;border:1px solid var(--line);margin-bottom:12px;transition:.25s}
+  .enterprise:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .enterprise .en-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+  .enterprise .en-name{font-weight:800;font-size:15px;color:var(--primary)}
+  .enterprise .en-badge{
+    font-size:10px;font-weight:700;padding:2px 10px;border-radius:99px;white-space:nowrap;color:#fff;
+  }
+  .en-badge.b1{background:var(--blue)}
+  .en-badge.b2{background:var(--teal)}
+  .en-badge.b3{background:var(--purple)}
+  .en-badge.b4{background:var(--orange)}
+  .enterprise .en-detail{font-size:13px;color:var(--ink-soft)}
+  .enterprise .en-detail strong{color:var(--ink)}
+
+  .table-compare{margin:16px 0;overflow-x:auto}
+  .table-compare table{width:100%;border-collapse:collapse;font-size:14px}
+  .table-compare th,.table-compare td{padding:10px 12px;border:1px solid var(--line);text-align:left}
+  .table-compare th{background:#eef3fb;font-weight:700;color:var(--primary2);font-size:13px}
+
+  footer{
+    max-width:1180px;margin:0 auto;padding:40px 24px 60px;text-align:center;
+    color:var(--muted);font-size:13px;border-top:1px solid var(--line);
+  }
+  footer .ft-title{color:var(--primary);font-weight:700;margin-bottom:8px;font-size:15px}
+
+  .totop{
+    position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;
+    background:var(--primary);color:#fff;border:none;cursor:pointer;box-shadow:var(--shadow-lg);
+    display:flex;align-items:center;justify-content:center;font-size:18px;z-index:90;
+    opacity:0;pointer-events:none;transition:.3s;
+  }
+  .totop.show{opacity:1;pointer-events:auto}
+  .totop:hover{background:var(--blue)}
+
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .tag{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--blue-soft);color:var(--blue);font-weight:600}
+
+  @media(max-width:860px){
+    .hero-stats{grid-template-columns:repeat(2,1fr)}
+    .district-grid,.data-row{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .chapter-body{padding:18px}
+  }
+.policy-card{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;background:linear-gradient(135deg,#f0f7fd,#e2eef9);border-radius:16px;padding:24px;border-left:5px solid #0B1D3A;margin:10px 0}.policy-card .policy-text{flex:1;min-width:280px;font-size:15px;color:#2d4a5e;line-height:1.8}.policy-card .policy-text b{color:#0B1D3A}.policy-card .policy-map{flex:0 0 360px;width:360px}.policy-map svg{width:100%;height:auto;border-radius:12px;box-shadow:0 4px 16px rgba(8,24,48,.12);background:#fff}.district-highlight{fill-opacity:0.85;stroke:#fff;stroke-width:1.5}.district-label{font-size:9px;font-weight:700;fill:#0B1D3A;text-anchor:middle}.district-other{fill:#d5e4f0;stroke:#fff;stroke-width:1}.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:11px;color:#5a7a94}.legend-dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px}</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="dot"></span>
+      <span>深圳商业航天</span>
+      <small>20+8 产业集群解析</small>
+    </div>
+    <div class="nav-links">
+      <a href="#mindmap">思维导图</a>
+      <a href="#c1">集群总览</a>
+      <a href="#c2">空间布局</a>
+      <a href="#c3">核心企业</a>
+      <a href="#c4">科技巨头</a>
+      <a href="#c5">产业园区</a>
+      <a href="#c6">政策体系</a>
+      
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <span class="hero-tag"><span class="pulse"></span>深圳"20+8"战略性新兴产业集群</span>
+  <h1>商业航天产业集群全景<br><span class="accent">从火箭到卫星的深圳力量</span></h1>
+  <p class="sub">商业航天已纳入国家战略性新兴产业，深圳将商业航天作为"20+8"产业集群重点培育。从宝安到罗湖，从卫星制造到火箭发射，从华大北斗到华为腾讯——深圳正构建"箭—星—网"全链条商业航天生态。</p>
+  <div class="meta">
+    <span class="chip">🚀 <b>产业规模</b> 2024全国2.3万亿</span>
+    <span class="chip">🛰️ <b>专利总量</b> 2278件·全国第五</span>
+    <span class="chip">🏙️ <b>核心区</b> 宝安·罗湖·南山·龙岗</span>
+    <span class="chip">📈 <b>目标</b> 2030接近10万亿</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">2278</div><div class="lbl">空天技术专利总量</div></div>
+    <div class="stat"><div class="num">190+</div><div class="lbl">罗湖空天核心企业</div></div>
+    <div class="stat"><div class="num">40%+</div><div class="lbl">车载导航仪全国市占</div></div>
+    <div class="stat"><div class="num">3000亿</div><div class="lbl">2026广东目标规模</div></div>
+  </div>
+</header>
+
+
+
+<!-- Mind Map -->
+<section class="section" id="mindmap">
+  <div class="sec-head">
+    <div class="kicker">Mind Map</div>
+    <h2>深圳商业航天全景思维导图</h2>
+    <p>以"深圳商业航天产业集群"为轴心，辐射出六大核心主题：集群总览、空间布局、核心企业、科技巨头布局、产业载体、政策体系。</p>
+  </div>
+  <div class="mindmap-wrap">
+    <svg class="mm-svg" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="spaceGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1565B5"/><stop offset="100%" stop-color="#0B1D3A"/>
+        </radialGradient>
+        <filter id="soft-s"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
+      <circle cx="500" cy="310" r="240" fill="none" stroke="#c8daf0" stroke-width="1.5" stroke-dasharray="3 5"/>
+      <circle cx="500" cy="310" r="160" fill="none" stroke="#d0e2f0" stroke-width="1" stroke-dasharray="2 4"/>
+      <g stroke-width="2.5" fill="none" opacity="0.5">
+        <path d="M500 310 L500 60" stroke="#0B1D3A"/><path d="M500 310 L770 110" stroke="#1565B5"/>
+        <path d="M500 310 L910 280" stroke="#0A6B5A"/><path d="M500 310 L500 580" stroke="#5B2A86"/>
+        <path d="M500 310 L90 280" stroke="#B8860B"/><path d="M500 310 L230 110" stroke="#A4133C"/>
+        <path d="M500 310 L500 460" stroke="#D4652A"/>
+      </g>
+      <circle cx="500" cy="310" r="75" fill="url(#spaceGrad)" filter="url(#soft-s)" opacity="0.35"/>
+      <circle cx="500" cy="310" r="60" fill="url(#spaceGrad)"/>
+      <text x="500" y="300" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">深圳商业航天</text>
+      <text x="500" y="320" text-anchor="middle" fill="#FFD97A" font-size="12" font-weight="600">产业集群</text>
+      <text x="500" y="338" text-anchor="middle" fill="#cfe0ff" font-size="9">火箭·卫星·应用</text>
+      <a href="#c1" style="cursor:pointer"><g><rect x="420" y="28" width="160" height="56" rx="12" fill="#0B1D3A"/><text x="500" y="52" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">① 集群总览</text><text x="500" y="70" text-anchor="middle" fill="#cfe0ff" font-size="10">规模·专利·增速</text></g></a>
+      <a href="#c2" style="cursor:pointer"><g><rect x="690" y="78" width="160" height="56" rx="12" fill="#1565B5"/><text x="770" y="102" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">② 空间布局</text><text x="770" y="120" text-anchor="middle" fill="#dae6ff" font-size="10">一核引领·多区联动</text></g></a>
+      <a href="#c3" style="cursor:pointer"><g><rect x="830" y="248" width="160" height="56" rx="12" fill="#0A6B5A"/><text x="910" y="272" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">③ 核心企业</text><text x="910" y="290" text-anchor="middle" fill="#c9efe6" font-size="10">15家重点企业图谱</text></g></a>
+      <a href="#c4" style="cursor:pointer"><g><rect x="420" y="548" width="160" height="56" rx="12" fill="#5B2A86"/><text x="500" y="572" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">④ 科技巨头</text><text x="500" y="590" text-anchor="middle" fill="#e6d8f3" font-size="10">华为·腾讯·比亚迪</text></g></a>
+      <a href="#c5" style="cursor:pointer"><g><rect x="10" y="248" width="160" height="56" rx="12" fill="#B8860B"/><text x="90" y="272" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑤ 产业园区</text><text x="90" y="290" text-anchor="middle" fill="#ffe9b8" font-size="10">8大重点载体</text></g></a>
+      <a href="#c6" style="cursor:pointer"><g><rect x="150" y="78" width="160" height="56" rx="12" fill="#A4133C"/><text x="230" y="102" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑥ 政策体系</text><text x="230" y="120" text-anchor="middle" fill="#ffd9e3" font-size="10">国省市三级支撑</text></g></a>
+      
+    </svg>
+    <div class="mm-legend">
+      <span><i style="background:#0B1D3A"></i>产业概览</span>
+      <span><i style="background:#1565B5"></i>区域布局</span>
+      <span><i style="background:#0A6B5A"></i>企业生态</span>
+      <span><i style="background:#5B2A86"></i>巨头入局</span>
+      <span><i style="background:#B8860B"></i>空间载体</span>
+      <span><i style="background:#A4133C"></i>政策支撑</span>
+      <span><i style="background:#D4652A"></i>专班机制</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTERS ===== -->
+<section class="section">
+  <div class="sec-head">
+    <div class="kicker">Seven Chapters</div>
+    <h2>深圳商业航天七大主题</h2>
+    <p>从产业概览到科技巨头入局，从空间布局到专班机制，全景呈现深圳商业航天产业集群。</p>
+  </div>
+
+  <!-- Chapter 1: 集群总览 -->
+  <article class="chapter c1" id="c1">
+    <div class="chapter-head">
+      <div class="ch-num">01</div>
+      <div>
+        <div class="ch-title">集群总体概况</div>
+        <div class="ch-sub">2278件专利全国第五 · 70余家重点企业 · 四环联动产业格局</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>深圳将商业航天（空天技术）作为"20+8"战略性新兴产业集群重点培育，立足电子信息产业基础，聚焦卫星制造、卫星运营、关键零部件和卫星应用等核心领域，已形成相对完善的产业体系。</p>
+      </div>
+      <div class="data-row">
+        <div class="data-card"><div class="v">2.3万亿</div><div class="k">2024全国商业航天收入</div></div>
+        <div class="data-card"><div class="v">10万亿</div><div class="k">2030市场预测规模</div></div>
+        <div class="data-card"><div class="v">15.8%</div><div class="k">近5年专利复合增速</div></div>
+      </div>
+      <ul class="point-list">
+        <li><b>产业规模：</b>2024年中国商业航天行业收入规模达2.3万亿元，预计2030年接近10万亿元。宝安区产业集群规模近30亿元，力争2025年突破100亿元。</li>
+        <li><b>产业格局：</b>已形成"卫星制造—卫星运营—关键零部件—卫星应用"四环联动格局，企业集中在卫星应用、卫星制造、地面设备三大领域。</li>
+        <li><b>专利与创新：</b>全市空天技术专利2278件、全国第五，近10年复合增长率10.1%，专利量前三十的创新主体中企业占比80%。</li>
+        <li><b>产业链结构：</b>深圳原有基础呈"哑铃形"——底层制造业发达、上层应用丰富，中间卫星火箭制造正在加速补齐，正构建"箭—星—网"全链条生态。</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- Chapter 2: 空间布局 -->
+  <article class="chapter c2" id="c2">
+    <div class="chapter-head">
+      <div class="ch-num">02</div>
+      <div>
+        <div class="ch-title">"一核引领、多区联动"空间布局</div>
+        <div class="ch-sub">宝安核心 · 罗湖特色 · 南山创新 · 龙岗制造+巨头基地</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>深圳商业航天产业呈现"一核引领、多区联动"的空间格局，以宝安区为核心承载区，罗湖、南山、龙岗等区协同发展，初步形成全链条产业生态。</p>
+      </div>
+      <div class="district-grid">
+        <div class="district d1">
+          <div class="dt">🚀 宝安区 · 核心承载区</div>
+          <div class="dd">建成大湾区首个空天产业总部基地星通大厦，打造空天技术产业园（南昌园）、润恒园、宝星智荟城等特色园区。集聚星际荣耀、亚太星通等龙头企业，集群规模近30亿元。在卫星通信、航空装备、航天材料等领域培育重点企业70余家。</div>
+          <div class="d-tags"><span>亚太星通</span><span>星际荣耀</span><span>星通大厦</span><span>70+企业</span></div>
+        </div>
+        <div class="district d2">
+          <div class="dt">🛰️ 罗湖区 · 特色集聚区</div>
+          <div class="dd">以高轨卫星为突破口，集聚空天产业核心企业190余家，近三年总投资46.95亿元。初步形成"二箭四星一网"产业生态——蓝箭航天提供发射能力，魔方卫星专注低轨卫星批量化制造（已从龙岗迁至罗湖），苍宇天基提供高中轨道天基信息服务。</div>
+          <div class="d-tags"><span>蓝箭航天</span><span>魔方卫星</span><span>苍宇天基</span><span>190+企业</span></div>
+        </div>
+        <div class="district d3">
+          <div class="dt">🔭 南山区 · 创新研发高地</div>
+          <div class="dd">依托高新区和深圳湾科技生态园，集聚深圳东方红、氦星光联等研制企业。光启技术已成立商业航天全资子公司。零部件、芯片、定位导航技术等细分领域全国领跑。</div>
+          <div class="d-tags"><span>深圳东方红</span><span>氦星光联</span><span>光启技术</span><span>华信天线</span></div>
+        </div>
+        <div class="district d4">
+          <div class="dt">⚙️ 龙岗区 · 关键部件+科技巨头基地</div>
+          <div class="dd">华大北斗总部（GNSS芯片全球第五）、地球之眼（国星宇航旗下）、亚太航空、驭龙航天汇聚。华为与比亚迪的航天业务/产线主要布局于龙岗区，依托龙岗制造基础支撑关键部件量产。原魔方卫星研发总部亦位于此，现总部迁至罗湖。</div>
+          <div class="d-tags"><span>华大北斗</span><span>地球之眼</span><span>亚太航空</span><span>驭龙航天</span></div>
+        </div>
+      </div>
+      <ul class="point-list">
+        <li><b>宝安核心区：</b>大湾区首个空天产业总部基地星通大厦，亚太星通链主企业，10亿元空天产业基金落地。</li>
+        <li><b>罗湖新势力：</b>"二箭四星一网"生态，魔方卫星迁入补齐卫星批量制造能力，润弘大厦已吸引逾40家企业入驻。</li>
+        <li><b>南山创新极：</b>光启技术超材料结构件批量用于火箭卫星，2026年5月成立商业航天子公司。</li>
+        <li><b>龙岗制造核：</b>华大北斗冲刺港股"北斗芯片第一股"，华为与比亚迪在此布局航天相关产线，国星宇航地球之眼公司落户。</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- Chapter 3: 15家核心企业 -->
+  <article class="chapter c3" id="c3">
+    <div class="chapter-head">
+      <div class="ch-num">03</div>
+      <div>
+        <div class="ch-title">15家核心企业图谱</div>
+        <div class="ch-sub">覆盖卫星制造 · 火箭研制 · 芯片部件 · 卫星运营 · 终端应用</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>深圳商业航天已形成覆盖全产业链的企业矩阵，从卫星制造到火箭研制，从芯片部件到运营服务，15家重点企业共同构成了深圳商业航天的核心力量。</div>
+
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">1. 亚太卫星宽带通信（亚太星通）</span><span class="en-badge b1">链主企业</span></div>
+        <div class="en-detail"><strong>宝安·星通大厦</strong> 我国境内仅有的两家拥有通信卫星资源的运营商之一，"深圳星"通信容量50Gbps，入网端站超2.6万个。国家级专精特新"小巨人"。</div>
+      </div>
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">2. 深圳东方红卫星有限公司</span><span class="en-badge b2">央企龙头</span></div>
+        <div class="en-detail"><strong>南山·学苑大道</strong> 隶属中国航天科技集团，研制全球首颗脉冲星实验卫星、阿曼首颗人造卫星，国内微小卫星研制领军企业。</div>
+      </div>
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">3. 魔方卫星科技有限公司</span><span class="en-badge b3">第一梯队</span></div>
+        <div class="en-detail"><strong>罗湖（原龙岗迁入）</strong> 国内商业航天卫星制造第一梯队，纳入中国星网和上海千帆星座合格供应商名录。</div>
+      </div>
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">4. 华大北斗科技股份有限公司</span><span class="en-badge b1">芯片龙头</span></div>
+        <div class="en-detail"><strong>龙岗·总部</strong> 专用GNSS芯片出货量全球第五，累计交付超1500万颗。2025年营收10.14亿元，港股"北斗芯片第一股"冲刺中。</div>
+      </div>
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">5. 星际荣耀智慧装备有限责任公司</span><span class="en-badge b4">火箭独角兽</span></div>
+        <div class="en-detail"><strong>宝安·南昌园</strong> 国内首家可复用垂直起降技术商业航天企业，火箭成功发射次数占国内民营火箭行业51.3%。</div>
+      </div>
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">6. 蓝箭航天科技（深圳）有限公司</span><span class="en-badge b4">火箭六强</span></div>
+        <div class="en-detail"><strong>罗湖区</strong> 国内民营火箭"六强"之一，朱雀三号对标猎鹰9号（可复用），LEO运力21吨。已启动IPO进程。</div>
+      </div>
+      <div class="enterprise">
+        <div class="en-header"><span class="en-name">7—15. 其他重点企业</span><span class="en-badge b2">细分龙头</span></div>
+        <div class="en-detail"><strong>氦星光联</strong>（南山·空间激光通信）｜<strong>苍宇天基</strong>（罗湖·高轨中继卫星）｜<strong>中科星图</strong>（罗湖·空天信息）｜<strong>航盛电子</strong>（宝安·车载电子龙头）｜<strong>华信天线</strong>（南山·高精度天线）｜<strong>傲天科技</strong>（南山·卫星通信终端）｜<strong>乾行达</strong>（宝安·航天材料）｜<strong>科卫泰</strong>（宝安·无人机+卫星）｜<strong>智航无人机</strong>（宝安·工业级无人机）</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Chapter 4: 科技巨头（深圳本土+全国） -->
+  <article class="chapter c4" id="c4">
+    <div class="chapter-head">
+      <div class="ch-num">04</div>
+      <div>
+        <div class="ch-title">科技巨头逐鹿星辰：深圳力量</div>
+        <div class="ch-sub">华为·腾讯·比亚迪·光启技术 · 深圳本土科技巨头的商业航天布局</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>2025年中国商业发射50次占全年54%。以华为、腾讯、比亚迪、光启技术为代表的深圳科技巨头，通过自研产品、资本投资、战略合作、设立子公司等方式深度入局商业航天。腾讯作为深圳本土互联网巨头，是最早投资商业航天的科技企业之一。</p>
+      </div>
+
+      <div class="enterprise" style="border-left:4px solid #1565B5">
+        <div class="en-header"><span class="en-name">🔵 华为——三环入局商业航天</span><span class="en-badge b1">硬件制造派</span></div>
+        <div class="en-detail">
+          <strong>龙岗/坂田基地</strong> 从发射、星载、终端三环切入。<br>
+          <strong>发射侧：</strong>2025年12月与海南国际商业航天发射公司、文昌航天城管理局签署战略合作协议，围绕发射场数字化、星座运营智能化、"空—天—地"一体化网络建设协作。<br>
+          <strong>星载侧：</strong>联合长光华芯研发的激光通信载荷已搭载试验卫星完成Tbps级在轨验证，用于千帆星座。<br>
+          <strong>终端侧：</strong>与中国卫通合作，成为全球首家同时支持天通卫星、北斗卫星、低轨卫星三网通信的手机厂商。
+        </div>
+      </div>
+
+      <div class="enterprise" style="border-left:4px solid #1565B5">
+        <div class="en-header"><span class="en-name">🔵 腾讯——最早投资航天的深圳互联网巨头</span><span class="en-badge b1">资本生态派</span></div>
+        <div class="en-detail">
+          <strong>南山·腾讯总部</strong> 2015年和2017年两次领投Satellogic超2700万美元，获取高分辨率遥感数据优先使用权，服务于腾讯地图、智慧城市等业务。2019年联合推出"WeEarth超级地球"平台，计划组建300颗卫星对地观测网。2020年联合发起"卫星即服务产业联盟"，搭建信息互通与生态融合平台。
+        </div>
+      </div>
+
+      <div class="enterprise" style="border-left:4px solid #0A6B5A">
+        <div class="en-header"><span class="en-name">🟢 比亚迪——与中国火箭院全面战略合作</span><span class="en-badge b2">硬件制造派</span></div>
+        <div class="en-detail">
+          <strong>龙岗/坪山基地</strong> 2018年与中国运载火箭技术研究院开启战略交流。2024年10月升级全面战略合作：<strong>技术共享</strong>——输出电池储能、轻量化材料及电驱系统技术；<strong>联合研发</strong>——聚焦太空能源系统、卫星电源模块、空间站能源管理，共同开发适用于小型卫星的高能效长寿命电池模组。
+        </div>
+      </div>
+
+      <div class="enterprise" style="border-left:4px solid #5B2A86">
+        <div class="en-header"><span class="en-name">🟣 光启技术——成立商业航天子公司</span><span class="en-badge b3">硬件制造派</span></div>
+        <div class="en-detail">
+          <strong>南山·总部</strong> 国内唯一实现超材料大规模量产并应用于尖端装备的企业。超材料结构件比强度较传统铝合金高3倍，重量减轻60%，单颗卫星发射成本降低15%—20%。批量应用于长征八号、朱雀三号及千帆星座，市占率超85%。<strong>2026年5月</strong>成立全资子公司"深圳光启商业航天技术有限公司"，覆盖卫星终端制造、火箭发动机研发、微小卫星生产。
+        </div>
+      </div>
+
+      <div class="essence" style="margin-top:18px">
+        <div class="label">全国视野·其他巨头入局</div>
+        <p><b>🔸 吉利</b>（时空道宇·64颗卫星组网）｜<b>🔸 宁德时代</b>（航天固态电池·超90%市占）｜<b>🔸 亿纬锂能</b>（箭上验证）｜<b>🔸 TCL中环</b>（航天级硅片）｜<b>🔸 先导科技</b>（星载射频芯片）｜<b>🔸 阿里巴巴</b>（算力星座+长光卫星）｜<b>🔸 联想</b>（君联资本覆盖全产业链）｜<b>🔸 小米</b>（顺为资本投资星际荣耀等）｜<b>🔸 格力</b>（控股航宇微·"珠海一号"）｜<b>🔸 海信</b>（控股乾照光电·砷化镓电池）</p>
+        
+      </div>
+    </div>
+  </article>
+
+  <!-- Chapter 5: 重点园区 -->
+  <article class="chapter c5" id="c5">
+    <div class="chapter-head">
+      <div class="ch-num">05</div>
+      <div>
+        <div class="ch-title">重点产业园区与载体</div>
+        <div class="ch-sub">8大载体构建空天产业空间矩阵</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>从宝安到罗湖，深圳已建成覆盖卫星制造、火箭装配、空天信息服务的完整产业空间载体矩阵。</div>
+      <div class="district-grid">
+        <div class="district d1">
+          <div class="dt">🏢 星通大厦 <span style="font-weight:400;font-size:12px;color:var(--muted)">· 宝安</span></div>
+          <div class="dd">大湾区首个空天产业总部基地，亚太星通链主企业所在地。</div>
+        </div>
+        <div class="district d2">
+          <div class="dt">🏭 空天技术产业园（南昌园）<span style="font-weight:400;font-size:12px;color:var(--muted)">· 宝安</span></div>
+          <div class="dd">深圳首个空天技术特色专业园区，星际荣耀7000平方米产线所在地。</div>
+        </div>
+        <div class="district d3">
+          <div class="dt">🏗️ 润弘空天科技大厦 <span style="font-weight:400;font-size:12px;color:var(--muted)">· 罗湖</span></div>
+          <div class="dd">罗湖区空天产业核心载体，运营一年吸引逾40家优质企业入驻。</div>
+        </div>
+        <div class="district d4">
+          <div class="dt">🔬 航天科技广场/卫星大厦 <span style="font-weight:400;font-size:12px;color:var(--muted)">· 南山</span></div>
+          <div class="dd">南山区空天技术特色产业园区，集聚七百余创新主体。</div>
+        </div>
+      </div>
+      <ul class="point-list">
+        <li><b>润恒鼎丰高新产业园</b>（宝安）：聚焦卫星应用与航天材料。</li>
+        <li><b>宝星智荟城</b>（宝安）：培育专精特新企业32家、小巨人6家。</li>
+        <li><b>粤海城低空经济产业园</b>（罗湖）：低空与空天融合产业载体。</li>
+        <li><b>石岩罗租空天产业示范园</b>（宝安）：聚焦航天制造环节。</li>
+        <li><b>大鹏新区卫星制造产业用地：依托大鹏新区优质生态与空间资源，规划布局卫星智能制造、总装测试基地，打造深圳商业航天卫星产业核心承载区。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">罗湖空间支持</span>
+        <p>罗湖区设立近5万平方米产业用地和3—7折租金优惠，推出"三个2000万"专项扶持。</p>
+        <span class="who">—— 罗湖区产业政策</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- Chapter 6: 政策体系 -->
+  <article class="chapter c6" id="c6">
+    <div class="chapter-head">
+      <div class="ch-num">06</div>
+      <div>
+        <div class="ch-title">四层政策支撑体系 + 金融活水</div>
+        <div class="ch-sub">国家战略·省级行动·市级规划·区级专项</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>从国家到区级，四层政策体系为深圳商业航天提供从资本通道到产业空间的全方位支撑。</div>
+      <div class="table-compare">
+        <table>
+          <tr><th>层级</th><th>政策/文件</th><th>核心要点</th></tr>
+          <tr><td><b>🇨🇳 国家</b></td><td>科创板第五套"尚未盈利"绿色通道</td><td>明确纳入商业航天，蓝箭航天等已启动IPO</td></tr>
+          <tr><td><b>🗺️ 省级</b></td><td>《推动商业航天高质量发展行动方案》</td><td>2026年全省目标3000亿元，"双核多点"广深布局</td></tr>
+          <tr><td><b>🏙️ 市级</b></td><td>深圳"十五五"规划纲要</td><td>商业航天列为新兴支柱产业</td></tr>
+          <tr><td><b>🏢 宝安区</b></td><td>空天产业高质量发展若干措施</td><td>唯一专项政策，30%—50%研发补贴</td></tr>
+          <tr><td><b>🏢 罗湖区</b></td><td>"三个2000万"专项扶持</td><td>580亿基金矩阵，5万㎡产业用地</td></tr>
+        </table>
+      </div>
+      <ul class="point-list">
+        <li><b>资本活水：</b>10亿元空天产业基金落地宝安（鼎晖百孚+市区引导基金）；罗湖构建总动员能超580亿元产业基金矩阵。</li>
+        <li><b>IPO加速：</b>蓝箭航天、华大北斗（冲刺港股"北斗芯片第一股"）等密集启动IPO。</li>
+        <li><b>人才保障：</b>深圳"菁英人才"政策，吸引近四千名发明创造人才集聚空天技术领域。</li>
+      </ul>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <div class="ft-title">深圳商业航天产业集群全景</div>
+  <div>基于深圳"20+8"产业集群解析与14家科技龙头企业的产业布局全景图谱</div>
+  <div style="margin-top:6px">数据来源：企业年报 / 各区统计局 / 深圳市战略性新兴产业集群促进工作组 · 2026年7月</div>
+  <div style="margin-top:10px;font-size:12px;color:#999">报告编制：驻深圳工作组 / 产业研究部 / 深圳市产业集群服务专班工作组 · 2026年7月</div>
+</footer>
+
+<button class="totop" id="totop" aria-label="返回顶部">↑</button>
+
+<script>
+  const btn=document.getElementById('totop');
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY>400) btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
+  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  const io=new IntersectionObserver((entries)=>entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='translateY(0)'}}),{threshold:0.08});
+  document.querySelectorAll('.chapter,.stat,.enterprise,.district').forEach(el=>{el.style.opacity=0;el.style.transform='translateY(24px)';el.style.transition='opacity .6s ease, transform .6s ease';io.observe(el)});
+</script>
+</body>
+</html>

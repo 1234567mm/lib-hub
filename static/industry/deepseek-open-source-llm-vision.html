@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从DeepSeek看开源大模型发展愿景｜梁文峰投资者交流会精华</title>
+<style>
+  :root{
+    --bg1:#f0f5ff; --bg2:#e4edfa;
+    --ink:#0d1b2a; --ink-soft:#36454f; --muted:#6b7b8d;
+    --card:#ffffff; --line:#dce3ef;
+    --primary:#0A1F3F; --primary2:#1B3A5C; --primary3:#4361A0;
+    --blue:#1A5BB5; --blue-soft:#E8F0FE;
+    --teal:#0B6E5A; --teal-bg:#E4F5F0;
+    --gold:#B8860B; --gold-bg:#FFF6DD;
+    --purple:#5B2A86; --purple-bg:#F1E9F7;
+    --red:#A4133C; --red-soft:#FBE8EE;
+    --orange:#D4652A; --orange-bg:#FDF0E6;
+    --shadow:0 10px 30px rgba(10,30,60,.08), 0 2px 8px rgba(10,30,60,.05);
+    --shadow-lg:0 24px 60px rgba(10,30,60,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",-apple-system,"Segoe UI",sans-serif;
+    background:linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
+    color:var(--ink);line-height:1.75;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:#ffd97a;color:#1a1a1a}
+
+  .topbar{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.82);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner{
+    max-width:1180px;margin:0 auto;padding:12px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary)}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));box-shadow:0 0 0 3px rgba(26,91,181,.15)}
+  .brand small{font-weight:500;color:var(--muted);font-size:12px}
+  .nav-links{display:flex;gap:6px;flex-wrap:wrap}
+  .nav-links a{
+    text-decoration:none;color:var(--ink-soft);font-size:13px;
+    padding:6px 10px;border-radius:8px;transition:.2s;white-space:nowrap;
+  }
+  .nav-links a:hover{background:var(--primary);color:#fff}
+
+  .hero{
+    max-width:1180px;margin:0 auto;padding:56px 24px 32px;
+    position:relative;
+  }
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blue-soft);color:var(--blue);
+    padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;
+    border:1px solid rgba(26,91,181,.18);
+  }
+  .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .hero h1{
+    font-size:clamp(30px,5vw,52px);line-height:1.2;margin:18px 0 14px;
+    color:var(--primary);font-weight:800;letter-spacing:-.5px;
+  }
+  .hero h1 .accent{
+    background:linear-gradient(120deg,var(--blue) 0%,var(--teal) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .sub{font-size:18px;color:var(--ink-soft);max-width:760px;margin-bottom:22px}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+  .meta .chip{
+    background:#fff;border:1px solid var(--line);border-radius:10px;
+    padding:8px 14px;font-size:13px;color:var(--ink-soft);box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:8px;
+  }
+  .meta .chip b{color:var(--primary)}
+  .hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+  .stat{
+    background:#fff;border-radius:14px;padding:18px 16px;box-shadow:var(--shadow);
+    border-top:3px solid var(--primary3);
+  }
+  .stat .num{font-size:26px;font-weight:800;color:var(--primary);line-height:1}
+  .stat .lbl{font-size:12px;color:var(--muted);margin-top:6px}
+
+  .section{max-width:1180px;margin:0 auto;padding:48px 24px}
+  .sec-head{margin-bottom:28px}
+  .sec-head .kicker{font-size:12px;letter-spacing:3px;color:var(--blue);font-weight:700;text-transform:uppercase}
+  .sec-head h2{font-size:30px;color:var(--primary);margin:6px 0 8px;font-weight:800}
+  .sec-head p{color:var(--ink-soft);max-width:780px}
+
+  /* Mind Map */
+  .mindmap-wrap{
+    background:#fff;border-radius:20px;box-shadow:var(--shadow-lg);
+    padding:18px;overflow:hidden;position:relative;
+  }
+  .mindmap-wrap::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 50%, rgba(67,97,160,.06), transparent 60%);
+    pointer-events:none;
+  }
+  .mm-svg{display:block;width:100%;height:auto;max-height:680px}
+  .mm-legend{
+    display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:center;
+    padding:14px 12px 4px;font-size:12px;color:var(--muted);
+  }
+  .mm-legend span{display:inline-flex;align-items:center;gap:6px}
+  .mm-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+  /* Chapter Base */
+  .chapter{
+    background:#fff;border-radius:18px;box-shadow:var(--shadow);
+    margin-bottom:26px;overflow:hidden;border:1px solid var(--line);
+    scroll-margin-top:90px;
+  }
+  .chapter-head{
+    padding:22px 28px 18px;display:flex;gap:18px;align-items:flex-start;
+    border-bottom:1px solid var(--line);position:relative;
+  }
+  .chapter-head::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:5px;
+  }
+  .chapter.c1 .chapter-head::before{background:linear-gradient(180deg,#0A1F3F,#4361A0)}
+  .chapter.c2 .chapter-head::before{background:linear-gradient(180deg,#1A5BB5,#0B6E5A)}
+  .chapter.c3 .chapter-head::before{background:linear-gradient(180deg,#0B6E5A,#5B2A86)}
+  .chapter.c4 .chapter-head::before{background:linear-gradient(180deg,#5B2A86,#B8860B)}
+  .chapter.c5 .chapter-head::before{background:linear-gradient(180deg,#B8860B,#A4133C)}
+  .chapter.c6 .chapter-head::before{background:linear-gradient(180deg,#A4133C,#0B6E5A)}
+  .chapter.c7 .chapter-head::before{background:linear-gradient(180deg,#4361A0,#1A5BB5)}
+  .chapter.c8 .chapter-head::before{background:linear-gradient(180deg,#0B6E5A,#5B2A86)}
+  .chapter.c9 .chapter-head::before{background:linear-gradient(180deg,#5B2A86,#1A5BB5)}
+  .chapter.c10 .chapter-head::before{background:linear-gradient(180deg,#0A1F3F,#B8860B)}
+  .ch-num{
+    flex:0 0 auto;width:46px;height:46px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:20px;color:#fff;
+  }
+  .chapter.c1 .ch-num{background:linear-gradient(135deg,#0A1F3F,#4361A0)}
+  .chapter.c2 .ch-num{background:linear-gradient(135deg,#1A5BB5,#0B6E5A)}
+  .chapter.c3 .ch-num{background:linear-gradient(135deg,#0B6E5A,#5B2A86)}
+  .chapter.c4 .ch-num{background:linear-gradient(135deg,#5B2A86,#B8860B)}
+  .chapter.c5 .ch-num{background:linear-gradient(135deg,#B8860B,#A4133C)}
+  .chapter.c6 .ch-num{background:linear-gradient(135deg,#A4133C,#0B6E5A)}
+  .chapter.c7 .ch-num{background:linear-gradient(135deg,#4361A0,#1A5BB5)}
+  .chapter.c8 .ch-num{background:linear-gradient(135deg,#0B6E5A,#5B2A86)}
+  .chapter.c9 .ch-num{background:linear-gradient(135deg,#5B2A86,#1A5BB5)}
+  .chapter.c10 .ch-num{background:linear-gradient(135deg,#0A1F3F,#B8860B)}
+  .ch-title{font-size:21px;font-weight:800;color:var(--primary);line-height:1.3}
+  .ch-sub{font-size:13px;color:var(--muted);margin-top:3px}
+  .chapter-body{padding:24px 28px 28px}
+
+  .essence{
+    background:linear-gradient(135deg,#f7f9fd,#eef3fb);
+    border-radius:12px;padding:16px 18px;margin-bottom:16px;
+    border-left:4px solid var(--primary3);
+  }
+  .essence .label{
+    font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--primary3);
+    text-transform:uppercase;margin-bottom:6px;
+  }
+  .essence p{font-size:15px;color:var(--ink)}
+
+  .point-list{list-style:none;margin:14px 0}
+  .point-list li{
+    position:relative;padding:8px 0 8px 26px;font-size:15px;color:var(--ink-soft);
+    border-bottom:1px solid var(--line);
+  }
+  .point-list li:last-child{border-bottom:none}
+  .point-list li::before{
+    content:"";position:absolute;left:4px;top:16px;width:8px;height:8px;
+    border-radius:2px;transform:rotate(45deg);
+    background:var(--primary3);
+  }
+  .point-list li b{color:var(--ink)}
+
+  .quote{
+    margin:16px 0;padding:18px 22px 18px 24px;
+    background:var(--blue-soft);border-radius:0 12px 12px 0;
+    border-left:4px solid var(--blue);position:relative;
+  }
+  .quote::before{
+    content:"\201C";position:absolute;left:10px;top:-6px;
+    font-size:48px;color:rgba(26,91,181,.25);font-family:Georgia,serif;line-height:1;
+  }
+  .quote .qlabel{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;
+    color:var(--blue);background:#fff;padding:3px 9px;border-radius:5px;margin-bottom:8px;
+    border:1px solid rgba(26,91,181,.2);
+  }
+  .quote p{font-size:15.5px;color:#1a2a3e;line-height:1.85;font-style:italic}
+  .quote .who{display:block;font-size:12px;color:var(--blue);margin-top:8px;font-style:normal;font-weight:600}
+
+  .golden{
+    margin:18px 0;padding:20px 22px;
+    background:linear-gradient(135deg,var(--gold-bg),#fff8e0);
+    border-radius:14px;border:1px solid rgba(184,134,11,.25);
+    position:relative;overflow:hidden;
+  }
+  .golden::after{
+    content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;
+    background:radial-gradient(circle,rgba(184,134,11,.18),transparent 70%);
+  }
+  .golden .glabel{
+    font-size:11px;font-weight:800;letter-spacing:2px;color:var(--gold);
+    margin-bottom:8px;display:flex;align-items:center;gap:6px;
+  }
+  .golden .glabel::before{content:"★";color:var(--gold)}
+  .golden blockquote{font-size:17px;color:#5a3d00;font-weight:600;line-height:1.7;position:relative;z-index:1}
+
+  .compare{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;
+  }
+  .cmp{border-radius:12px;padding:14px 16px;border:1px solid var(--line)}
+  .cmp.a{background:#eef3fb;border-color:#cdd8ee}
+  .cmp.b{background:#f0faf6;border-color:#b8dfd2}
+  .cmp .h{font-weight:800;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .cmp.a .h{color:var(--primary2)}
+  .cmp.b .h{color:var(--teal)}
+  .cmp p{font-size:13.5px;color:var(--ink-soft)}
+
+  .data-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .data-card{
+    background:linear-gradient(135deg,#fff,#f5f8fd);
+    border-radius:12px;padding:14px;border:1px solid var(--line);text-align:center;
+  }
+  .data-card .v{font-size:22px;font-weight:800;color:var(--blue)}
+  .data-card .k{font-size:12px;color:var(--muted);margin-top:4px}
+
+  /* ===== 四象限 ===== */
+  .quad-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .quad{background:#fff;border-radius:12px;padding:14px;border:1px solid var(--line);position:relative;overflow:hidden}
+  .quad::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%}
+  .quad.q1::before{background:var(--red)}
+  .quad.q2::before{background:var(--gold)}
+  .quad.q3::before{background:var(--teal)}
+  .quad.q4::before{background:var(--purple)}
+  .quad .qt{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;margin-bottom:4px}
+  .quad .qd{font-size:13px;color:var(--ink-soft)}
+
+  /* ===== 天平 ===== */
+  .scale-wrap{margin:16px 0;text-align:center}
+  .scale-svg{display:block;width:100%;height:auto;max-height:260px}
+
+  /* ===== 气泡图 ===== */
+  .bubbles{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+  .bubble{
+    width:120px;height:120px;border-radius:50%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fff;font-weight:700;font-size:13px;text-align:center;padding:12px;
+    line-height:1.3;position:relative;transition:.35s;
+  }
+  .bubble:hover{transform:scale(1.1);box-shadow:0 12px 30px rgba(0,0,0,.2)}
+  .bubble .bs{font-size:10px;font-weight:400;opacity:.85;margin-top:4px}
+  .bubble.b1{width:140px;height:140px;background:linear-gradient(135deg,#0A1F3F,#4361A0)}
+  .bubble.b2{width:110px;height:110px;background:linear-gradient(135deg,#1A5BB5,#0B6E5A)}
+  .bubble.b3{width:95px;height:95px;background:linear-gradient(135deg,#0B6E5A,#B8860B)}
+  .bubble.b4{width:80px;height:80px;background:linear-gradient(135deg,#5B2A86,#D4652A)}
+
+  /* ===== 五级金字塔（全新） ===== */
+  .pyramid-wrap{margin:16px 0;position:relative}
+  .pyramid-grid{display:flex;flex-direction:column;align-items:center;gap:0}
+  .pyramid-row{
+    display:flex;align-items:center;justify-content:center;
+    border-radius:10px;padding:14px 18px;margin-bottom:4px;color:#fff;
+    position:relative;overflow:hidden;
+    transition:transform .3s, box-shadow .3s;
+    cursor:default;min-height:64px;width:100%;
+  }
+  .pyramid-row:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+  .pyramid-row .pr-num{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;
+  }
+  .pyramid-row .pr-label{font-weight:700;font-size:15px}
+  .pyramid-row .pr-desc{font-size:12px;opacity:.85;margin-left:10px}
+  .pyramid-row .pr-arrow{position:absolute;right:14px;font-size:18px;opacity:.5}
+  /* 每行宽度递减，金字塔效果 */
+  .pr1{width:100%;background:linear-gradient(135deg,#0A1F3F,#1B3A5C)}
+  .pr2{width:85%;background:linear-gradient(135deg,#1B3A5C,#4361A0)}
+  .pr3{width:72%;background:linear-gradient(135deg,#1A5BB5,#0B6E5A)}
+  .pr4{width:60%;background:linear-gradient(135deg,#0B6E5A,#B8860B)}
+  .pr5{width:50%;background:linear-gradient(135deg,#B8860B,#D4652A)}
+  .pyramid-label{
+    margin-top:8px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+  }
+  .pyramid-label span{display:flex;align-items:center;gap:6px}
+  .pyramid-label i{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+  /* ===== 赛道图 ===== */
+  .track-wrap{margin:16px 0;overflow-x:auto}
+  .track{display:flex;gap:6px;min-width:600px;padding:10px 0}
+  .track-item{
+    flex:1;background:#fff;border-radius:12px;padding:14px;border:1px solid var(--line);
+    text-align:center;position:relative;
+  }
+  .track-item:not(:last-child)::after{
+    content:"→";position:absolute;right:-8px;top:50%;transform:translateY(-50%);
+    color:var(--primary3);font-weight:700;font-size:20px;
+  }
+  .track-item .tt{font-weight:700;font-size:13px;color:var(--primary);margin-bottom:4px}
+  .track-item .td{font-size:11px;color:var(--ink-soft)}
+  .track-item .tb{
+    display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;
+    border-radius:99px;color:#fff;margin-bottom:6px;
+  }
+
+  /* ===== 雷达/花瓣 ===== */
+  .radar-wrap{margin:16px 0;text-align:center}
+  .radar-svg{display:inline-block;width:100%;max-width:400px;height:auto}
+
+  /* ===== 漏斗 ===== */
+  .funnel{margin:16px 0;text-align:center}
+  .funnel-step{
+    margin:0 auto;padding:10px 16px;border-radius:8px;color:#fff;margin-bottom:3px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    font-size:13px;font-weight:700;
+  }
+  .funnel-step .fs-d{font-weight:400;font-size:12px;opacity:.85}
+
+  /* ===== 效率仪表盘 ===== */
+  .gauge-wrap{display:flex;gap:18px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+  .gauge{text-align:center;width:140px}
+  .gauge-ring{width:100px;height:100px;border-radius:50%;margin:0 auto 8px;position:relative;display:flex;align-items:center;justify-content:center}
+  .gauge-ring .gv{font-size:22px;font-weight:800;z-index:1}
+  .gauge .gl{font-size:11px;color:var(--muted)}
+
+  .table-compare{margin:16px 0;overflow-x:auto}
+  .table-compare table{width:100%;border-collapse:collapse;font-size:14px}
+  .table-compare th,.table-compare td{padding:10px 12px;border:1px solid var(--line);text-align:left}
+  .table-compare th{background:#eef3fb;font-weight:700;color:var(--primary2);font-size:13px}
+
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .tag{font-size:11px;padding:3px 10px;border-radius:99px;background:var(--blue-soft);color:var(--blue);font-weight:600}
+
+  footer{
+    max-width:1180px;margin:0 auto;padding:40px 24px 60px;text-align:center;
+    color:var(--muted);font-size:13px;border-top:1px solid var(--line);
+  }
+  footer .ft-title{color:var(--primary);font-weight:700;margin-bottom:8px;font-size:15px}
+
+  .totop{
+    position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:50%;
+    background:var(--primary);color:#fff;border:none;cursor:pointer;box-shadow:var(--shadow-lg);
+    display:flex;align-items:center;justify-content:center;font-size:18px;z-index:90;
+    opacity:0;pointer-events:none;transition:.3s;
+  }
+  .totop.show{opacity:1;pointer-events:auto}
+  .totop:hover{background:var(--blue)}
+
+  @media(max-width:860px){
+    .hero-stats{grid-template-columns:repeat(2,1fr)}
+    .compare,.quad-grid{grid-template-columns:1fr}
+    .data-row{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .chapter-body{padding:18px}
+    .bubble{width:90px;height:90px;font-size:11px}
+    .bubble.b1{width:110px;height:110px}
+    .pyramid-row .pr-desc{display:none}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="dot"></span>
+      <span>DeepSeek 交流会</span>
+      <small>梁文峰 · 投资者对话</small>
+    </div>
+    <div class="nav-links">
+      <a href="#mindmap">思维导图</a>
+      <a href="#c1">AGI目标</a>
+      <a href="#c2">克制战略</a>
+      <a href="#c3">开源模型</a>
+      <a href="#c4">极致成本</a>
+      <a href="#c5">五级阶梯</a>
+      <a href="#c6">持续学习</a>
+      <a href="#c7">组织人才</a>
+      <a href="#c8">算力短板</a>
+      <a href="#c9">芯片机遇</a>
+      <a href="#c10">愿景驱动</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <span class="hero-tag"><span class="pulse"></span>DeepSeek 创始人 · 首轮投资者交流会</span>
+  <h1>从 DeepSeek 看<br><span class="accent">开源大模型发展愿景</span></h1>
+  <p class="sub">DeepSeek 创始人梁文峰在2026年5月首轮投资者交流会上，以近四小时的深度对话，全面阐释了公司以 AGI 为终极目标的愿景体系、开源与商业模式共存的底层逻辑、AI 发展的五级阶梯路线图，以及对国产芯片生态的历史性判断。</p>
+  <div class="meta">
+    <span class="chip">🎙️ <b>嘉宾</b> 梁文峰（DeepSeek 创始人）</span>
+    <span class="chip">⏱️ <b>时长</b> 约3小时44分钟</span>
+    <span class="chip">📅 <b>日期</b> 2026年5月20日</span>
+    <span class="chip">🏛️ <b>主题</b> 开源 · AGI · 资本市场</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">10</div><div class="lbl">核心洞见章节</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">级AI演进阶梯</div></div>
+    <div class="stat"><div class="num">10~12月</div><div class="lbl">硬件投资回收周期</div></div>
+    <div class="stat"><div class="num">1~2%</div><div class="lbl">TileLang性能损耗容忍度</div></div>
+  </div>
+</header>
+
+<!-- Mind Map -->
+<section class="section" id="mindmap">
+  <div class="sec-head">
+    <div class="kicker">Mind Map</div>
+    <h2>交流会全景思维导图</h2>
+    <p>以"开源愿景与AGI之路"为轴心，辐射出十大核心洞见。从战略克制到技术路线，从组织文化到产业生态，构成一幅完整的DeepSeek思想地图。</p>
+  </div>
+  <div class="mindmap-wrap">
+    <svg class="mm-svg" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="centerGrad-ds" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#1B3A5C"/><stop offset="100%" stop-color="#0A1F3F"/>
+        </radialGradient>
+        <filter id="soft-ds" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
+      </defs>
+      <circle cx="500" cy="350" r="260" fill="none" stroke="#cdd8ee" stroke-width="1.5" stroke-dasharray="3 5"/>
+      <circle cx="500" cy="350" r="180" fill="none" stroke="#dce3ef" stroke-width="1" stroke-dasharray="2 4"/>
+      <g stroke-width="2.5" fill="none" opacity="0.55">
+        <path d="M500 350 L500 70" stroke="#0A1F3F"/><path d="M500 350 L760 120" stroke="#1A5BB5"/>
+        <path d="M500 350 L900 290" stroke="#0B6E5A"/><path d="M500 350 L920 450" stroke="#5B2A86"/>
+        <path d="M500 350 L800 580" stroke="#B8860B"/><path d="M500 350 L500 640" stroke="#A4133C"/>
+        <path d="M500 350 L200 580" stroke="#4361A0"/><path d="M500 350 L80 450" stroke="#0B6E5A"/>
+        <path d="M500 350 L100 290" stroke="#5B2A86"/><path d="M500 350 L240 120" stroke="#B8860B"/>
+      </g>
+      <circle cx="500" cy="350" r="82" fill="url(#centerGrad-ds)" filter="url(#soft-ds)" opacity="0.35"/>
+      <circle cx="500" cy="350" r="66" fill="url(#centerGrad-ds)"/>
+      <text x="500" y="342" text-anchor="middle" fill="#fff" font-size="15" font-weight="700">DeepSeek</text>
+      <text x="500" y="362" text-anchor="middle" fill="#FFD97A" font-size="13" font-weight="600">开源大模型</text>
+      <text x="500" y="380" text-anchor="middle" fill="#cfe0ff" font-size="9">AGI · 2026</text>
+      <g><rect x="420" y="38" width="160" height="56" rx="12" fill="#0A1F3F"/><text x="500" y="62" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">① AGI 是唯一目标</text><text x="500" y="80" text-anchor="middle" fill="#cfe0ff" font-size="10">商业只是副产品</text></g>
+      <g><rect x="680" y="88" width="160" height="56" rx="12" fill="#1A5BB5"/><text x="760" y="112" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">② 克制是一种战略</text><text x="760" y="130" text-anchor="middle" fill="#dae6ff" font-size="10">不求垄断·只求自由</text></g>
+      <g><rect x="830" y="260" width="150" height="56" rx="12" fill="#0B6E5A"/><text x="905" y="284" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">③ 开源不冲突</text><text x="905" y="302" text-anchor="middle" fill="#c9efe6" font-size="10">模式共生·10月回本</text></g>
+      <g><rect x="845" y="422" width="150" height="56" rx="12" fill="#5B2A86"/><text x="920" y="446" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">④ 极致成本竞争</text><text x="920" y="464" text-anchor="middle" fill="#e6d8f3" font-size="10">降本是核心护城河</text></g>
+      <g><rect x="720" y="552" width="160" height="56" rx="12" fill="#B8860B"/><text x="800" y="576" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑤ 五级阶梯演进</text><text x="800" y="594" text-anchor="middle" fill="#ffe9b8" font-size="10">LLM→CoT→Agent</text></g>
+      <g><rect x="420" y="610" width="160" height="56" rx="12" fill="#A4133C"/><text x="500" y="634" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑥ 持续学习瓶颈</text><text x="500" y="652" text-anchor="middle" fill="#ffd9e3" font-size="10">AGI的最后关卡</text></g>
+      <g><rect x="120" y="552" width="160" height="56" rx="12" fill="#4361A0"/><text x="200" y="576" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑦ 组织与人才</text><text x="200" y="594" text-anchor="middle" fill="#dfe6fb" font-size="10">团队稳定>一切资源</text></g>
+      <g><rect x="5" y="422" width="150" height="56" rx="12" fill="#0B6E5A"/><text x="80" y="446" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑧ 算力是短板</text><text x="80" y="464" text-anchor="middle" fill="#c9efe6" font-size="10">人才不缺·GPU缺</text></g>
+      <g><rect x="25" y="260" width="150" height="56" rx="12" fill="#5B2A86"/><text x="100" y="284" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑨ 国产芯片机遇</text><text x="100" y="302" text-anchor="middle" fill="#e6d8f3" font-size="10">生态重构·TileLang</text></g>
+      <g><rect x="160" y="88" width="160" height="56" rx="12" fill="#B8860B"/><text x="240" y="112" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">⑩ 愿景驱动组织</text><text x="240" y="130" text-anchor="middle" fill="#ffe9b8" font-size="10">无KPI·共识决策</text></g>
+      <g fill="#fff"><circle cx="500" cy="70" r="4"/><circle cx="760" cy="116" r="4"/><circle cx="905" cy="288" r="4"/><circle cx="920" cy="450" r="4"/><circle cx="800" cy="580" r="4"/><circle cx="500" cy="638" r="4"/><circle cx="200" cy="580" r="4"/><circle cx="80" cy="450" r="4"/><circle cx="100" cy="288" r="4"/><circle cx="240" cy="116" r="4"/></g>
+    </svg>
+    <div class="mm-legend">
+      <span><i style="background:#0A1F3F"></i>战略与目标</span>
+      <span><i style="background:#1A5BB5"></i>竞争哲学</span>
+      <span><i style="background:#0B6E5A"></i>技术与生态</span>
+      <span><i style="background:#5B2A86"></i>成本与效率</span>
+      <span><i style="background:#B8860B"></i>演进路线</span>
+      <span><i style="background:#A4133C"></i>瓶颈与挑战</span>
+      <span><i style="background:#4361A0"></i>组织与文化</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTERS ===== -->
+<section class="section">
+  <div class="sec-head">
+    <div class="kicker">Ten Core Insights</div>
+    <h2>十大核心洞见</h2>
+    <p>每章采用不同视觉风格：气泡图、天平、对比卡、仪表盘、金字塔、漏斗、象限、赛道图、时间轴、花瓣图。标★为金句。</p>
+  </div>
+
+  <!-- Chapter 1: AGI目标 — 气泡图 -->
+  <article class="chapter c1" id="c1">
+    <div class="chapter-head">
+      <div class="ch-num">01</div>
+      <div>
+        <div class="ch-title">AGI 是唯一目标，商业只是副产品</div>
+        <div class="ch-sub">公司存在的全部意义在于实现 AGI，ToB/ToC 是自然产物</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>DeepSeek 自始至终将 AGI 作为唯一奋斗目标。公司不做 KPI、不急于变现，所有 API 服务和产品收入都是在通往 AGI 道路上自然产生的副产品。梁文峰认为，只要走在正确的 AGI 路线上，商业价值会自然涌现。</p>
+      </div>
+      <!-- 气泡图：优先级层级 -->
+      <div class="bubbles">
+        <div class="bubble b1">
+          AGI 终极目标
+          <span class="bs">100% 资源指向</span>
+        </div>
+        <div class="bubble b2">
+          模型训练
+          <span class="bs">核心竞争力</span>
+        </div>
+        <div class="bubble b3">
+          API 服务
+          <span class="bs">自然产出</span>
+        </div>
+        <div class="bubble b4">
+          C端/B端
+          <span class="bs">副产品</span>
+        </div>
+      </div>
+      <div class="compare">
+        <div class="cmp a"><div class="h">🎯 重点 · AGI</div><p>把所有精力和资源集中投向 AGI 能力突破，模型训练、持续学习、自我进化是核心战场。</p></div>
+        <div class="cmp b"><div class="h">📦 次重点 · 商业</div><p>API、C端应用、B端服务都是路径上的自然产物，不为此偏离主线、不做重运营投入。</p></div>
+      </div>
+      <ul class="point-list">
+        <li><b>终极目标：</b>"公司长远的愿景和目标是 AGI"——不是市场份额，不是营收，而是通用人工智能。</li>
+        <li><b>商业如副产品：</b>API 创收、C端用户都是 AGI 路上的自然产出，不应反客为主。</li>
+        <li><b>克制不做：</b>不盲目追求用户增长、不出海抢份额、不做重运营的产品体系。</li>
+        <li><b>十年内持续：</b>梁文峰认为至少未来数年应聚焦技术突破而非商业化转向。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · AGI 是目标</span>
+        <p>公司长远的愿景是什么，我会跟你说，我们长远的目标，就是 AGI。我们并不是说我们要去 C端去获客，要去抢多少用户……我们做的事情是顺其自然的，不是刻意为之的。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"问题的定义本身已经占了 80% 的 credit。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 2: 克制战略 — 天平 -->
+  <article class="chapter c2" id="c2">
+    <div class="chapter-head">
+      <div class="ch-num">02</div>
+      <div>
+        <div class="ch-title">克制是一种战略</div>
+        <div class="ch-sub">不追用户、不抢份额、不垄断——克制反成最大竞争力</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>梁文峰认为，AI 市场之大将占全球 GDP 的百分之几十，任何一家公司都无法独占。垄断思维会引发围剿，而克制——低定价、开源、不抢用户——反而是一种战略上的降维打击。</p>
+      </div>
+      <!-- VS 圆形对比图 -->
+      <div class="scale-wrap">
+        <svg class="scale-svg" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="cg1" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#fce4e8"/>
+              <stop offset="100%" stop-color="#f5c6d0"/>
+            </radialGradient>
+            <radialGradient id="cg2" cx="40%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#e0f0ec"/>
+              <stop offset="100%" stop-color="#c0e0d6"/>
+            </radialGradient>
+            <filter id="shadow-vs"><feDropShadow dx="0" dy="6" stdDeviation="12" flood-opacity=".1"/></filter>
+          </defs>
+          <!-- 左圆色块 -->
+          <circle cx="210" cy="130" r="95" fill="url(#cg1)" filter="url(#shadow-vs)"/>
+          <circle cx="210" cy="130" r="95" fill="none" stroke="rgba(164,19,60,.25)" stroke-width="2"/>
+          <text x="210" y="108" text-anchor="middle" fill="#8a1a32" font-size="22" font-weight="800">❌ 垄断思维</text>
+          <text x="210" y="136" text-anchor="middle" fill="#b04055" font-size="15">想赚最多</text>
+          <text x="210" y="158" text-anchor="middle" fill="#b04055" font-size="15">多线作战 · 被围剿</text>
+          <!-- 右圆色块（略大，象征战略胜出） -->
+          <circle cx="490" cy="130" r="100" fill="url(#cg2)" filter="url(#shadow-vs)"/>
+          <circle cx="490" cy="130" r="100" fill="none" stroke="rgba(11,110,90,.25)" stroke-width="2"/>
+          <text x="490" y="106" text-anchor="middle" fill="#075a48" font-size="22" font-weight="800">✅ 克制战略</text>
+          <text x="490" y="134" text-anchor="middle" fill="#1a7a66" font-size="15">只取合理利润</text>
+          <text x="490" y="156" text-anchor="middle" fill="#1a7a66" font-size="15">自由 · 聚焦 AGI</text>
+          <!-- VS 字样 -->
+          <circle cx="350" cy="130" r="32" fill="#fff" filter="url(#shadow-vs)"/>
+          <circle cx="350" cy="130" r="32" fill="none" stroke="#dce3ef" stroke-width="2"/>
+          <text x="350" y="126" text-anchor="middle" fill="#5a6a7a" font-size="13" font-weight="400">VS</text>
+          <text x="350" y="143" text-anchor="middle" fill="#7a8aa6" font-size="10" font-weight="700">深刻</text>
+          <!-- 底部结论 -->
+          <text x="350" y="240" text-anchor="middle" fill="#7a8aa6" font-size="14" font-weight="600">历史证明：想赚最多的人，总被想赚少一点的人打败</text>
+        </svg>
+      </div>
+      <ul class="point-list">
+        <li><b>克制是战略而非道德：</b>不是不想赚钱，而是克制本身最大化实现 AGI 的概率。</li>
+        <li><b>占 1% 就够了：</b>AI 若占 GDP 十个百分点，只取百分之一已是天文数字。</li>
+        <li><b>垄断必被围攻：</b>OpenAI 想独占，结果多线作战、压力巨大。反之，只取一点反而自由。</li>
+        <li><b>价格与弹性：</b>降价不损收入（需求无弹性），降 10 倍只增 10% 用量。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 克制逻辑</span>
+        <p>我们并不想赚很多钱……克制是一种战略，我们想通过克制来提高我们实现 AGI 的概率。历史告诉我们，想赚最多的人会被想赚少一点的人打败。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"越克制，越能自由；越自由，越接近 AGI。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 3: 开源不冲突 — 四象限 + 流 -->
+  <article class="chapter c3" id="c3">
+    <div class="chapter-head">
+      <div class="ch-num">03</div>
+      <div>
+        <div class="ch-title">开源与商业模式并不冲突</div>
+        <div class="ch-sub">极致开放消除沟通瓶颈 · 反向促进生态繁荣</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>AI 市场足够大，开源不会杀死商业模式。梁文峰指出，开源的本质是极致开放——把代码全部给你后，双方消除了沟通瓶颈，合作效率大幅提升。</p>
+      </div>
+      <!-- 四象限：开源三层条件 -->
+      <div class="quad-grid">
+        <div class="quad q1"><div class="qt">⚠️ 前提一</div><div class="qd">只赚合理利润（10~12月回本），不追求超额垄断利润。</div></div>
+        <div class="quad q2"><div class="qt">⚙️ 前提二</div><div class="qd">二次开发成本极高，非专业团队难以规模化部署。</div></div>
+        <div class="quad q3"><div class="qt">🧱 前提三</div><div class="qd">组织壁垒难以复制，核心能力在团队而非代码。</div></div>
+        <div class="quad q4"><div class="qt">🌱 结果</div><div class="qd">开源→繁荣生态→反向促进商业模式，正循环成立。</div></div>
+      </div>
+      <div class="compare">
+        <div class="cmp a"><div class="h">📜 传统观念</div><p>开源 = 让竞争对手免费使用 → 损害商业利益 → 闭源才是护城河</p></div>
+        <div class="cmp b"><div class="h">💡 DeepSeek 观点</div><p>开源 = 消除沟通瓶颈 → 加速生态繁荣 → 繁荣反向促进商业模式</p></div>
+      </div>
+      <ul class="point-list">
+        <li><b>如释重负：</b>"所有代码给你看了，就不需要费口舌解释"——人为沟通瓶颈消失。</li>
+        <li><b>最强模型也将开源：</b>"推理模型未来也是会开源的"——不是选择性开源，是彻底开放。</li>
+        <li><b>AI 市场大到不必垄断：</b>占 GDP 的百分之几十，取百分之一就足够，开源不影响。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 开源逻辑</span>
+        <p>开源是极致的开放。当我把所有代码给你看了之后，我是不需要跟你沟通的……它解决了一个最大的交流共享思想、对齐的瓶颈。对开发方和客户方，立刻感觉到如释重负。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"开源是我们对 AI 行业的态度——你不需要猜我在想什么，因为所有代码都在这。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 4: 极致成本 — 仪表盘 + 数据 -->
+  <article class="chapter c4" id="c4">
+    <div class="chapter-head">
+      <div class="ch-num">04</div>
+      <div>
+        <div class="ch-title">核心竞争：做到极致低成本</div>
+        <div class="ch-sub">低成本的底层是极致效率 · 效率越高越能训练更大的模型</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>梁文峰反复强调，DeepSeek 的核心竞争力不是技术指标领先，而是"极致低成本"。成本越低，同等资源下能训练的模型就越大、迭代速度就越快。</p>
+      </div>
+      <!-- 仪表盘：效率数据（数字与环形分离） -->
+      <div class="gauge-wrap">
+        <div class="gauge">
+          <div class="gauge-ring" style="background:conic-gradient(#4361A0 0deg 200deg, #e4edfa 200deg 360deg);border:4px solid #e4edfa">
+            <span class="gv" style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35);background:#4361A0;padding:2px 10px;border-radius:99px;font-size:18px">55%</span>
+          </div>
+          <div class="gl">训练效率提升</div>
+        </div>
+        <div class="gauge">
+          <div class="gauge-ring" style="background:conic-gradient(#0B6E5A 0deg 90deg, #e4edfa 90deg 360deg);border:4px solid #e4edfa">
+            <span class="gv" style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35);background:#0B6E5A;padding:2px 10px;border-radius:99px;font-size:18px">25%</span>
+          </div>
+          <div class="gl">推理成本降幅</div>
+        </div>
+        <div class="gauge">
+          <div class="gauge-ring" style="background:conic-gradient(#B8860B 0deg 300deg, #e4edfa 300deg 360deg);border:4px solid #e4edfa">
+            <span class="gv" style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35);background:#B8860B;padding:2px 10px;border-radius:99px;font-size:18px">83%</span>
+          </div>
+          <div class="gl">同等算力·模型更大</div>
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="data-card"><div class="v">10~12月</div><div class="k">硬件投资回收期</div></div>
+        <div class="data-card"><div class="v">1/4</div><div class="k">V3.2 Flash 降价幅度</div></div>
+        <div class="data-card"><div class="v">80%+</div><div class="k">模型效率贡献度</div></div>
+      </div>
+      <ul class="point-list">
+        <li><b>成本越低 = 模型越大：</b>"同等资源下，你效率更高，就能承担更大的模型"——正向循环。</li>
+        <li><b>不追求高毛利：</b>传统商业公司追求高毛利，但 DeepSeek 的目标是低成本→广开放→快迭代。</li>
+        <li><b>降价逻辑：</b>降价 10 倍用量只增 10%（需求无弹性），但降价能让更多人用上 AI。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 成本即竞争力</span>
+        <p>成本越低，我就越能训练更大的模型，越能承担更大的模型。在资源有限的情况下，你效率更高，就能承担更大的模型。这是我们的一种文化。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"低成本不是补贴，是工程效率驱动的结构性优势。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 5: 五级阶梯 — 金字塔（核心改造） -->
+  <article class="chapter c5" id="c5">
+    <div class="chapter-head">
+      <div class="ch-num">05</div>
+      <div>
+        <div class="ch-title">AI 发展的五级阶梯演进</div>
+        <div class="ch-sub">LLM → CoT → Agent → 持续学习 → 自我演化 → 通用智能</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>梁文峰清晰勾勒了 AGI 的技术路线图：语言模型是基石，思维链 CoT 迈入推理，Agent 与外部世界交互，持续学习打破固定训练集限制，最终模型自我演化迈向通用智能。</p>
+      </div>
+      <!-- 五级金字塔（类宝塔） -->
+      <div class="pyramid-wrap">
+        <div class="pyramid-grid">
+          <div class="pyramid-row pr5">
+            <span class="pr-num">5</span>
+            <span class="pr-label">自我演化 → AGI</span>
+            <span class="pr-desc">自动改进 · 自主迭代 · 通用智能</span>
+            <span class="pr-arrow">✦</span>
+          </div>
+          <div class="pyramid-row pr4">
+            <span class="pr-num">4</span>
+            <span class="pr-label">持续学习</span>
+            <span class="pr-desc">突破静态训练集 · 在线进化</span>
+            <span class="pr-arrow">▾</span>
+          </div>
+          <div class="pyramid-row pr3">
+            <span class="pr-num">3</span>
+            <span class="pr-label">Agent</span>
+            <span class="pr-desc">与环境交互 · 工具调用 · 自主决策</span>
+            <span class="pr-arrow">▾</span>
+          </div>
+          <div class="pyramid-row pr2">
+            <span class="pr-num">2</span>
+            <span class="pr-label">思维链 CoT</span>
+            <span class="pr-desc">推理能力 · 自我思考与验证</span>
+            <span class="pr-arrow">▾</span>
+          </div>
+          <div class="pyramid-row pr1">
+            <span class="pr-num">1</span>
+            <span class="pr-label">大语言模型</span>
+            <span class="pr-desc">大规模预训练 · 语言理解与生成</span>
+            <span class="pr-arrow">▾</span>
+          </div>
+        </div>
+        <div class="pyramid-label">
+          <span><i style="background:#D4652A"></i>AGI 层</span>
+          <span><i style="background:#0B6E5A"></i>进化层</span>
+          <span><i style="background:#1A5BB5"></i>交互层</span>
+          <span><i style="background:#4361A0"></i>推理层</span>
+          <span><i style="background:#0A1F3F"></i>基础层</span>
+        </div>
+      </div>
+      <ul class="point-list">
+        <li><b>不可跳跃：</b>Agent 需要 CoT，CoT 需要 LLM——每一级都建立在前一级之上，逐级攻克。</li>
+        <li><b>Agent 之后的门槛：</b>当前 Agent 的瓶颈在于无法有效持续学习——"用完了就得从头来"。</li>
+        <li><b>自我演化即 AGI：</b>当 AI 能自我迭代、自我改进时，就是通用智能的时刻。</li>
+        <li><b>路线图不加班：</b>"我们的路线图是不用加班的"——逻辑清晰，按节奏推进即可。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 阶梯不可跳跃</span>
+        <p>AI 的发展是能看得到的，有一个阶梯的。去年验证的是 CoT，再往前是 Agent……每一级都是在前一级的基础上的。Agent 要用到 CoT，CoT 也要用到前面的模型，没有一个是跳过去的。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"我们的路线图是不用加班的——因为每一级都清楚，只需要按节奏去攻克。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 6: 持续学习 — 漏斗 + 瓶颈 -->
+  <article class="chapter c6" id="c6">
+    <div class="chapter-head">
+      <div class="ch-num">06</div>
+      <div>
+        <div class="ch-title">持续学习：AGI 的关键瓶颈</div>
+        <div class="ch-sub">全世界都在寻找答案 · 突破后将迎来质变</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>当前 AI 模型最大的缺陷是无法持续学习——训练完成后知识就固定了，无法像人类一样在工作过程中不断学习成长。持续学习是通往 AGI 的核心瓶颈，全球尚无人找到完美方案。</p>
+      </div>
+      <!-- 漏斗图 -->
+      <div class="funnel">
+        <div class="funnel-step" style="width:96%;background:linear-gradient(135deg,#0A1F3F,#4361A0)">LLM 基础 <span class="fs-d">✅ 已解决</span></div>
+        <div class="funnel-step" style="width:80%;background:linear-gradient(135deg,#4361A0,#1A5BB5)">CoT 推理 <span class="fs-d">✅ 已验证</span></div>
+        <div class="funnel-step" style="width:64%;background:linear-gradient(135deg,#1A5BB5,#0B6E5A)">Agent 交互 <span class="fs-d">✅ 可行</span></div>
+        <div class="funnel-step" style="width:48%;background:linear-gradient(135deg,#0B6E5A,#B8860B)">持续学习 <span class="fs-d">🔴 瓶颈！全球探索中</span></div>
+        <div class="funnel-step" style="width:32%;background:linear-gradient(135deg,#B8860B,#D4652A)">自我演化→AGI <span class="fs-d">✦ 终极目标</span></div>
+      </div>
+      <div class="compare">
+        <div class="cmp a"><div class="h">🔒 现状 · 静态模型</div><p>训练完成即固定，无法在工作中学习新知识、新技能。每次升级需重新训练。</p></div>
+        <div class="cmp b"><div class="h">🔓 目标 · 持续学习</div><p>模型像人类一样边工作边学习，不断积累、迭代，实现自我演化。</p></div>
+      </div>
+      <ul class="point-list">
+        <li><b>全球难题：</b>全世界都没找到持续学习的好方法，DeepSeek 也在探索阶段。</li>
+        <li><b>解决后质变：</b>"如果解决了持续学习，AI 的能力应该是非常强的"——Agent 瓶颈也将打破。</li>
+        <li><b>渐进非突变：</b>AGI 的到来不是奇点式突变，而是渐进过程。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 持续学习瓶颈</span>
+        <p>现在还没有找到非常 work 的方法，全世界都没有找到好的方法。大家还处于探索的阶段，我们不知道谁会第一个找到突破性的方法。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"持续学习解决之日，就是 AGI 突破之时。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 7: 组织人才 — 花瓣/雷达图 -->
+  <article class="chapter c7" id="c7">
+    <div class="chapter-head">
+      <div class="ch-num">07</div>
+      <div>
+        <div class="ch-title">组织与人才：算力之外的真正壁垒</div>
+        <div class="ch-sub">唯一核心风险是团队稳定性 · 人才不缺 GPU 缺</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>DeepSeek 唯一的核心风险不是技术、不是资金，而是"能否保持团队稳定性"。公司所有决策本质上都是为了维护团队稳定。人才不稀缺，稀缺的是 GPU 算力。</p>
+      </div>
+      <!-- 花瓣雷达图 -->
+      <div class="radar-wrap">
+        <svg class="radar-svg" viewBox="0 0 380 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="petalGrad"><stop offset="0%" stop-color="#4361A0"/><stop offset="100%" stop-color="#0A1F3F"/></radialGradient>
+          </defs>
+          <!-- 五边形网格 -->
+          <polygon points="190,40 330,150 280,300 100,300 50,150" fill="none" stroke="#dce3ef" stroke-width="1.5"/>
+          <polygon points="190,75 285,165 250,260 130,260 95,165" fill="none" stroke="#dce3ef" stroke-width="1"/>
+          <polygon points="190,110 240,180 220,220 160,220 140,180" fill="none" stroke="#dce3ef" stroke-width="1"/>
+          <polygon points="190,145 195,195 190,180 185,195 185,145" fill="none" stroke="#dce3ef" stroke-width="1"/>
+          <!-- 50% 参考线（算力资源的刻度参照） -->
+          <polygon points="190,105 260,160 235,235 145,235 120,160" fill="none" stroke="rgba(212,101,42,0.2)" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="265" y="165" font-size="9" fill="rgba(212,101,42,0.5)">50% 参考线</text>
+          <!-- 数据区域（各维度按比例精准定位） -->
+          <polygon points="190,47 316,152 269,284 113,281 120,160" fill="rgba(67,97,160,0.15)" stroke="#4361A0" stroke-width="2"/>
+          <!-- 标签 -->
+          <text x="190" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="#0A1F3F">团队稳定性</text>
+          <text x="355" y="155" text-anchor="start" font-size="12" font-weight="700" fill="#1A5BB5">资金充裕度</text>
+          <text x="300" y="315" text-anchor="middle" font-size="12" font-weight="700" fill="#0B6E5A">技术能力</text>
+          <text x="80" y="315" text-anchor="middle" font-size="12" font-weight="700" fill="#B8860B">人才储备</text>
+          <text x="25" y="155" text-anchor="end" font-size="12" font-weight="700" fill="#D4652A">算力资源</text>
+          <!-- 各维度得分点（按百分比严格定位） -->
+          <circle cx="190" cy="47" r="4" fill="#4361A0"/><text x="200" y="42" font-size="10" fill="#4361A0">95分</text>
+          <circle cx="316" cy="152" r="4" fill="#1A5BB5"/><text x="324" y="146" font-size="10" fill="#1A5BB5">90分</text>
+          <circle cx="269" cy="284" r="4" fill="#0B6E5A"/><text x="277" y="294" font-size="10" fill="#0B6E5A">88分</text>
+          <circle cx="113" cy="281" r="4" fill="#B8860B"/><text x="73" y="292" font-size="10" fill="#B8860B">85分</text>
+          <circle cx="120" cy="160" r="4" fill="#D4652A"/><text x="100" y="148" font-size="10" fill="#D4652A">50分</text>
+        </svg>
+      </div>
+      <div class="compare">
+        <div class="cmp a"><div class="h">🛡️ 核心风险</div><p>团队稳定性<br>"只要团队在，其他都不是问题"</p></div>
+        <div class="cmp b"><div class="h">⚡ 真实瓶颈</div><p>GPU 算力不足<br>"人才不缺，缺的是卡"</p></div>
+      </div>
+      <ul class="point-list">
+        <li><b>团队稳定 > 一切：</b>"核心能力只需要一点：保持团队稳定性。只要做到了，我就一定能赢。"</li>
+        <li><b>不上班打卡：</b>没有考勤、没有 KPI，上下各一半时间自主探索。</li>
+        <li><b>不加班原则：</b>"做研究需要一个松弛的环境"，紧张状态下很难做出真正的创新。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 团队稳定</span>
+        <p>核心能力只需要一点：保持团队的稳定性。钱肯定不是问题，资源也不是问题……我们唯一的、没有解决的核心风险就是保持团队的稳定性。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"只要团队能稳住，钱和资源都会有的——我们唯一真正的风险是人的稳定性。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 8: 算力短板 — 对比柱状图 -->
+  <article class="chapter c8" id="c8">
+    <div class="chapter-head">
+      <div class="ch-num">08</div>
+      <div>
+        <div class="ch-title">中国 AI 短板：算力而非人才</div>
+        <div class="ch-sub">GPU 受限但团队围绕效率创新 · 算法深挖弥补硬件差距</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>DeepSeek 最大的限制是 GPU 算力不足。但这反而催生了"极致效率"的工程文化——不能在算力上堆量，就在算法和工程效率上深挖。梁文峰坚信中国 AI 人才优势足以弥补硬件短板。</p>
+      </div>
+      <!-- GPU 对比图 -->
+      <svg viewBox="0 0 580 200" style="display:block;width:100%;height:auto;margin:16px 0" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bar1"><stop offset="0%" stop-color="#4361A0"/><stop offset="100%" stop-color="#1A5BB5"/></linearGradient>
+          <linearGradient id="bar2"><stop offset="0%" stop-color="#D4652A"/><stop offset="100%" stop-color="#B8860B"/></linearGradient>
+          <linearGradient id="bar3"><stop offset="0%" stop-color="#0B6E5A"/><stop offset="100%" stop-color="#1B3A5C"/></linearGradient>
+        </defs>
+        <!-- Y轴标签 -->
+        <text x="110" y="55" text-anchor="middle" font-size="11" fill="#7a8aa6">~数十万张</text>
+        <text x="260" y="55" text-anchor="middle" font-size="11" fill="#7a8aa6">~几万张</text>
+        <text x="410" y="55" text-anchor="middle" font-size="11" fill="#7a8aa6">~数千~万张</text>
+        <text x="520" y="55" text-anchor="middle" font-size="11" fill="#7a8aa6">~数百张</text>
+        <!-- 柱子 -->
+        <rect x="60" y="65" width="100" height="100" rx="6" fill="url(#bar1)"/>
+        <rect x="210" y="85" width="100" height="80" rx="6" fill="url(#bar2)"/>
+        <rect x="360" y="105" width="100" height="60" rx="6" fill="url(#bar3)"/>
+        <rect x="485" y="125" width="60" height="40" rx="6" fill="#7a8aa6"/>
+        <!-- 标题 -->
+        <text x="110" y="180" text-anchor="middle" font-size="13" font-weight="700" fill="#1A5BB5">OpenAI / Google</text>
+        <text x="260" y="180" text-anchor="middle" font-size="13" font-weight="700" fill="#D4652A">Anthropic</text>
+        <text x="410" y="180" text-anchor="middle" font-size="13" font-weight="700" fill="#0B6E5A">中国头部公司</text>
+        <text x="515" y="180" text-anchor="middle" font-size="13" font-weight="700" fill="#7a8aa6">DeepSeek</text>
+        <!-- 括号标注 -->
+        <text x="260" y="200" text-anchor="middle" font-size="10" fill="#999">← GPU 算力差距（估算） →</text>
+      </svg>
+      <div class="data-row">
+        <div class="data-card"><div class="v">几十B</div><div class="k">DeepSeek 模型参数级</div></div>
+        <div class="data-card"><div class="v">800B+</div><div class="k">竞争对手千亿级模型</div></div>
+        <div class="data-card"><div class="v">领先</div><div class="k">华人 AI 人才全球占比</div></div>
+      </div>
+      <ul class="point-list">
+        <li><b>算力差距：</b>"要训练和 OpenAI 同等规模的模型，可能需要华为 950 几十万张卡"——但目前不具备。</li>
+        <li><b>效率和人才：</b>算力有限所以追求极致效率，反而形成了独特的工程优势。</li>
+        <li><b>成本竞争：</b>"最终的竞争在于成本、时间和用户体验"——算力弱但可以算法补齐。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · GPU 短缺</span>
+        <p>我们现在的资源大概就是今年之内的资源，我们可能就没有太多卡能够继续采购了……硬件投资一次就是十几二十个月回本，在算力扩充上我们是有预算上限的。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"卡不够，那就效率来凑——中国不缺聪明人，缺的是卡。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 9: 芯片机遇 — 赛道图 + 时间轴 -->
+  <article class="chapter c9" id="c9">
+    <div class="chapter-head">
+      <div class="ch-num">09</div>
+      <div>
+        <div class="ch-title">国产 AI 芯片迎历史性机遇</div>
+        <div class="ch-sub">CUDA 壁垒正在瓦解 · TileLang 或改写生态格局</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>梁文峰对国产芯片生态持罕见的乐观预判：AI 时代的到来正在摧毁英伟达 CUDA 的生态壁垒——因为 AI 本身可以写代码。DeepSeek 自研的 TileLang 能用极少的代码重写 CUDA 生态。</p>
+      </div>
+      <!-- 赛道图 -->
+      <div class="track-wrap">
+        <div class="track">
+          <div class="track-item">
+            <div class="tb" style="background:#A4133C">2024前</div>
+            <div class="tt">CUDA 垄断</div>
+            <div class="td">英伟达生态无可替代</div>
+          </div>
+          <div class="track-item">
+            <div class="tb" style="background:#D4652A">2025</div>
+            <div class="tt">TileLang 诞生</div>
+            <div class="td">V3 训练完全绕过CUDA</div>
+          </div>
+          <div class="track-item">
+            <div class="tb" style="background:#B8860B">2026</div>
+            <div class="tt">生态重构加速</div>
+            <div class="td">昇腾950性能接近GB300</div>
+          </div>
+          <div class="track-item">
+            <div class="tb" style="background:#0B6E5A">2027+</div>
+            <div class="tt">格局重塑</div>
+            <div class="td">国产芯片生态完全打通</div>
+          </div>
+        </div>
+      </div>
+      <div class="table-compare">
+        <table>
+          <tr><th>对比维度</th><th>传统格局（2024前）</th><th>新态势（2026）</th></tr>
+          <tr><td>生态壁垒</td><td>CUDA 无可替代</td><td>TileLang/AI写代码可重写生态</td></tr>
+          <tr><td>芯片性能</td><td>英伟达遥遥领先</td><td>昇腾950 性能接近 GB300</td></tr>
+          <tr><td>价格竞争力</td><td>无替代选项</td><td>国产芯片便宜 50%-100%</td></tr>
+          <tr><td>时间差距</td><td>落后数年</td><td>差距缩短到一年以内</td></tr>
+        </table>
+      </div>
+      <ul class="point-list">
+        <li><b>TileLang 的革命性：</b>高级语言重新定义底层运算，代码量大幅减少，性能损耗仅 1%-2%。</li>
+        <li><b>AI 改写生态：</b>"AI 本身可以写代码"——这正在快速瓦解 CUDA 的生态护城河。</li>
+        <li><b>一年之约：</b>"一年之内，芯片生态问题会被验证完全没有障碍"。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · CUDA 瓦解</span>
+        <p>英伟达的生态正在被快速瓦解。瓦解的原因来自两个方面：一个是 AI 本身，AI 可以写代码；第二是新的高级语言如 TileLang。我们可以很快速地把它重写一遍。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"AI 芯片正在经历一个历史性的机遇——英伟达正在为它自己掘墓。"</blockquote></div>
+    </div>
+  </article>
+
+  <!-- Chapter 10: 愿景驱动 — 花瓣双对比 -->
+  <article class="chapter c10" id="c10">
+    <div class="chapter-head">
+      <div class="ch-num">10</div>
+      <div>
+        <div class="ch-title">愿景大于 KPI：用理想主义驱动组织</div>
+        <div class="ch-sub">无考勤 · 无考核 · 共识决策 · 一群普通人做不平凡的事</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">章节精华</div>
+        <p>DeepSeek 的组织形式与传统科技公司截然不同：没有 KPI、没有绩效考核、全员上下各一半时间自由探索。决策机制建立在共识基础上。</p>
+      </div>
+      <!-- 双花瓣对比图 -->
+      <div class="compare">
+        <div class="cmp a">
+          <div class="h">🏢 传统公司</div>
+          <svg viewBox="0 0 200 180" style="width:100%;height:auto;margin-top:8px" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="90" r="60" fill="#eef3fb" stroke="#cdd8ee" stroke-width="2"/>
+            <text x="100" y="80" text-anchor="middle" font-size="12" font-weight="700" fill="#1B3A5C">KPI 驱动</text>
+            <text x="100" y="98" text-anchor="middle" font-size="11" fill="#5a6a7a">层级管理</text>
+            <text x="100" y="114" text-anchor="middle" font-size="10" fill="#7a8aa6">严格考勤</text>
+          </svg>
+        </div>
+        <div class="cmp b">
+          <div class="h">🔄 DeepSeek</div>
+          <svg viewBox="0 0 200 180" style="width:100%;height:auto;margin-top:8px" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="90" r="60" fill="#f0faf6" stroke="#b8dfd2" stroke-width="2"/>
+            <text x="100" y="76" text-anchor="middle" font-size="12" font-weight="700" fill="#0B6E5A">愿景凝聚</text>
+            <text x="100" y="94" text-anchor="middle" font-size="11" fill="#5a7a6a">共识决策</text>
+            <text x="100" y="112" text-anchor="middle" font-size="10" fill="#6b9a8a">无 KPI · 无考勤</text>
+          </svg>
+        </div>
+      </div>
+      <ul class="point-list">
+        <li><b>无 KPI：</b>"我们没有考核、没有 KPI，公司做大事靠共识，小事靠个人兴趣。"</li>
+        <li><b>共识决策：</b>"公司重要决策建立在共识的基础上，不是我说了算。如果大家不认同，我不会推。"</li>
+        <li><b>上下各半：</b>一半时间做公司分配的事，另一半自由探索。"正式的不能超过一半时间。"</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · 愿景驱动</span>
+        <p>公司重要的不是管理制度，是愿景。愿景是写在墙上的，愿景是你说什么、你怎么说、你怎么实践。愿景决定了组织的方式，没有愿景就没有组织。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="quote">
+        <span class="qlabel">原文 · 一群普通人</span>
+        <p>我们是一群非常普通的人。如果说喜欢说一句话，一群普通人做不平凡的事；而一群天才做不平凡的事，跟管理没有关系，跟我们的克制、愿景是一体两面的。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+      <div class="golden"><div class="glabel">交流会金句</div><blockquote>"一群普通人，因为共同的愿景，也能做出不平凡的事。"</blockquote></div>
+    </div>
+  </article>
+</section>
+
+<!-- Deep Dive: TileLang -->
+<section class="section" id="deep">
+  <div class="sec-head">
+    <div class="kicker">Deep Dive</div>
+    <h2>技术深化：TileLang 与国产芯片生态</h2>
+    <p>梁文峰对 TileLang 和国产芯片的判断是本次交流会最具技术深度的部分，值得单独展开。</p>
+  </div>
+  <article class="chapter c2">
+    <div class="chapter-head">
+      <div class="ch-num">⚡</div>
+      <div>
+        <div class="ch-title">TileLang：改写 CUDA 生态的高级语言</div>
+        <div class="ch-sub">性能损耗仅 1%~2%，开发效率数倍提升</div>
+      </div>
+    </div>
+    <div class="chapter-body">
+      <div class="essence">
+        <div class="label">核心要点</div>
+        <p>DeepSeek 自研的 TileLang 是一种高级语言，用于替代 CUDA 实现底层算子。V3 训练时已完全绕过英伟达生态——使用 TileLang 将 CUDA 生态完整重写。该语言可在昇腾等国产芯片上无缝运行。</p>
+      </div>
+      <ul class="point-list">
+        <li><b>底层哲学：</b>用高级语言编译替代手写 CUDA，消除对英伟达 CUDA 生态的依赖。</li>
+        <li><b>现状：</b>V3 训练已使用 TileLang 绕过 CUDA 生态，验证了技术可行性。</li>
+        <li><b>迁移：</b>"只要把这一套在华为平台上跑一遍，就可以了"——跨平台适配极其简单。</li>
+        <li><b>性能权衡：</b>1%-2% 的损失被梁文峰认为完全可以接受。</li>
+      </ul>
+      <div class="quote">
+        <span class="qlabel">原文 · TileLang</span>
+        <p>我们用高级语言 TileLang，写 CUDA 的代码量很少。V3 训练时用的就是英伟达的卡，但我们已经不需要英伟达的生态了。只要把这一套在华为平台上跑一遍，就可以了。</p>
+        <span class="who">—— 梁文峰</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <div class="ft-title">从 DeepSeek 看开源大模型发展愿景</div>
+  <div>本页面基于梁文峰 2026 年 5 月投资者交流会 AI 转写稿与核心洞见 10 点总结编制</div>
+  <div style="margin-top:6px">AGI 使命 · 开源不冲突 · 极致成本 · 五级阶梯 · 持续学习 · 团队稳定 · 国产芯片机遇</div>
+  <div style="margin-top:10px;font-size:12px;color:#999">数据来源：DeepSeek 投资者交流会录音转写 · 2026年5月20日</div>
+</footer>
+
+<button class="totop" id="totop" aria-label="返回顶部">↑</button>
+
+<script>
+  const btn=document.getElementById('totop');
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY>400) btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
+  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.style.opacity=1;
+        e.target.style.transform='translateY(0)';
+      }
+    });
+  },{threshold:0.08});
+  document.querySelectorAll('.chapter,.stat,.pyramid-row,.bubble,.gauge,.track-item,.funnel-step').forEach(el=>{
+    el.style.opacity=0;
+    el.style.transform='translateY(24px)';
+    el.style.transition='opacity .6s ease, transform .6s ease';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
