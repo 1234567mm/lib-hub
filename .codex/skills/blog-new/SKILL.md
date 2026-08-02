@@ -1,11 +1,18 @@
 ---
 name: blog-new
-description: Create a new Docusaurus blog post from a natural-language prompt, generating the filename, frontmatter, and markdown scaffold. Use when the user asks to create or scaffold a blog article in this repo.
+description: Create a new Docusaurus blog post from a natural-language prompt, generating the filename, frontmatter, and markdown scaffold. Use when the user asks to create or scaffold a blog article, or add industry-news content (HTML 专题页面) to this repo. Routes by module: stm32/esp32/sharing/开发工具 follow dual-track blog+docs; 行业动态 follows the static HTML + React wrapper page flow.
 ---
 
 # blog-new
 
-Use `/blog-new` when the user wants to create a new Docusaurus blog post from a title, topic, or natural-language idea.
+Use `/blog-new` when the user wants to create a new Docusaurus blog post from a title, topic, or natural-language idea, or add 行业动态 content.
+
+**模块分流判断（第一步先确认模块）**：
+
+| 用户想创建 | 走的流程 |
+|-----------|---------|
+| STM32 / ESP32 / 干货分享 / 开发工具 内容 | 双轨发布（blog + docs，见下方章节） |
+| 行业动态专题（通常是分享的 HTML 页面） | 行业动态流程（见下方章节，**非双轨**） |
 
 ## Process
 
@@ -67,6 +74,45 @@ title: "C/C++ 字节对齐完全指南：从 struct 布局到 pragma pack"
 sidebar_position: 2
 ---
 ```
+
+---
+
+## 🛰️ 行业动态模块发布流程（特殊：非双轨，已踩坑）
+
+**行业动态不走 blog + docs 双轨，也不创建 blog 文章**。导航栏「行业动态」指向自定义页面 `/industry-news`（`src/pages/industry-news.js`），由 `src/data/industryStories.mjs` 驱动列表。发布一个行业专题（通常是用户分享的 HTML 页面）需要 **3 个文件缺一不可**：
+
+1. **原始 HTML 原样整入**：复制到 `static/industry/<slug>.html`
+   - **不要改写/总结内容，页面原样整上去**（用户明确要求；HTML 是自包含的，无外部图片/CSS/JS 依赖）
+   - 原始文件常来自 `D:\Program Files\QQ_cache\Message\`（中文文件名）
+2. **React 包装页**：创建 `src/pages/industry/<slug>.js` + `<slug>.module.css`
+   - 包装页带站点导航栏，用 `<iframe src="/industry/<slug>.html">` 嵌入原文
+   - 直接复制 `src/pages/industry/byd-strategy.js` 和 `byd-strategy.module.css` 改 slug/title 即可（css 内容相同）
+3. **注册故事条目**：在 `src/data/industryStories.mjs` 的 `stories` 数组添加对象：
+   ```js
+   {
+     slug: 'shenzhen-commercial-space-cluster',
+     href: '/industry/shenzhen-commercial-space-cluster',   // 无 .html 后缀
+     publishedAt: '2026-08-02',                             // 今天
+     title: '标题｜副标题',
+     summary: '页面已有的引言/sub 文字（不要自己编）',
+     label: '深度专题',
+   }
+   ```
+   - 列表按 `publishedAt` 降序排列（`getIndustryStories()` 排序），**最新日期排最前，第一条自动成为「最新发布」头条**
+   - 新条目加在数组前面，旧条目不动
+
+**slug 命名**：全小写连字符，如 `deepseek-open-source-llm-vision`、`shenzhen-commercial-space-cluster`（参照 `byd-strategy`）。
+
+### 行业动态踩过的坑
+
+| 坑 | 表现 | 解决 |
+|----|------|------|
+| **漏创建 React 包装页**（只复制 HTML + 注册 stories） | `npm run build` 报 broken link：`/lib-hub/industry/<slug>` 链接不存在 | 必须补 `src/pages/industry/<slug>.js` 包装页；href 用无后缀路径靠 React 路由承载，iframe `src` 才用 `/industry/<slug>.html` |
+| 改写 HTML 内容 / 自己总结 | 用户明确要求「不要自己总结，直接把这个页面整上去」 | 原样复制，summary 直接取页面已有的 sub 引言 |
+| 误按双轨发布创建 blog 文章 | 行业动态不展示在 blog 时间线 | 行业动态只走 static + 包装页 + stories 模式 |
+| reasonix.toml 被调试命令污染 | git status 显示 `M reasonix.toml` | 提交前 `git checkout -- reasonix.toml` 还原 |
+
+**验证**：`npm run build` 通过且无 broken link 警告；`build/industry/<slug>/index.html` 存在且含 `articleFrame` iframe。
 
 ---
 
