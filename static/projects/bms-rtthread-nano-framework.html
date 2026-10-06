@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RT-Thread Nano 配置与启动逻辑说明 — admin_BMS 工程学习笔记</title>
+<style>
+  :root{
+    --accent:#0f6b5f; --accent-l:#e6f4f1; --warn:#b3541e; --warn-l:#fdf0e7;
+    --danger:#a4262c; --danger-l:#fbeaea; --gold:#8a6d1a; --gold-l:#fdf3d7;
+    --purple:#4b3fa0; --purple-l:#ece9fd;
+    --code-bg:#1e2530; --code-tx:#d8e0ea; --border:#d9dee5; --tx:#24292f; --muted:#57606a;
+  }
+  *{box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:var(--tx);background:#f6f8fa;margin:0;line-height:1.8}
+  .wrap{max-width:1020px;margin:0 auto;padding:24px 20px 90px}
+  header.hero{background:linear-gradient(135deg,#0f3d3a,#0f6b5f);color:#fff;border-radius:14px;padding:34px 38px;margin-bottom:30px}
+  header.hero h1{margin:0 0 10px;font-size:26px}
+  header.hero p{margin:4px 0;opacity:.92;font-size:14.5px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .meta span{background:rgba(255,255,255,.16);padding:3px 12px;border-radius:999px;font-size:12.5px}
+  nav.toc{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 26px;margin-bottom:34px;font-size:14.5px}
+  nav.toc b{font-size:15px}
+  nav.toc ol{margin:8px 0 2px;padding-left:22px}
+  nav.toc a{color:var(--accent);text-decoration:none}
+  nav.toc a:hover{text-decoration:underline}
+  h2{font-size:22px;margin:50px 0 16px;padding:8px 0 8px 14px;border-left:6px solid var(--accent);background:var(--accent-l);border-radius:0 8px 8px 0}
+  h3{font-size:17.5px;margin:30px 0 10px;color:var(--accent)}
+  h4{font-size:15.5px;margin:20px 0 8px}
+  p{margin:10px 0}
+  code.i{background:#eceff3;border-radius:4px;padding:1px 6px;font-family:Consolas,"Courier New",monospace;font-size:.9em;color:#b3305c}
+  pre{background:var(--code-bg);color:var(--code-tx);border-radius:10px;padding:16px 18px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.65}
+  pre .c{color:#7fa17f} pre .k{color:#7ab7e8} pre .f{color:#e8c47a} pre .s{color:#e8927c}
+  table{border-collapse:collapse;width:100%;margin:14px 0;background:#fff;font-size:14px}
+  th,td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top}
+  th{background:var(--accent-l);color:#0b4a42}
+  tr:nth-child(even) td{background:#fbfcfd}
+  .box{border-radius:10px;padding:14px 18px;margin:16px 0;font-size:14.5px}
+  .box.warn{background:var(--warn-l);border-left:5px solid var(--warn)}
+  .box.danger{background:var(--danger-l);border-left:5px solid var(--danger)}
+  .box.good{background:var(--accent-l);border-left:5px solid var(--accent)}
+  .box.info{background:var(--purple-l);border-left:5px solid var(--purple)}
+  ul.t li{margin:6px 0}
+  .foot{margin-top:60px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:14px}
+  a{color:var(--accent)}
+
+  /* ---- 文件树 ---- */
+  .tree{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 26px;font-family:Consolas,"Courier New",monospace;font-size:13.5px;line-height:2;overflow-x:auto}
+  .tree .d{color:#0b4a42;font-weight:bold}
+  .tree .own{border-radius:999px;padding:0 10px;font-size:11.5px;font-family:"Microsoft YaHei",sans-serif;margin-left:10px}
+  .own.mine{background:#e2f2ec;color:#0b4a42} .own.gen{background:var(--gold-l);color:var(--gold)}
+  .own.third{background:var(--purple-l);color:var(--purple)} .own.hw{background:#e8e8e8;color:#444}
+  .tree .note{color:var(--muted);font-family:"Microsoft YaHei",sans-serif;font-size:12.5px}
+
+  /* ---- 流程图 ---- */
+  .flow{display:flex;flex-direction:column;margin:22px 0}
+  .fstep{position:relative;background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 18px 14px 74px}
+  .fstep .n{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:42px;height:42px;background:var(--accent);color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:17px}
+  .fstep h4{margin:0 0 2px;font-size:15px}
+  .fstep p{margin:2px 0;font-size:13.5px;color:var(--muted)}
+  .fstep .w{display:inline-block;font-size:12px;background:#eef1f4;border-radius:4px;padding:1px 9px;color:var(--muted);margin-top:4px;font-family:Consolas,monospace}
+  .fstep.red{border-color:var(--danger);background:var(--danger-l)} .fstep.red .n{background:var(--danger)}
+  .fstep.gold{border-color:var(--gold);background:var(--gold-l)} .fstep.gold .n{background:var(--gold)}
+  .fstep.green{border-color:var(--accent);background:var(--accent-l)} .fstep.green .n{background:var(--accent)}
+  .arr{text-align:center;color:var(--accent);font-size:22px;line-height:1.1;margin:3px 0;user-select:none}
+  .arr small{display:block;font-size:12px;color:var(--muted)}
+
+  /* ---- 分层架构 ---- */
+  .layers{display:flex;flex-direction:column-reverse;gap:7px;margin:20px 0}
+  .layer{display:flex;align-items:center;gap:14px;border-radius:9px;padding:10px 18px;border:1px solid var(--border);background:#fff}
+  .layer .ln{min-width:200px;font-weight:bold;font-size:14px}
+  .layer .ld{font-size:13.5px;color:var(--muted)}
+  .layer .lo{margin-left:auto;font-size:12px;border-radius:999px;padding:2px 12px;white-space:nowrap}
+  .lo.mine{background:#e2f2ec;color:#0b4a42}.lo.gen{background:var(--gold-l);color:var(--gold)}
+  .lo.third{background:var(--purple-l);color:var(--purple)}.lo.hw{background:#e8e8e8;color:#444}
+  .layer.mine{border-left:6px solid #0f6b5f}.layer.gen{border-left:6px solid #d9b23a}
+  .layer.third{border-left:6px solid #7b6fd0}.layer.hw{border-left:6px solid #999}
+
+  /* ---- 双时基并行图 ---- */
+  .duo{display:grid;grid-template-columns:150px 1fr;gap:10px;margin:18px 0;align-items:stretch}
+  .duo .lab{display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;border-radius:10px;padding:10px}
+  .duo .lane{border:1px solid var(--border);border-radius:10px;background:#fff;padding:12px 16px;font-size:13.5px}
+  .duo .lab.s1{background:var(--accent);color:#fff}.duo .lab.s2{background:var(--gold);color:#fff}
+  .chip{display:inline-block;background:#eef1f4;border-radius:6px;padding:2px 10px;margin:3px 4px 3px 0;font-size:12.5px;font-family:Consolas,monospace}
+
+  /* ---- 数据流三泳道 ---- */
+  .swim{display:grid;grid-template-columns:120px 1fr;gap:10px;margin:18px 0}
+  .swim .lab{display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;border-radius:10px;color:#fff;padding:8px}
+  .swim .row{border:1px solid var(--border);border-radius:10px;background:#fff;padding:10px 14px;font-size:13px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .node{background:var(--accent-l);border:1px solid #bcd9d3;border-radius:7px;padding:3px 10px;font-family:Consolas,monospace;font-size:12.5px}
+  .node.dark{background:var(--code-bg);color:var(--code-tx);border-color:var(--code-bg)}
+  .node.hard{background:#f0f0f0;border-color:#ccc}
+  .sarr{color:var(--accent);font-weight:bold}
+
+  /* ---- 优先级阶梯 ---- */
+  .prio{margin:18px 0;background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+  .pbar{display:grid;grid-template-columns:70px 1fr 90px;gap:10px;align-items:center;margin:8px 0;font-size:13px}
+  .pbar .num{text-align:right;font-family:Consolas,monospace;color:var(--muted)}
+  .pbar .bar{height:22px;border-radius:5px;position:relative}
+  .pbar .who{font-weight:bold}
+  .pbar .zone{grid-column:2/4;font-size:12px;color:var(--muted);border-left:3px solid #d0d5db;padding:2px 0 2px 10px;margin:2px 0}
+
+  /* ---- RAM 预算条 ---- */
+  .ram{margin:18px 0}
+  .rambar{display:flex;height:34px;border-radius:8px;overflow:hidden;border:1px solid var(--border);font-size:12px;color:#fff;text-align:center;line-height:34px;font-family:Consolas,monospace}
+  .rambar div{overflow:hidden;white-space:nowrap}
+  .ramlegend{font-size:13px;color:var(--muted);margin-top:8px}
+
+  @media (max-width:760px){.duo,.swim{grid-template-columns:1fr}.duo .lab,.swim .lab{padding:6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>RT-Thread Nano 配置与启动逻辑说明</h1>
+  <p>admin_BMS 工程专用学习笔记 —— 文件架构 · CubeMX 生成框架 · 系统初始化逻辑链 · 运行期架构 · 配置项逐项说明</p>
+  <div class="meta">
+    <span>STM32F103C8T6 · Cortex-M3 · 72MHz · 20KB RAM</span>
+    <span>RT-Thread Nano 3.1.5（CubeMX 软件包）</span>
+    <span>CLion 2026.2.3 · CMake + Ninja · arm-none-eabi-gcc 13.3.1</span>
+    <span>整理于 2026-10-05</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <b>目录</b>
+  <ol>
+    <li><a href="#s1">工程总览</a></li>
+    <li><a href="#s2">文件架构详解</a></li>
+    <li><a href="#s3">CubeMX 生成框架：初始代码从哪里开始</a></li>
+    <li><a href="#s4">系统初始化逻辑链（从上电到业务）</a></li>
+    <li><a href="#s5">运行期架构：线程 · 优先级 · 数据流 · 资源预算</a></li>
+    <li><a href="#s6">配置文件逐项说明</a></li>
+    <li><a href="#s7">业务开发接入点</a></li>
+    <li><a href="#s8">配置核对清单</a></li>
+    <li><a href="#s9">附录：术语与参考</a></li>
+  </ol>
+</nav>
+
+<!-- ================================================================ -->
+<h2 id="s1">1. 工程总览</h2>
+<table>
+  <tr><th style="width:30%">项目</th><th>内容</th></tr>
+  <tr><td>硬件平台</td><td>STM32F103C8T6（Cortex-M3，72MHz，64KB Flash / 20KB RAM）+ BQ769x0 电芯监控 + RS485 收发器</td></tr>
+  <tr><td>RTOS</td><td>RT-Thread Nano 3.1.5（CubeMX 软件包 RealThread.RT-Thread，含 FinSH 命令行组件）</td></tr>
+  <tr><td>生成工具</td><td>STM32CubeMX（生成 CubeMX 框架代码、CMake 工程、启动文件）</td></tr>
+  <tr><td>IDE / 构建链</td><td>CLion 2026.2.3 → CMake 3.28 + Ninja（均来自 STM32CubeCLT 1.18.0）→ arm-none-eabi-gcc 13.3.1 交叉编译 → 链接脚本 STM32F103xx_FLASH.ld → admin_BMS.elf</td></tr>
+  <tr><td>双时基设计</td><td>TIM2 作为 HAL 库时基；SysTick 作为 RT-Thread 心跳（详见 §4.6）</td></tr>
+  <tr><td>不使用的部分</td><td>MDK-ARM 目录（Keil 工程文件，与 CLion 构建链无关，仅作参考）</td></tr>
+</table>
+
+<!-- ================================================================ -->
+<h2 id="s2">2. 文件架构详解</h2>
+
+<h3>2.1 目录树与归属标注</h3>
+<p>工程中每个文件都可以归入三类：<b style="color:var(--gold)">CubeMX 生成</b>（重新生成代码时会被重写）、<b style="color:var(--purple)">第三方提供</b>（软件包原样安装，原则上不修改）、<b style="color:#0b4a42">自维护</b>（完全由开发者所有，随意修改）。</p>
+
+<div class="tree">
+<span class="d">admin_BMS/</span><br>
+├─ <span class="d">Core/</span> —— CubeMX 生成框架 <span class="own gen">CubeMX 生成</span><br>
+│&nbsp;&nbsp;├─ <span class="d">Inc/</span> main.h（引脚定义/外设声明）、can.h、usart.h、gpio.h<br>
+│&nbsp;&nbsp;└─ <span class="d">Src/</span> main.c（程序入口）、gpio.c、can.c、usart.c（huart1/huart2）、stm32f1xx_it.c（中断服务）、<span class="note">stm32f1xx_hal_timebase_tim.c（HAL 时基=TIM2）</span><br>
+├─ <span class="d">Drivers/</span> <span class="own third">ST 提供</span> —— STM32F1xx HAL 库 + CMSIS<br>
+├─ <span class="d">Middlewares/Third_Party/RealThread_RTOS_RT-Thread/</span> <span class="own third">RT-Thread 包</span><br>
+│&nbsp;&nbsp;├─ <span class="d">src/</span> 内核：scheduler.c 调度 · thread.c 线程 · ipc.c IPC · timer.c 定时器 · clock.c tick · mem.c 堆 · components.c <span class="note">← 含 entry()/rtthread_startup()，启动关键</span><br>
+│&nbsp;&nbsp;├─ <span class="d">components/finsh/</span> FinSH 组件：shell.c · msh.c · cmd.c · finsh_config.h（线程参数）<br>
+│&nbsp;&nbsp;└─ <span class="d">bsp/_template/</span> 包内原始模板 <span class="note">← 已被 User/bsp 的副本替换，不再参与编译</span><br>
+├─ <span class="d">User/</span> <span class="own mine">自维护</span> —— 全部自定义代码的家<br>
+│&nbsp;&nbsp;├─ <span class="d">bsp/</span> <b>RT-Thread 适配层</b>：rtconfig.h（系统总开关）· rt_board.c（移植文件：时钟/心跳/控制台）· finsh_port.c（命令行收字符）· board.c/board.h（外设板级初始化）<br>
+│&nbsp;&nbsp;├─ <span class="d">Drivers/</span> 芯片驱动：drv_softi2c_bq769x0（BQ 电芯监控）· drv_soft_i2c · drv_can · drv_rs485<br>
+│&nbsp;&nbsp;└─ <span class="d">bms/</span> 业务层：<span class="d">Inc/</span> 公共头（type/config/global/utils/app）· <span class="d">Hal/</span> 硬件抽象（monitor/control/config/comm）· <span class="d">core/</span> 业务逻辑（monitor/protect/analysis/energy/comm）+ bms_app.c（业务总入口）<br>
+├─ <span class="d">cmake/</span><br>
+│&nbsp;&nbsp;├─ gcc-arm-none-eabi.cmake <span class="note">← 交叉编译配置：-mcpu=cortex-m3、链接脚本、nano.specs</span><br>
+│&nbsp;&nbsp;└─ <span class="d">stm32cubemx/</span> CMakeLists.txt <span class="note">← CubeMX 生成的源文件清单（重生成时被覆盖，不在其中做修改）</span><br>
+├─ CMakeLists.txt <span class="own mine">自维护</span> <span class="note">← 构建接线主战场：include 路径、自维护源文件、RT-Thread 目标替换</span><br>
+├─ startup_stm32f103xb.s <span class="note">← 启动文件：向量表 + Reset_Handler；末尾 bl entry 接管入口</span><br>
+└─ STM32F103xx_FLASH.ld <span class="note">← 链接脚本：Flash 64K / RAM 20K 布局，ENTRY(Reset_Handler)</span>
+</div>
+
+<h3>2.2 文件修改规则</h3>
+<div class="box good">
+<b>规则一（改哪里）：</b>自维护代码全部集中在 <code class="i">User/</code> 下。要定制第三方文件时，复制一份到 User/ 下改名自用（如 <code class="i">_template/board.c</code> → <code class="i">User/bsp/rt_board.c</code>），再在 CMakeLists.txt 里做"替换接线"，保持 Middlewares 原封不动。
+</div>
+<div class="box warn">
+<b>规则二（不可随意改的文件）：</b><code class="i">cmake/stm32cubemx/CMakeLists.txt</code> 和 <code class="i">Core/</code> 下所有文件在 CubeMX 重新生成代码时会被重写。Core 下只允许写 <code class="i">/* USER CODE BEGIN x */</code> 与 <code class="i">/* USER CODE END x */</code> 之间的区域（重生成时保留）；CMake 自定义内容全部写在根 CMakeLists.txt（标注 generated only once，永不被覆盖）。
+</div>
+
+<!-- ================================================================ -->
+<h2 id="s3">3. CubeMX 生成框架：初始代码从哪里开始</h2>
+
+<h3>3.1 两套框架的视角差（理解全局的钥匙）</h3>
+<p>本工程同时存在两套"框架视角"，它们在 <b>main()</b> 处汇合：</p>
+
+<div class="duo">
+  <div class="lab s1">CubeMX 裸机视角</div>
+  <div class="lane">CubeMX 假设 <code class="i">main()</code> 是程序入口：上电 → main() → 外设初始化 → while(1)。它把所有外设初始化（MX_*_Init）和用户代码都排在 main() 里。</div>
+  <div class="lab s2">RT-Thread 视角</div>
+  <div class="lane">RT-Thread 要求先启动内核（心跳、堆、调度器），再把 main() 当作<b>一个普通线程的入口函数</b>来调用——此时外设初始化天然发生在调度器启动之后。</div>
+</div>
+
+<p>两者的汇合方式：<b>启动文件不再直接执行 main()，而是先执行 RT-Thread 的启动流程；内核起来之后，由名为 "main" 的线程去调用 main() 函数</b>。于是 CubeMX 生成的所有代码一行都不用改，只是它们的执行时机从"裸机主流程"变成了"main 线程里"。</p>
+
+<h3>3.2 CubeMX 生成代码的初始化结构（main.c）</h3>
+<pre><span class="k">int</span> <span class="f">main</span>(<span class="k">void</span>)
+{
+    <span class="f">HAL_Init</span>();                  <span class="c">/* ① HAL 库基础设施：NVIC 分组、Flash 接口、TIM2 时基 */</span>
+    <span class="f">SystemClock_Config</span>();        <span class="c">/* ② 时钟树：HSE→PLL×9 → SYSCLK 72MHz */</span>
+    <span class="f">MX_GPIO_Init</span>();              <span class="c">/* ③ 各外设初始化，顺序由 .ioc 决定 */</span>
+    <span class="f">MX_CAN_Init</span>();
+    <span class="f">MX_USART1_UART_Init</span>();       <span class="c">/*    PA9/PA10 控制台串口 */</span>
+    <span class="f">MX_USART2_UART_Init</span>();       <span class="c">/*    PA2/PA3 RS485 串口 */</span>
+    <span class="c">/* USER CODE BEGIN 2 */</span>
+    <span class="f">BMS_SysInitialize</span>();         <span class="c">/* ④ 业务总入口（User/bms/core/bms_app.c）*/</span>
+    <span class="c">/* USER CODE END 2 */</span>
+    <span class="k">while</span> (1)                    <span class="c">/* ⑤ main 线程的主循环 */</span>
+    {
+        LED 翻转;
+        <span class="f">rt_thread_mdelay</span>(1000);  <span class="c">/* 线程睡眠 1s，让出 CPU */</span>
+    }
+}</pre>
+
+<h3>3.3 USER CODE 区机制</h3>
+<p>CubeMX 生成代码时按 <code class="i">.ioc</code> 配置重写整个文件，唯一的保留区是成对的 <code class="i">/* USER CODE BEGIN x */ … /* USER CODE END x */</code> 注释之间。因此对 Core/ 文件的一切修改（含中断处理函数、头文件引用）都必须写在这些区域内。</p>
+
+<h3>3.4 CubeMX 框架内的中断结构</h3>
+<table>
+  <tr><th>文件 / 函数</th><th>触发源</th><th>职责</th></tr>
+  <tr><td>stm32f1xx_it.c → TIM2_IRQHandler</td><td>TIM2 周期中断</td><td>调 HAL_IncTick()，HAL 时基 +1ms（供 HAL_Delay/HAL_GetTick）</td></tr>
+  <tr><td>stm32f1xx_it.c → USART1/2_IRQHandler</td><td>串口事件</td><td>转交 HAL_UART_IRQHandler，驱动 _IT 收发</td></tr>
+  <tr><td>stm32f1xx_it.c → SysTick_Handler（自维护）</td><td>SysTick 每 1ms</td><td>调 rt_os_tick_callback()，RT-Thread 心跳 +1</td></tr>
+  <tr><td>main.c → HAL_TIM_PeriodElapsedCallback</td><td>TIM2 溢出</td><td>识别 TIM2 后调 HAL_IncTick()</td></tr>
+</table>
+
+<!-- ================================================================ -->
+<h2 id="s4">4. 系统初始化逻辑链（从上电到业务）</h2>
+
+<div class="flow">
+  <div class="fstep"><div class="n">0</div>
+    <h4>硬件复位</h4>
+    <p>Cortex-M3 从向量表（Flash 0x0800_0000）取初始 SP（指向 RAM 顶端）与复位向量，跳入 Reset_Handler。纯硬件行为。</p>
+    <span class="w">硬件</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep gold"><div class="n">1</div>
+    <h4>启动文件：搭建 C 运行环境</h4>
+    <p>① SystemInit()：给 SystemCoreClock 变量赋账面值（不碰实际时钟寄存器）；② .data 段从 Flash 搬到 RAM；③ .bss 段清零；④ __libc_init_array()（C 库初始化）；⑤ <b>bl entry</b>（接管入口，见 §4.5）。</p>
+    <span class="w">startup_stm32f103xb.s</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep red"><div class="n">2</div>
+    <h4>entry() → rtthread_startup()：内核接管</h4>
+    <p>关全局中断 → 进入 RT-Thread 的启动序列。从此到调度器启动，代码按固定顺序执行，不再返回。</p>
+    <span class="w">components.c（GCC 分支）</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep green"><div class="n">3</div>
+    <h4>rt_hw_board_init()：适配层上岗</h4>
+    <p>① HAL_Init()（NVIC 分组、TIM2 时基）；② SystemClock_Config()（时钟真正拉到 72MHz）；③ SysTick_Config(72M/1000)（安装 1ms 心跳）；④ rt_components_board_init()（执行 INIT_BOARD_EXPORT 登记：uart_init 配控制台串口）；⑤ rt_system_heap_init()（注册 15KB 内核堆）。</p>
+    <span class="w">User/bsp/rt_board.c</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep"><div class="n">4</div>
+    <h4>内核子系统依次初始化</h4>
+    <p>rt_show_version()（打印版本横幅，控制台已在第 3 步就绪）→ rt_system_timer_init（定时器容器）→ rt_system_scheduler_init（调度器）→ rt_application_init（创建 main 线程：优先级 16 / 栈 1024）→ rt_system_timer_thread_init（timer 线程：优先级 4）→ rt_thread_idle_init（idle 线程：优先级 31）。</p>
+    <span class="w">components.c · rtthread_startup()</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep"><div class="n">5</div>
+    <h4>rt_system_scheduler_start()：调度器启动（永不返回）</h4>
+    <p>就绪队列里挑最高优先级线程运行。rtthread_startup 的使命到此结束，"程序入口"的概念到此消失——之后一切代码都在某个线程的上下文里执行。</p>
+    <span class="w">scheduler.c</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep"><div class="n">6</div>
+    <h4>main 线程：main_thread_entry → 汇合 CubeMX 框架</h4>
+    <p>main 线程先调 rt_components_init()（执行 INIT_APP_EXPORT 登记、创建 FinSH 的 tshell 线程），然后调用 main() —— CubeMX 生成的整个框架从这里开始执行（§3.2 的 ①~⑤）。</p>
+    <span class="w">components.c → main.c</span>
+  </div>
+  <div class="arr">▼</div>
+
+  <div class="fstep green"><div class="n">7</div>
+    <h4>业务就绪</h4>
+    <p>main() 完成 HAL/时钟（重复调用无害）→ 四个外设初始化 → BMS_SysInitialize()（业务总入口）→ while(1) 周期任务。与此同时 tshell 在等命令、timer 在处理定时器、idle 在兜底——多线程并行开始。</p>
+    <span class="w">main.c · bms_app.c · finsh</span>
+  </div>
+</div>
+
+<h3>4.5 关键配置：GCC 入口接管</h3>
+<div class="box danger">
+<b>原理：</b>Keil 的 ARMCC 编译器支持 <code class="i">$Sub$$main</code> 语法，链接时自动把入口 main 换成 rtthread_startup——Keil 教程无需任何操作。GCC 没有该语法，RT-Thread 包改用 <code class="i">entry()</code> 函数方案（components.c 第 156~163 行，注释注明 "Add -eentry to arm-none-eabi-gcc argument"）。本工程的启动文件默认 <code class="i">bl main</code>，若不修改，上电将直接执行 main() 并完全绕过 RT-Thread：无调度器、无心跳、无 FinSH，首个 rt_thread_mdelay 永久阻塞。
+<br><br>
+<b>配置方法：</b>将 startup_stm32f103xb.s 中 Reset_Handler 末尾的 <code class="i">bl main</code> 改为 <code class="i">bl entry</code>（等效备选方案：在 rt_board.c 末尾添加 <code class="i">__attribute__((constructor))</code> 钩子调用 rtthread_startup()，该写法存于自维护文件中，不怕 CubeMX 覆盖）。
+</div>
+
+<h3>4.6 双时基并行结构</h3>
+<p>芯片内同时运行两个独立计时系统，职责分离、互不干扰：</p>
+
+<div class="duo">
+  <div class="lab s1">SysTick<br>RT-Thread 心跳</div>
+  <div class="lane">
+    <span class="chip">rt_board.c: SysTick_Config(72M/1000) 装载</span>
+    <span class="chip">stm32f1xx_it.c: SysTick_Handler 响应</span>
+    <span class="chip">rt_os_tick_callback → rt_tick_increase</span><br>
+    服务对象：调度器时间片、rt_thread_mdelay/睡眠、IPC 超时、软件定时器。每 1ms 使系统 tick +1。
+  </div>
+  <div class="lab s2">TIM2<br>HAL 时基</div>
+  <div class="lane">
+    <span class="chip">HAL_Init → HAL_InitTick(TIM2) 装载</span>
+    <span class="chip">stm32f1xx_it.c: TIM2_IRQHandler 响应</span>
+    <span class="chip">HAL_TIM_PeriodElapsedCallback → HAL_IncTick</span><br>
+    服务对象：HAL_Delay、HAL_GetTick、HAL 驱动内部超时（如 UART 等待标志）。
+  </div>
+</div>
+
+<div class="box info">
+<b>为什么分开：</b>HAL 的延时/超时逻辑与 RTOS 调度使用同一计时源时会互相干扰（例如 RTOS 关调度器期间 HAL 超时失准）。CubeMX 启用第三方 RTOS 包时把 HAL 时基从 SysTick 挪到 TIM2，正是为了消除冲突——这也是为什么 SysTick 能完整让给 RT-Thread。
+</div>
+
+<!-- ================================================================ -->
+<h2 id="s5">5. 运行期架构</h2>
+
+<h3>5.1 线程清单</h3>
+<table>
+  <tr><th>线程</th><th>优先级</th><th>栈(B)</th><th>创建者</th><th>职责</th></tr>
+  <tr><td>timer</td><td>4</td><td>1024</td><td>rt_system_timer_thread_init</td><td>执行软件定时器回调</td></tr>
+  <tr><td>main</td><td>16</td><td>1024</td><td>rt_application_init</td><td>rt_components_init → main()：外设初始化 + 业务总入口 + LED 循环</td></tr>
+  <tr><td>tshell</td><td>21</td><td>1024</td><td>rt_components_init → FinSH 组件</td><td>轮询 rt_hw_console_getchar，解析执行 msh 命令（help/ps/free…）</td></tr>
+  <tr><td>idle</td><td>31</td><td>—</td><td>rt_thread_idle_init</td><td>无就绪线程时兜底运行；可挂低功耗钩子</td></tr>
+</table>
+
+<h3>5.2 优先级阶梯（RT_THREAD_PRIORITY_MAX = 32，数字越小越高）</h3>
+<div class="prio">
+  <div class="pbar"><div class="num">0</div><div class="bar" style="background:#dfe5ea"></div><div class="who"></div></div>
+  <div class="pbar"><div class="num">4</div><div class="bar" style="background:#0f6b5f;width:12%"></div><div class="who">timer 线程</div></div>
+  <div class="pbar"><div class="num">8~12</div><div class="bar" style="background:#7fc4b8;width:16%;margin-left:14%"></div><div class="who">建议的 BMS 业务线程区</div></div>
+  <div class="pbar"><div class="num">16</div><div class="bar" style="background:#3a9184;width:28%;margin-left:33%"></div><div class="who">main 线程</div></div>
+  <div class="pbar"><div class="num">21</div><div class="bar" style="background:#d9b23a;width:38%;margin-left:47%"></div><div class="who">tshell（FinSH）</div></div>
+  <div class="pbar"><div class="num">31</div><div class="bar" style="background:#999;width:56%;margin-left:64%"></div><div class="who">idle 线程</div></div>
+  <div class="zone">规划原则：硬实时采集 &gt; 计算分析 &gt; 通信 &gt; 调试。业务线程放 8~14 区间（比 main 高保证及时响应，比 timer 低不干扰精确定时），FinSH 永远排在业务之后。</div>
+</div>
+
+<h3>5.3 三个方向的数据流</h3>
+<div class="swim">
+  <div class="lab" style="background:#0f6b5f">打印方向</div>
+  <div class="row">
+    <span class="node">rt_kprintf()</span><span class="sarr">→</span>
+    <span class="node">rt_console_output</span><span class="sarr">→</span>
+    <span class="node">rt_hw_console_output()</span><span class="sarr">→</span>
+    <span class="node">HAL_UART_Transmit(huart1)</span><span class="sarr">→</span>
+    <span class="node hard">PA9 → PC 串口终端</span>
+  </div>
+  <div class="lab" style="background:#b3541e">命令方向</div>
+  <div class="row">
+    <span class="node hard">PC 键盘 → PA10</span><span class="sarr">→</span>
+    <span class="node">RXNE 标志</span><span class="sarr">→</span>
+    <span class="node">rt_hw_console_getchar()</span><span class="sarr">→</span>
+    <span class="node">FinSH msh 解析</span><span class="sarr">→</span>
+    <span class="node dark">执行命令 / MSH_CMD_EXPORT 的函数</span>
+  </div>
+  <div class="lab" style="background:#8a6d1a">心跳方向</div>
+  <div class="row">
+    <span class="node hard">SysTick 硬件每 1ms</span><span class="sarr">→</span>
+    <span class="node">SysTick_Handler()</span><span class="sarr">→</span>
+    <span class="node">rt_os_tick_callback()</span><span class="sarr">→</span>
+    <span class="node">rt_tick_increase()</span><span class="sarr">→</span>
+    <span class="node dark">调度/延时/超时全部依赖此计数</span>
+  </div>
+</div>
+
+<h3>5.4 RAM 预算（总 20KB）</h3>
+<div class="ram">
+  <div class="rambar">
+    <div style="width:75%;background:#0f6b5f">内核堆 15KB</div>
+    <div style="width:5%;background:#3a9184">main</div>
+    <div style="width:5%;background:#d9b23a">tshell</div>
+    <div style="width:5%;background:#b3541e">timer</div>
+    <div style="width:10%;background:#888">全局+主栈</div>
+  </div>
+  <div class="ramlegend">构成：rt_board.c 的 RT_HEAP_SIZE 静态数组 15KB（rt_thread_create / FinSH 命令缓冲都从这里分配）+ 三个线程栈各 1KB + 全局变量与 MSP 主栈约 2KB。内存吃紧时第一刀调 RT_HEAP_SIZE。</div>
+</div>
+
+<!-- ================================================================ -->
+<h2 id="s6">6. 配置文件逐项说明</h2>
+
+<h3>6.1 User/bsp/rtconfig.h —— 系统总开关（实际编译读取的这份）</h3>
+<table>
+  <tr><th>分组</th><th>宏</th><th>作用</th></tr>
+  <tr><td rowspan="5">基础</td><td>RT_THREAD_PRIORITY_MAX 32</td><td>优先级分 32 档（0 最高）</td></tr>
+  <tr><td>RT_TICK_PER_SECOND 1000</td><td>心跳频率 1000Hz（1ms/tick）</td></tr>
+  <tr><td>RT_NAME_MAX 8</td><td>内核对象名最长 8 字符</td></tr>
+  <tr><td>RT_USING_COMPONENTS_INIT</td><td>启用自动初始化机制（INIT_BOARD/APP_EXPORT）</td></tr>
+  <tr><td>RT_USING_USER_MAIN + RT_MAIN_THREAD_STACK_SIZE 1024</td><td>main 变成线程；main 线程栈 1KB</td></tr>
+  <tr><td rowspan="2">调试</td><td>RT_DEBUG + RT_DEBUG_COLOR</td><td>内核断言与彩色日志（学习期开启，量产可关）</td></tr>
+  <tr><td>RT_USING_OVERFLOW_CHECK</td><td>线程栈溢出检测（初学强烈建议保留）</td></tr>
+  <tr><td rowspan="2">软件定时器</td><td>RT_TIMER_THREAD_PRIO 4</td><td>timer 线程优先级</td></tr>
+  <tr><td>RT_TIMER_THREAD_STACK_SIZE 1024</td><td>timer 线程栈</td></tr>
+  <tr><td>IPC</td><td>SEMAPHORE / MUTEX / EVENT / MESSAGEQUEUE</td><td>按需启用的线程间同步通信设施</td></tr>
+  <tr><td rowspan="3">内存</td><td>RT_USING_HEAP + RT_USING_SMALL_MEM</td><td>启用动态堆（rt_board.c 的 15KB 数组）与小内存管理算法</td></tr>
+  <tr><td>RT_USING_MEMPOOL</td><td>静态内存池支持</td></tr>
+  <tr><td>RT_USING_CONSOLE + RT_CONSOLEBUF_SIZE 128</td><td>控制台与打印缓冲</td></tr>
+  <tr><td>FinSH</td><td>#include "finsh_config.h"</td><td>引入命令行组件配置（本行即总开关）</td></tr>
+  <tr><td>设备</td><td>RT_USING_DEVICE</td><td>设备对象框架</td></tr>
+</table>
+<div class="box warn">
+<b>生效机制：</b>RT-Thread 内核统一 <code class="i">#include &lt;rtconfig.h&gt;</code>。工程中存在两份 rtconfig.h（User/bsp 与 Middlewares 包内模板），编译器按 include 路径顺序取<b>先找到</b>的一份，且两者均有包含保护——第二份被静默跳过、不报错。因此必须在 CMakeLists.txt 中让 User/bsp 的路径排在包模板之前（见 §6.3）。
+</div>
+
+<h3>6.2 finsh_config.h —— FinSH 组件参数（components/finsh/）</h3>
+<table>
+  <tr><th>宏</th><th>值</th><th>含义</th></tr>
+  <tr><td>RT_USING_FINSH</td><td>（第 7 行定义）</td><td>FinSH 总开关，由 rtconfig.h 的 include 引入</td></tr>
+  <tr><td>FINSH_THREAD_PRIORITY</td><td>21</td><td>tshell 线程优先级（软件包默认值，低于业务线程是刻意设计）</td></tr>
+  <tr><td>FINSH_THREAD_STACK_SIZE</td><td>1024</td><td>tshell 线程栈，msh 命令解析在此栈上进行</td></tr>
+  <tr><td>FINSH_USING_MSH / SYMTAB / DESCRIPTION</td><td>开</td><td>msh 命令模式 / 符号表 / 命令描述（help 内容来源）</td></tr>
+</table>
+
+<h3>6.3 根 CMakeLists.txt —— 构建接线（自维护，重生成不覆盖）</h3>
+<pre><span class="c"># ① 声明自维护源文件（驱动/业务/适配层）</span>
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+    User/bsp/board.c  User/Drivers/drv_can.c  ...  User/bms/core/bms_app.c)
+
+<span class="c"># ② 声明自维护头文件搜索路径（顺序：先自己的，后 CubeMX 的）</span>
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    User/bsp  User/Drivers  User/bms/Inc  User/bms/Hal  User/bms/core)
+
+<span class="c"># ③ 以下内容必须放在 add_subdirectory(cmake/stm32cubemx) 之后（目标才已存在）</span>
+
+<span class="c"># 让 RT-Thread 源码优先读取 User/bsp 的 rtconfig.h（自有目录排在继承目录之前）</span>
+<span class="f">set_property</span>(TARGET RT-Thread APPEND PROPERTY INCLUDE_DIRECTORIES ${CMAKE_SOURCE_DIR}/User/bsp)
+
+<span class="c"># 用 User/bsp 的移植文件替换包内 _template 版本（避免重复定义）</span>
+<span class="f">get_property</span>(rtthread_srcs TARGET RT-Thread PROPERTY SOURCES)
+<span class="f">list</span>(FILTER rtthread_srcs EXCLUDE REGEX <span class="s">"bsp/_template/board\\.c|components/finsh/finsh_port\\.c"</span>)
+<span class="f">list</span>(APPEND rtthread_srcs ${CMAKE_SOURCE_DIR}/User/bsp/rt_board.c ${CMAKE_SOURCE_DIR}/User/bsp/finsh_port.c)
+<span class="f">set_property</span>(TARGET RT-Thread PROPERTY SOURCES <span class="s">"${rtthread_srcs}"</span>)</pre>
+
+<h3>6.4 中断与 NVIC 配置</h3>
+<table>
+  <tr><th>中断</th><th>使能位置</th><th>服务函数</th><th>归属</th></tr>
+  <tr><td>SysTick</td><td>rt_board.c 的 SysTick_Config()</td><td>SysTick_Handler → rt_os_tick_callback</td><td>RT-Thread 心跳</td></tr>
+  <tr><td>TIM2</td><td>HAL_Init → HAL_InitTick（自动）</td><td>TIM2_IRQHandler → HAL_IncTick</td><td>HAL 时基</td></tr>
+  <tr><td>USART1</td><td>CubeMX NVIC Settings</td><td>USART1_IRQHandler（CubeMX 生成空壳转 HAL）</td><td>控制台（当前轮询收，备用）</td></tr>
+  <tr><td>USART2</td><td>CubeMX NVIC Settings</td><td>USART2_IRQHandler</td><td>RS485 的 Receive_IT/Transmit_IT 必需</td></tr>
+  <tr><td>CAN / EXTI 等</td><td>CubeMX NVIC Settings</td><td>对应 IRQHandler</td><td>按业务需要</td></tr>
+</table>
+<div class="box info">
+<b>DMA 与 _IT 的关系：</b>HAL 函数名后缀决定数据搬运方式——无后缀（轮询）、<code class="i">_IT</code>（每字节中断搬运）、<code class="i">_DMA</code>（DMA 控制器整块搬运，完成后才中断一次）。本工程 RS485 使用 _IT 逐字节收发，只需使能对应 NVIC 中断，无需配置 DMA；DMA 适用于大块报文（如 Modbus 帧）或高波特率场景。
+</div>
+
+<!-- ================================================================ -->
+<h2 id="s7">7. 业务开发接入点</h2>
+
+<h3>7.1 初始化职责分界</h3>
+<table>
+  <tr><th>阶段</th><th>执行者</th><th>内容</th></tr>
+  <tr><td>main 之前</td><td>rt_board.c（适配层）</td><td>时钟、心跳、控制台串口、内核堆——<b>RTOS 生存所需</b></td></tr>
+  <tr><td>main 线程 · rt_components_init</td><td>INIT_APP_EXPORT 登记的函数</td><td>组件级初始化（含 tshell 创建）</td></tr>
+  <tr><td>main() 前半段</td><td>CubeMX 框架</td><td>GPIO/CAN/USART 等外设初始化</td></tr>
+  <tr><td>main() 中段</td><td>bms_app.c</td><td>BMS_SysInitialize()：汇总各业务模块初始化</td></tr>
+  <tr><td>main() 之后</td><td>各业务线程</td><td>周期性业务（采集/保护/分析/均衡）并行运行</td></tr>
+</table>
+
+<h3>7.2 周期业务线程模板（对应 BMS 采集 250ms 节拍）</h3>
+<pre><span class="k">static void</span> <span class="f">bms_monitor_thread_entry</span>(<span class="k">void</span> *param)
+{
+    <span class="k">while</span> (1)
+    {
+        <span class="f">BMS_MonitorTaskEntry</span>();        <span class="c">/* 单次采集任务 */</span>
+        <span class="f">rt_thread_mdelay</span>(250);         <span class="c">/* 周期 250ms，期间 CPU 让给其他线程 */</span>
+    }
+}
+
+<span class="k">static int</span> <span class="f">bms_monitor_task_start</span>(<span class="k">void</span>)
+{
+    rt_thread_t tid = <span class="f">rt_thread_create</span>(<span class="s">"bms_mon"</span>, bms_monitor_thread_entry, RT_NULL,
+                                       1024,   <span class="c">/* 栈：放 printf/排序等，1KB 起 */</span>
+                                       12,     <span class="c">/* 优先级：8~14 业务区 */</span>
+                                       10);    <span class="c">/* 时间片：同级轮转权重 */</span>
+    <span class="k">if</span> (tid != RT_NULL) <span class="f">rt_thread_startup</span>(tid);
+    <span class="k">return</span> 0;
+}
+<span class="f">INIT_APP_EXPORT</span>(bms_monitor_task_start);   <span class="c">/* main 线程阶段自动执行，无需手动调用 */</span></pre>
+
+<div class="box good">
+<b>配套调试手段：</b>业务线程跑起来后，串口终端 <code class="i">ps</code> 可观察所有线程的优先级与栈剩余、<code class="i">free</code> 查堆水位、<code class="i">MSH_CMD_EXPORT(func, desc)</code> 可把任意业务函数导出为串口命令在线触发——这是 RTOS 相对裸机最大的开发体验提升。
+</div>
+
+<!-- ================================================================ -->
+<h2 id="s8">8. 配置核对清单</h2>
+
+<h3>8.1 每次 CubeMX 重新生成代码后核对</h3>
+<table>
+  <tr><th>#</th><th>核对项</th><th>位置</th></tr>
+  <tr><td>1</td><td>启动文件末尾仍是 bl entry（而非 bl main）</td><td>startup_stm32f103xb.s</td></tr>
+  <tr><td>2</td><td>自维护中断代码仍在 USER CODE 区</td><td>Core/Src/stm32f1xx_it.c</td></tr>
+  <tr><td>3</td><td>main.c 中 BMS_SysInitialize() 调用仍在 USER CODE 2 区</td><td>Core/Src/main.c</td></tr>
+  <tr><td>4</td><td>新外设是否需要同步加入 rt_board.c / 驱动层</td><td>视外设而定</td></tr>
+  <tr><td>5</td><td>根 CMakeLists.txt 的接线无需改动（该文件不被覆盖）</td><td>根目录</td></tr>
+</table>
+
+<h3>8.2 初始化完成验收标准</h3>
+<table>
+  <tr><th>#</th><th>验收项</th><th>合格现象</th></tr>
+  <tr><td>1</td><td>CMake 配置通过</td><td>CLion CMake 面板对应 Profile 无报错标记</td></tr>
+  <tr><td>2</td><td>编译通过</td><td>生成 admin_BMS.elf，无 error</td></tr>
+  <tr><td>3</td><td>烧录运行</td><td>ST-LINK 下载成功，复位后程序运行</td></tr>
+  <tr><td>4</td><td>心跳准确</td><td>LED 恰好 1s 周期翻转（偏差大 = 时钟顺序问题）</td></tr>
+  <tr><td>5</td><td>控制台</td><td>115200 打开 PA9/PA10，可见 RT-Thread 版本横幅</td></tr>
+  <tr><td>6</td><td>FinSH</td><td>help 有响应；ps 显示 main/tshell/timer/idle 及优先级、栈水位</td></tr>
+</table>
+<p>6 项全部通过，即 RT-Thread 适配层、CubeMX 框架、业务层三者完成对接，可正式进入 BMS 核心业务开发。</p>
+
+<!-- ================================================================ -->
+<h2 id="s9">附录</h2>
+
+<h3>9.1 术语速查</h3>
+<table>
+  <tr><th>术语</th><th>解释</th></tr>
+  <tr><td>向量表 / 复位向量</td><td>芯片上电时查询的"地址目录"，首项为栈顶地址，次项为复位后第一条代码（Reset_Handler）</td></tr>
+  <tr><td>.data / .bss</td><td>已初始化 / 未初始化全局变量段；启动时前者从 Flash 搬初值，后者清零</td></tr>
+  <tr><td>tick（心跳）</td><td>RTOS 最小时间单位（本工程 1ms）；延时与超时均以 tick 计数</td></tr>
+  <tr><td>ISR</td><td>中断服务程序：硬件事件触发后 CPU 自动执行的函数</td></tr>
+  <tr><td>抢占式调度</td><td>高优先级线程就绪即打断低优先级线程；同优先级按时间片轮转</td></tr>
+  <tr><td>线程栈 / 堆</td><td>线程私有内存（局部变量、调用链）/ 内核动态分配池（rt_thread_create 等）</td></tr>
+  <tr><td>临界区</td><td>rt_enter_critical/exit 之间不可被调度打断的代码段</td></tr>
+  <tr><td>自动初始化</td><td>INIT_BOARD_EXPORT（main 前）/ INIT_APP_EXPORT（main 线程内）登记后自动执行，替代手工逐个调用</td></tr>
+  <tr><td>$Sub$$main</td><td>ARMCC 语法：链接时以 rtthread_startup 替换 main 入口；GCC 无此语法，故需 bl entry 手动接管</td></tr>
+</table>
+
+<h3>9.2 参考资料</h3>
+<ul class="t">
+  <li><a href="https://www.rt-thread.org/document/site/#/rt-thread-version/rt-thread-nano/nano-port-cubemx/an0041-nano-port-cubemx">RT-Thread 官方：基于 CubeMX 移植 RT-Thread Nano（AN0041）</a></li>
+  <li><a href="https://community.st.com/stm32-mcus-embedded-software-32/rt-thread-project-160908">ST 社区：RT-Thread project（GCC 入口 entry 处理）</a></li>
+  <li><a href="https://blog.csdn.net/sinat_22081411/article/details/134920603">STM32CubeIDE 移植 RT-Thread Nano 问题总结</a></li>
+  <li><a href="https://www.jetbrains.com/help/clion/embedded-stm32.html">JetBrains：CLion STM32CubeMX 工程文档</a></li>
+  <li>本工程内一手资料：components.c（启动序列）、startup_stm32f103xb.s（启动文件）、finsh_config.h（FinSH 参数）、admin_BMS.ioc（外设配置）</li>
+</ul>
+
+<div class="foot">
+  <p>admin_BMS 工程学习笔记 · 内容依据工程内实际文件（startup_stm32f103xb.s / components.c / rtconfig.h / finsh_config.h / CMakeLists.txt / admin_BMS.ioc）逐项核实 · 2026-10-05</p>
+</div>
+
+</div>
+</body>
+</html>

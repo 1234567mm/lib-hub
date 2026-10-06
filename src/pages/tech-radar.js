@@ -30,8 +30,15 @@ const tagSlugMap = {
 };
 const getTagSlug = (tag) => tagSlugMap[tag.toLowerCase()] || tag;
 
-/** 代表项目数据 */
+/** 代表项目数据（整卡可点击：href 存在跳整页阅读，否则跳相关文章标签页） */
 const projects = [
+  {
+    title: '集中式BMS软件嵌入式开发框架',
+    tags: ['stm32', '项目实战', 'RT-Thread'],
+    desc: 'RT-Thread Nano 配置与启动逻辑，CubeMX 生成工程框架',
+    stars: 5,
+    href: '/project/bms-rtthread-nano-framework',
+  },
   { title: 'ESP32 二轴无刷云台', tags: ['esp32', '项目实战', 'FOC'], desc: 'IMU姿态解算 + FOC闭环控制，STM32+ESP32协同', stars: 5 },
   { title: '四轴飞行器', tags: ['stm32', '项目实战', 'PID'], desc: 'MPU6050姿态传感，互补滤波，PID飞控', stars: 4 },
   { title: '智能小车', tags: ['esp32', '项目实战'], desc: 'Wi-Fi控制 + 超声波避障 + 红外循迹', stars: 4 },
@@ -121,25 +128,28 @@ function ProjectsSection() {
         <h2 id="projects" className={styles.sectionTitle}>精选项目</h2>
         <p className={styles.sectionSubtitle}>从实战中打磨的技术沉淀</p>
         <div className={styles.projectsGrid}>
-          {projects.map((p, i) => (
-            <div key={i} className={styles.projectCard}>
-              <div className={styles.projectHeader}>
-                <h3 className={styles.projectTitle}>{p.title}</h3>
-                <div className={styles.projectStars}>
-                  {Array.from({ length: 5 }, (_, j) => (
-                    <StarIcon key={j} filled={j < p.stars} />
+          {projects.map((p, i) => {
+            const to = p.href || `/blog/tags/${getTagSlug(p.tags[0])}`;
+            return (
+              <Link key={i} className={styles.projectCard} to={to}>
+                <div className={styles.projectHeader}>
+                  <h3 className={styles.projectTitle}>{p.title}</h3>
+                  <div className={styles.projectStars}>
+                    {Array.from({ length: 5 }, (_, j) => (
+                      <StarIcon key={j} filled={j < p.stars} />
+                    ))}
+                  </div>
+                </div>
+                <p className={styles.projectDesc}>{p.desc}</p>
+                <div className={styles.projectTags}>
+                  {p.tags.map((t, j) => (
+                    <span key={j} className={styles.projectTag}>{t}</span>
                   ))}
                 </div>
-              </div>
-              <p className={styles.projectDesc}>{p.desc}</p>
-              <div className={styles.projectTags}>
-                {p.tags.map((t, j) => (
-                  <span key={j} className={styles.projectTag}>{t}</span>
-                ))}
-              </div>
-              <Link className={styles.projectLink} to={`/blog/tags/${getTagSlug(p.tags[0])}`}>查看相关文章 →</Link>
-            </div>
-          ))}
+                <span className={styles.projectLink}>{p.href ? '点击阅读 →' : '查看相关文章 →'}</span>
+              </Link>
+            );
+          })}
         </div>
         <div className={styles.sectionCta}>
           <Link className={styles.ctaButton} to="/blog">浏览全部技术文章 →</Link>
