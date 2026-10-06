@@ -119,6 +119,8 @@ def get_slug(filepath):
     name = name.replace('，', '-').replace('。', '-').replace('、', '-')
     # Collapse hyphens
     name = re.sub(r'-+', '-', name).strip('-')
+    # Strip path separators and dot sequences so the slug can never traverse
+    name = re.sub(r'\.{2,}|[\\/]+', '-', name).strip('-')
     return name
 
 def migrate_file(src_path, rel_path, dry_run=False):
@@ -149,7 +151,13 @@ date: {date}
     content = frontmatter + body
     
     blog_filename = f"{date}-{slug}.md"
+    if '..' in blog_filename or '/' in blog_filename or '\\' in blog_filename:
+        print(f"  [SKIP] {src_path} -> unsafe filename: {blog_filename}")
+        return None
     dest_path = BLOG_DIR / blog_filename
+    if not dest_path.resolve().is_relative_to(BLOG_DIR.resolve()):
+        print(f"  [SKIP] {src_path} -> destination escapes blog/: {blog_filename}")
+        return None
     
     if dry_run:
         print(f"  [DRY RUN] {src_path} → {dest_path}")
@@ -157,8 +165,7 @@ date: {date}
         return dest_path
     
     os.makedirs(dest_path.parent, exist_ok=True)
-    with open(dest_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+    dest_path.write_text(content, encoding='utf-8')
     
     print(f"  [OK] {src_path} -> {dest_path}")
     return dest_path
