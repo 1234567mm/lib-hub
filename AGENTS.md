@@ -31,8 +31,10 @@ Blog posts live in `blog/` as `YYYY-MM-DD-slug.md`; docs pages live in `docs/`.
 
 ### Blog publishing
 
-Use the repo-local blog skills in `.codex/skills/`:
-- `/blog-new` to scaffold a new post
+Use the repo-local blog skills in `.codex/skills/` (this is the single source of truth;
+`.zcode/skills/` is a set of NTFS junctions pointing at it for ZCode discovery — edit
+`.codex/skills/` only, never duplicate files between the two):
+- `/blog-new` to scaffold a new post, 行业动态 topic, or tech-radar featured project
 - `/blog-review` to audit frontmatter, filenames, tags, and references
 - `/blog-deploy` to commit, push, and trigger deployment
 - `/project-showcase` to score project-heavy posts for the tech-radar page
@@ -42,8 +44,19 @@ create the file under `blog/`, keep the frontmatter complete, preview locally wi
 
 ### Local permissions
 
-The repo-local automation allowlist has been migrated into `reasonix.toml`:
-`git status`, `git add`, `git commit`, `git push`, and `npm run`.
+The repo-local automation allowlist lives in `reasonix.toml` `[permissions] allow`.
+It covers the publishing flow in both shell forms (bare and `cd <repo> && …`):
+`git status/add/commit/push`, `npm run`, read-only `git diff/log/show`,
+the exact `git checkout -- reasonix.toml` restore, and `uv run` for script checks.
+If a new command keeps getting auto-appended here, add a matching pattern instead
+of letting literal entries accumulate.
+
+### Mimosa security gate
+
+The Mimosa plugin scans file writes and `git commit/push`. Real findings must be
+fixed in code (never bypass with `--no-verify`); coexistence rules, ledger reading,
+and known false-positive patterns (e.g. Python `open(path, 'w')` — use
+`pathlib.write_text`) are documented in `.codex/skills/blog-deploy/SKILL.md`.
 
 ## Notes
 

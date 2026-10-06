@@ -13,6 +13,7 @@ Use `/blog-new` when the user wants to create a new Docusaurus blog post from a 
 |-----------|---------|
 | STM32 / ESP32 / 干货分享 / 开发工具 内容 | 双轨发布（blog + docs，见下方章节） |
 | 行业动态专题（通常是分享的 HTML 页面） | 行业动态流程（见下方章节，**非双轨**） |
+| 技术甄选·精选项目介绍（点阅读式项目页） | 精选项目流程（见下方章节，**非双轨**） |
 
 ## Process
 
@@ -115,6 +116,19 @@ sidebar_position: 2
 **验证**：`npm run build` 通过且无 broken link 警告；`build/industry/<slug>/index.html` 存在且含 `articleFrame` iframe。
 
 ---
+
+## ⭐ 技术甄选·精选项目发布流程（特殊：非双轨，2026-10-06 新增）
+
+「技术甄选」页（`src/pages/tech-radar.js`）的「精选项目」支持整卡点击跳转的阅读页（同行业动态形式）。新增一个项目介绍需要 **3 处**：
+
+1. **原始 HTML 原样整入**：复制到 `static/projects/<slug>.html`（不改写内容，页面自包含）
+2. **React 包装页**：复制 `src/pages/project/bms-rtthread-nano-framework.js` 和同名 `.module.css`，改组件名/标题；iframe 指向 `/projects/<slug>.html`（css 内容各包装页相同）
+3. **注册项目条目**：在 `tech-radar.js` 的 `projects` 数组添加对象，**带 `href: '/project/<slug>'` 字段**——有 `href` 的卡片整卡可点击（cursor=pointer），底部渲染「点击阅读 →」；无 `href` 的仍跳 `/blog/tags/<tag>` 并渲染「查看相关文章 →」
+   - `desc` 保持与其他卡片一致的单行风格（如「RT-Thread Nano 配置与启动逻辑，CubeMX 生成工程框架」），不要粘整段页面引言（会把卡片撑高、格式不一致）
+
+**验证**：`npm run build` 通过；`build/project/<slug>/index.html` 存在且含 `articleFrame`；`build/projects/<slug>.html` 存在。注意技术甄选页正文是**客户端渲染**，构建产物的 HTML 里搜不到项目内容属正常——项目数据在 JS bundle 里（`grep -rl <slug> build/assets/` 可验证）。本地浏览器实测：点卡片应跳阅读页，阅读页带站点导航栏、iframe 正常渲染原文。
+
+参考实现：`bms-rtthread-nano-framework`（集中式BMS软件嵌入式开发框架）。
 
 ## 导航栏与样式设置速查（2026-08 已定稿，勿改回）
 

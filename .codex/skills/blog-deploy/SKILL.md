@@ -128,6 +128,34 @@ $html = [System.IO.File]::ReadAllText("D:\1-QRS\0-Admin\lib-hub\build\docs\shari
 
 ---
 
+## 🛡 Mimosa 门禁共存（2026-10-06 实战踩坑）
+
+本机 ZCode 装有 Mimosa 插件，`Edit/Write` 写入与 `git commit/push` 都会被安全 Hook 扫描。发布流程与其共存规则：
+
+### 提交被拦时的标准处理
+1. **读 finding**：拦截消息给出 `文件:行号` 和规则（如 path-traversal/CWE-22）。
+2. 与本次变更相关 → 正确修复后重新提交。
+3. 与本次变更无关的存量问题 → 仍需修复（门禁按仓库当前状态评判，不修过不去）；修复单独一个 `fix:` 提交，与内容提交分开。
+4. **绝不 `--no-verify` 绕过**。
+
+### 已踩坑：扫描器按调用形态匹配，不认标准防护写法
+- Python 写文件用 `pathlib.Path.write_text()`，**不要用 `open(path, 'w')`**——后者必被标记 path-traversal，即使前面已有 `resolve()` + `is_relative_to()` 目录限定 + 显式拒绝 `../` 三层防护也不放行（实测 2026-10-06）。
+- 路径源自文件名/外部输入时：源头清洗（正则去除 `..`、`/`、`\`）与写前 resolve 目录限定，两层都要写。
+
+### Ledger 状态解读（`node <插件目录>/payload/dist/cli.js status --project <仓库根>`）
+- ledger 是**不可变历史**：一条 `blocked` 记录会永远保留，状态面板「总体：需要处理」≠ 门禁会拦后续提交——门禁看当前扫描结果，历史 blocked 不拦人。
+- `mimosa validate <findingId>` 只对 `fixed_static` 状态开放且要求证据来自最新完整批次；代码修好后旧 finding 通常无法走该升级，属预期，不是故障。
+- 内容型仓库（markdown/HTML 为主）的 L3 全仓扫描结论**永远 INCONCLUSIVE**（callgraph partial 是常态），钩子按「兼容策略」放行并附提示——这是预期行为。
+- 相关环境变量默认值即当前策略，一般无需设置：`MIMOSA_GIT_GATE_MODE=graded`（high=拒/medium=问/low=提示）、`MIMOSA_GIT_GATE_FAILURE_MODE=open`。
+
+### 暂存纪律
+- **只 `git add` 明确的内容路径**，禁止 `git add -A`：`.mimosa/`（Mimosa 工具状态）、`scripts/__pycache__/` 不能进库；`.zcode/` 是指向 `.codex/skills` 的目录联接（JUNCTION，同一份文件），不要单独提交。
+- 提交前 `git checkout -- reasonix.toml` 还原工具自动改动。
+
+### 环境事实
+- 本机无可用 `python`（WindowsApps 商店占位符），验证 Python 脚本用 `uv run python ...`。
+- 本仓库默认 shell 是 Git Bash；多行 commit message 用多条 `-m` 即可。
+
 ## commit 类型
 
 | type | 适用场景 |

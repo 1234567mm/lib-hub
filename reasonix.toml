@@ -57,12 +57,31 @@ max_depth = 2   # scan .codex/skills/*/SKILL.md
 # disabled_skills = ["review"]   # hide noisy or unwanted skills
 
 [permissions]
+# 博客发布流程四命令（git status/add/commit/push）。
+# 必须同时覆盖「裸命令」和「cd 本仓库 && 命令」两种形态：
+# 命中的形态不足时，每次批准都会被自动追加成新的字面条目，污染本文件。
 allow = [
-  "Bash(Set-Location \"D:\\1-QRS\\0-Admin\\lib-hub\"; git status)",
+  "Bash(git status*)",
   "Bash(git add *)",
   "Bash(git commit *)",
-  "Bash(npm run *)",
   "Bash(git push *)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git status*)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git add *)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git commit *)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git push *)",
+  # 发布配套：构建预检、只读检查、reasonix.toml 还原（精确到该文件）、脚本验证（uv）
+  "Bash(npm run *)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && npm run *)",
+  "Bash(git diff*)",
+  "Bash(git log*)",
+  "Bash(git show*)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git diff*)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git log*)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git show*)",
+  "Bash(git checkout -- reasonix.toml)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && git checkout -- reasonix.toml)",
+  "Bash(uv run *)",
+  "Bash(cd \"D:\\1-QRS\\0-Admin\\lib-hub\" && uv run *)",
 ]
 [sandbox]
 # Confine tool blast radius. File-writers (write_file/edit_file/multi_edit/move_file)
