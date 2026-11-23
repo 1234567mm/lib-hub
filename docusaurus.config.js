@@ -9,7 +9,7 @@ const darkCodeTheme = themes.dracula;
   title: '山药泥酸奶的技术窝',
   tagline: '嵌入式开发 | 智能硬件 | 技术分享',
   url: 'https://1234567mm.github.io',
-  baseUrl: '/lib-hub/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
